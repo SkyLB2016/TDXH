@@ -45,7 +45,6 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
 
     override fun inflateBinding() = ActivityUrlBinding.inflate(layoutInflater)
     override fun initViews() {
-        super.initViews()
         setToolbar(binding!!.appBar.toolbar, "网络图片加载")
         first = true
         //设置swipe的开始位置与结束位置
@@ -107,15 +106,17 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
             Snackbar.make(v, "正在加载，请稍后", Snackbar.LENGTH_LONG)
                 .setAction("cancel") { showToast("已取消") }.show()
         }
-//        adapter.onItemClickListener = { view, position -> getPhoto(view, position) }
-
-//        viewModel.getImageUrl()
     }
 
     override fun setObservers() {
         collectUiState()
     }
 
+    override fun onResume() {
+        super.onResume()
+        showLoading()
+
+    }
     private fun collectUiState() {
 //        collectFlow(viewModel.uiState) { state ->
 //            when (state) {
@@ -134,8 +135,9 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
 //        }
         collectFlow(viewModel.teachers) { datas ->
             adapter.submitList(datas)
-
+            disLoading()
         }
+
     }
 
     private fun loadMore() {

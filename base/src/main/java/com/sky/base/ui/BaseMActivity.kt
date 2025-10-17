@@ -88,6 +88,9 @@ abstract class BaseMActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatAct
     }
 
     override fun showLoading() {
+        if (isFinishing|| isDestroyed){
+            return
+        }
         DialogLoading.showDialog(this)
     }
 
