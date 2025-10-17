@@ -1,0 +1,53 @@
+<resources>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="overlapAnchor">true</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--  无边框      -->
+        <item name="android:windowNoTitle">true</item><!-- 是否显示title       -->
+        <item name="android:windowBackground">@drawable/bg_dialog</item><!--   显示区的背景     -->
+        <!--        <item name="android:windowBackground">@android:color/transparent</item>&lt;!&ndash;  透明#00000000      &ndash;&gt;-->
+        <!--        <item name="android:background">@android:color/transparent</item>&lt;!&ndash;dialog的背景  &ndash;&gt;-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!--        <item name="android:windowIsTranslucent">true</item>&lt;!&ndash;是否半透明&ndash;&gt;-->
+        <!--就是用来控制灰度的值，当为1时，界面除了我们的dialog内容是高亮显示的，dialog以外的区域是黑色的，完全看不到其他内容，系统的默认值是0.5-->
+        <!--        <item name="android:backgroundDimAmount">0.5</item>-->
+        <!--显示区域以外是否使用黑色半透明背景-->
+        <!--        <item name="android:backgroundDimEnabled">true</item>-->
+    </style>
+    <!--         PopupWindow上下弹出的效果 -->
+    <style name="AnimationFade">
+        <item name="android:windowEnterAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/abc_slide_out_bottom</item>
+
+        <!--        andridx.fragment:fragment:1.2.0-->
+        <!--        <item name="android:windowEnterAnimation">@anim/fragment_open_enter</item>-->
+        <!--        <item name="android:windowExitAnimation">@anim/fragment_close_exit</item>-->
+    </style>
+
+
+
+    <style name="AlertDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--  无边框      -->
+        <item name="android:windowNoTitle">true</item><!-- 是否显示title       -->
+        <item name="android:windowBackground">@android:color/transparent</item><!--   显示区的背景     -->
+        <!--        <item name="android:windowBackground">@android:color/transparent</item>&lt;!&ndash;  透明#00000000      &ndash;&gt;-->
+        <!--        <item name="android:background">@android:color/transparent</item>&lt;!&ndash;dialog的背景  &ndash;&gt;-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!--        <item name="android:windowIsTranslucent">true</item>&lt;!&ndash;是否半透明&ndash;&gt;-->
+        <!--就是用来控制灰度的值，当为1时，界面除了我们的dialog内容是高亮显示的，dialog以外的区域是黑色的，完全看不到其他内容，系统的默认值是0.5-->
+        <!--        <item name="android:backgroundDimAmount">0.5</item>-->
+        <!--显示区域以外是否使用黑色半透明背景-->
+        <!--        <item name="android:backgroundDimEnabled">true</item>-->
+
+    </style>
+
+</resources>

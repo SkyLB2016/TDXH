@@ -1,0 +1,895 @@
+围棋笔记
+1.棋子的基本知识：接，尖，断，跨断，冲断，
+2.吃子的技巧：门吃，抱吃，二路吃，双叫吃，征吃，枷吃，倒扑吃，扑吃接不归，挖。
+3.联络：（粘）虎，飞（大目小日），双，渡（目前看来比较难）
+4.基本下法：并，长，退，立，爬，
+拆，关，尖，象步，跳，大跳，小飞，大飞，靠压，挖。
+围地一般围三线或四线。
+
+
+从外到内一至九路，最后为十路天元。
+星位之内是角包括星位，星位之间是边，剩下的为五路之内的为中腹。
+斜连称为尖，交叉为扭断，跨断不相连，冲段有基础。禁入点，劫。
+直三死
+曲三死
+直四活
+钩四活
+丁四死
+直五活
+丁五活
+刀把五死
+聚五聚六死
+聚七活棋
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "status": 200,
+    "message": "SUCCESS",
+    "msg": "SUCCESS",
+    "data": {
+        "signUrl": "https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250326155514&transaction_id=si20250326155514NACB0004&customer_id=70FEC003692F8245756820E78CEB0BD2&contract_id=ct2025032615545334798489&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880326&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=MTI1RTM4M0IxM0ZDOTlGMkM0MjNFMjQ0RkJBREY2RDU5OEI3NTgwRA==",
+        "order_no": "202503261554529290902",
+        "contract_id": "20250326155436000022",
+        "contract_url": "{\"viewpdf_url\": \"https://testapi.fadada.com/api/viewContract.action?app_id=401952&v=2.0&timestamp=20250326155454&contract_id=ct2025032615545334798489&msg_digest=MjE2NTY1RUY1MURCM0VGOEVDQTE2OTU5OUZDNkMyRjg5REQ0MzE2Qw==\", \"download_url\": \"https://testapi.fadada.com/api/downLoadContract.action?app_id=401952&v=2.0&timestamp=20250326155454&contract_id=ct2025032615545334798489&msg_digest=MjE2NTY1RUY1MURCM0VGOEVDQTE2OTU5OUZDNkMyRjg5REQ0MzE2Qw==\"}"
+    }
+}
+
+https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250326161355&transaction_id=si20250326161355BNAB0006&customer_id=70FEC003692F8245756820E78CEB0BD2&contract_id=ct2025032616134757656538&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880326&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=NUNENDc3QjgwQUU4MDAzNERFMzQ0NEE4NzYzMzhGQkRFNERDQTMyQQ==
+https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250326161540&transaction_id=si20250326161540KAGB0007&customer_id=70FEC003692F8245756820E78CEB0BD2&contract_id=ct2025032616153575608675&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880326&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=NkEzQ0MzRDc1M0RFODQ3NkZCNzI2MTI5RjQ2QUQ5NzFDMkMzNDI1Rg==
+
+{
+    "status": 200,
+    "message": "SUCCESS",
+    "msg": "SUCCESS",
+    "data": {
+        "signUrl": "https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250326161540&transaction_id=si20250326161540KAGB0007&customer_id=70FEC003692F8245756820E78CEB0BD2&contract_id=ct2025032616153575608675&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880326&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=NkEzQ0MzRDc1M0RFODQ3NkZCNzI2MTI5RjQ2QUQ5NzFDMkMzNDI1Rg==",
+        "order_no": "202503261615353170629",
+        "contract_id": "20250326161534000032",
+        "contract_url": "{\"viewpdf_url\": \"https://testapi.fadada.com/api/viewContract.action?app_id=401952&v=2.0&timestamp=20250326161536&contract_id=ct2025032616153575608675&msg_digest=M0MxNkNEMzcyRTREMUEyRTQzMDBGRDU1NDM1QTY0N0Y0OEMwRUU4RA==\", \"download_url\": \"https://testapi.fadada.com/api/downLoadContract.action?app_id=401952&v=2.0&timestamp=20250326161536&contract_id=ct2025032616153575608675&msg_digest=M0MxNkNEMzcyRTREMUEyRTQzMDBGRDU1NDM1QTY0N0Y0OEMwRUU4RA==\"}"
+    }
+}
+
+@乔月 @我是小玮。 @李彬 法大大电子合同这边修改接口
+1.contract/sign/get/manual/url
+2.contract/sign/signAuto
+这俩接口在原有的参数基础上新增字段，字段类型String，由页码pagenum，横坐标x，纵坐标y，组成jsonString字符串
+/**
+     * 定位坐标:20250317Add
+     * [{"pagenum":0,"x":350,"y":350},{"pagenum":1,"x":350.225,"y":750}]
+ */
+private String  signaturePositions;
+
+[{"pagenum":0,"x":350,"y":350},{"pagenum":1,"x":350.225,"y":750}]
+[{"id":0,"page":1,"x":171,"y":99,"pageWidth":842,"pageHeight":595},{"id":1,"page":1,"x":508,"y":254,"pageWidth":842,"pageHeight":595}]
+
+signature_positions=%5B%7B%22x%22:138,%22y%22:89,%22pagenum%22:0%7D,%7B%22x%22:687,%22y%22:122,%22pagenum%22:0%7D,%7B%22x%22:328,%22y%22:899,%22pagenum%22:0%7D,%7B%22x%22:580,%22y%22:889,%22pagenum%22:1%7D%5D
+https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250328112835&transaction_id=si20250328112835KAIM0063&customer_id=B6183CE3145978B719991FD914669CD0&contract_id=ct2025032811283449644240&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880328&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=MkZGOUI1N0Q1MTAwNEY0QzBEN0VFRkVDODcxRTMwNkM0QkVEMERDMQ==&mobile_sign_type=1&signature_positions=%5B%7B%22x%22:138,%22y%22:89,%22pagenum%22:0%7D,%7B%22x%22:687,%22y%22:122,%22pagenum%22:0%7D,%7B%22x%22:328,%22y%22:899,%22pagenum%22:0%7D,%7B%22x%22:580,%22y%22:889,%22pagenum%22:1%7D%5D
+
+{
+    "status": 200,
+    "message": "SUCCESS",
+    "msg": "SUCCESS",
+    "data": {
+        "signUrl": "https://testapi19.fadada.com/api/extsign.api?app_id=401952&v=2.0&timestamp=20250328112835&transaction_id=si20250328112835KAIM0063&customer_id=B6183CE3145978B719991FD914669CD0&contract_id=ct2025032811283449644240&doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880328&keyword_strategy=0&return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F&notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult&msg_digest=MkZGOUI1N0Q1MTAwNEY0QzBEN0VFRkVDODcxRTMwNkM0QkVEMERDMQ==&mobile_sign_type=1",
+        "order_no": "202503281128338147042",
+        "contract_id": "20250328112832000028",
+        "contract_url": "{\"viewpdf_url\": \"https://testapi.fadada.com/api/viewContract.action?app_id=401952&v=2.0&timestamp=20250328112835&contract_id=ct2025032811283449644240&msg_digest=MjI2OUJBQTdFQUQyMENDOTBBMzYxMDk5RDQ0MkI3NEQxODQ0NzQxMw==\", \"download_url\": \"https://testapi.fadada.com/api/downLoadContract.action?app_id=401952&v=2.0&timestamp=20250328112835&contract_id=ct2025032811283449644240&msg_digest=MjI2OUJBQTdFQUQyMENDOTBBMzYxMDk5RDQ0MkI3NEQxODQ0NzQxMw==\"}"
+    }
+}
+
+https://testapi19.fadada.com/api/extsign.api?app_id=401952
+v=2.0
+timestamp=20250328114454
+transaction_id=si20250328114454IFNH0066
+customer_id=B6183CE3145978B719991FD914669CD0
+contract_id=ct2025032811433199730589
+doc_title=%E6%B5%8B%E8%AF%95%E5%90%88%E5%90%8C%E6%A8%A1%E7%89%880328
+keyword_strategy=0
+return_url=http%3A%2F%2Ftesteureka.hrwuu.com%2FsignHelper_mobile%3Fcode%3D000000%23%2Fsign-result%3F
+notify_url=http%3A%2F%2Fqq.bumuyun.com%2Fcontract%2Fnotify%2Fsign%2Fresult
+msg_digest=QjI3N0M3NzU1QUMxQzA2QkI3QUVEODU4RTdBRkYwMUI3NzZGRDEyNA==
+mobile_sign_type=1
+
+
+
+
+获取kpi考核文件数量
+curl 'https://httpizza.ele.me/xtop/xtop.performance.xy.opp.agencyKsKpiFsWs.queryAgencyKsKpiPlans/1.0' \
+  -H 'authority: httpizza.ele.me' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'cookie: cna=U/8EH8A0mgYCAXWFKV9oCXs8; xlly_s=1; AEOLUS_MOZI_TOKEN=PBE_2.0_5221922713280a41ccb593784a3305b9708b6c19f5b7ea97bdb663cbe871430d25aea3285c7bfcb784737b4bd1b03cb9d41aaaab83c37ae375b456a8801395b110e4d52a8afd9e61225d5ea6b41f7328b6b77aab337549473dcb1dc6b5d1a4123e12e4d3474879d169827127793a580a59072936c5a47be5576c1ede7a0877078ceb8d2e6b28942a014a772cb1b5e207a8b6f1edc3c0b93e8645bec517eb69cf86723cd011b2af3f2dbb1a42c77295bc325be91a5040695b69302c6daa92857da7811fd46ca15d2a91c32e520e5ab2ae; PASSPORT_TOKEN=PBE_2.0_5cd1c6141c127d419e908dfb46eda0ce680fc8b8675e251f97211c5695a1300e1126b922a5bd086350bf7a79fc590a72ea336df2a92d695ae7975121891d1fc303d620208bbf0b21e3cf2ba0fb43a7d33ff144c74022605019d7d304e0dbe420f251732aa68ee693cf8f1fef2756b28077b2c50c388ac6f7d513b0bc914bdb37f2a62fe2644cc5a8c24678ab53f6ad43dd92934cb8f1e6134f16f53469d3b7f1efb5199c0e74e7d465f0e17ec1b065198fc1d417fc20802a9689f2f62cf79d0a6fc8e7c5a264faea564ec04c3507d57ef39d451bb0034d09286338c03312caf2d25e401eaa6b3a8094ea6b47be9ac6fb152a27e16d57afcc70bf6da4310c4df25aeb14ea511d0d1402534d5b30eb9a5b2ffbaca845de1c8452f446457735e9dbb23a2cc7e79a5b2f17cea43645e2ed0e8a8103ca14b1802e1294e4d3e6c2ec87ca3842fa1c972ffbe4d10430546d2452893a7b013f8a2f618065b28fcfee4de357a9043f2bd7ae57; PASSPORT_AGENTS_TOKEN=PBE_2.0_5cd1c6141c127d419e908dfb46eda0ce680fc8b8675e251f97211c5695a1300e1126b922a5bd086350bf7a79fc590a72ea336df2a92d695ae7975121891d1fc303d620208bbf0b21e3cf2ba0fb43a7d33ff144c74022605019d7d304e0dbe420f251732aa68ee693cf8f1fef2756b28077b2c50c388ac6f7d513b0bc914bdb37f2a62fe2644cc5a8c24678ab53f6ad43dd92934cb8f1e6134f16f53469d3b7f1efb5199c0e74e7d465f0e17ec1b065198fc1d417fc20802a9689f2f62cf79d0a6fc8e7c5a264faea564ec04c3507d57ef39d451bb0034d09286338c03312caf2d25e401eaa6b3a8094ea6b47be9ac6fb152a27e16d57afcc70bf6da4310c4df25aeb14ea511d0d1402534d5b30eb9a5b2ffbaca845de1c8452f446457735e9dbb23a2cc7e79a5b2f17cea43645e2ed0e8a8103ca14b1802e1294e4d3e6c2ec87ca3842fa1c972ffbe4d10430546d2452893a7b013f8a2f618065b28fcfee4de357a9043f2bd7ae57; tfstk=gUDxYxD8_3Iv_2yHnKOlItO3SW-oMAn2FqoCIP4c143-Szc0InosBOUSWP4ghhl96cz-ofx4hc9tlqUiiqmbBciZbrw0Ij0JB43IiNmsIlMtz-NZiP40WRnZJ3YHKpmq0RyB-evn7pbajRz6IROuFvacB3LHKpmXGoyiVeDm-Wt0olw_cS6bV3Egv1w_5tt8PlEF1Zg_C3K8Xlsbf5a_P_Z3ARas5Rt-VzrtN8YTPiaGBXtvPo7DYB6cnYEYMPBgyOQ2joFYjmaJReMJCSUIczB68tKJyzZKFF707YnShPgWEtetVl38tjLdHJGEm-cIRUf0lXEtxf3Bjsru6Y3x60L5MumouvejpEB0qD0xBW0DFtUZZcM0wRpP4rGEZqM7QGCbnXmnQWMXHwzuTl38tjLdHJGEm-cO4TDnpdpf-yEGM3KR_1Pb4kVQPAg0k7C32yxvB15aa3r8-3KR_1PJauUHDdCN_7-P.; isg=BMvLbXGaKH77uHUfb11amk8yWmm1YN_iUkYy-j3Ky4phXO2-xTAfM3q-Nlyy_Dfa' \
+  -H 'origin: https://r.ele.me' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://r.ele.me/pikipek/wlKpi.html' \
+  -H 'sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36' \
+  --data-raw '{"params":{}}' \
+  --compressed
+获取KPI考核地址
+curl 'https://httpizza.ele.me/xtop/xtop.performance.xy.opp.agencyKsKpiFsWs.exportAgencyKsKpiTotalResult/1.0' \
+  -H 'authority: httpizza.ele.me' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'cookie: cna=U/8EH8A0mgYCAXWFKV9oCXs8; xlly_s=1; AEOLUS_MOZI_TOKEN=PBE_2.0_5221922713280a41ccb593784a3305b9708b6c19f5b7ea97bdb663cbe871430d25aea3285c7bfcb784737b4bd1b03cb9d41aaaab83c37ae375b456a8801395b110e4d52a8afd9e61225d5ea6b41f7328b6b77aab337549473dcb1dc6b5d1a4123e12e4d3474879d169827127793a580a59072936c5a47be5576c1ede7a0877078ceb8d2e6b28942a014a772cb1b5e207a8b6f1edc3c0b93e8645bec517eb69cf86723cd011b2af3f2dbb1a42c77295bc325be91a5040695b69302c6daa92857da7811fd46ca15d2a91c32e520e5ab2ae; PASSPORT_TOKEN=PBE_2.0_5cd1c6141c127d419e908dfb46eda0ce680fc8b8675e251f97211c5695a1300e1126b922a5bd086350bf7a79fc590a72ea336df2a92d695ae7975121891d1fc303d620208bbf0b21e3cf2ba0fb43a7d33ff144c74022605019d7d304e0dbe420f251732aa68ee693cf8f1fef2756b28077b2c50c388ac6f7d513b0bc914bdb37f2a62fe2644cc5a8c24678ab53f6ad43dd92934cb8f1e6134f16f53469d3b7f1efb5199c0e74e7d465f0e17ec1b065198fc1d417fc20802a9689f2f62cf79d0a6fc8e7c5a264faea564ec04c3507d57ef39d451bb0034d09286338c03312caf2d25e401eaa6b3a8094ea6b47be9ac6fb152a27e16d57afcc70bf6da4310c4df25aeb14ea511d0d1402534d5b30eb9a5b2ffbaca845de1c8452f446457735e9dbb23a2cc7e79a5b2f17cea43645e2ed0e8a8103ca14b1802e1294e4d3e6c2ec87ca3842fa1c972ffbe4d10430546d2452893a7b013f8a2f618065b28fcfee4de357a9043f2bd7ae57; PASSPORT_AGENTS_TOKEN=PBE_2.0_5cd1c6141c127d419e908dfb46eda0ce680fc8b8675e251f97211c5695a1300e1126b922a5bd086350bf7a79fc590a72ea336df2a92d695ae7975121891d1fc303d620208bbf0b21e3cf2ba0fb43a7d33ff144c74022605019d7d304e0dbe420f251732aa68ee693cf8f1fef2756b28077b2c50c388ac6f7d513b0bc914bdb37f2a62fe2644cc5a8c24678ab53f6ad43dd92934cb8f1e6134f16f53469d3b7f1efb5199c0e74e7d465f0e17ec1b065198fc1d417fc20802a9689f2f62cf79d0a6fc8e7c5a264faea564ec04c3507d57ef39d451bb0034d09286338c03312caf2d25e401eaa6b3a8094ea6b47be9ac6fb152a27e16d57afcc70bf6da4310c4df25aeb14ea511d0d1402534d5b30eb9a5b2ffbaca845de1c8452f446457735e9dbb23a2cc7e79a5b2f17cea43645e2ed0e8a8103ca14b1802e1294e4d3e6c2ec87ca3842fa1c972ffbe4d10430546d2452893a7b013f8a2f618065b28fcfee4de357a9043f2bd7ae57; isg=BEZGRywdXb09UAjsInqv-WodlzrIp4phV9kvqTBuqWlEM-JNmDezcDyJC2__m4J5; tfstk=g4SKYPj9zRHKNqt0xkaiqD6oAXwgsgBE16WjqQAnP1COeCbHqJW520d1F9xh-3m8wC62qH-l-NHR31KlAH9hF8BcUesuL_q-PsXoKB1HquHFXsnoxWzFF0KkVSV0moXeL3-7iO_C_70eKKu7qe9WYh_QIc_QmoXFd9p68SZcxMKXwBOWVeTI5AOwebMCNQM_BL9oO4iCNOw9_LcINU9W5f9kd3O5N3wOCCJ-ajNJ1vOo2ZwdA4LzvjjCvGppJI6Tu0i-KdlDa9OtV0OKMeObqCnSVGpdI7iIPDZv1wb5xhsQ1xt13NfBBnEKgpQ1H1LcjfmkcZ5O2EtYrJ-fYT_VP9ETGFQA1ZJN773JMa6huK7TMD-hHNsH7iNiY_Bc9gLctlwCaH95aESugDRCFtSVonEKgpQ1H1LcjfmV4KScDuEIiIpoJRetz48BQKYX1g1sxo42BI2L24uy7RJ9iRetz48T7dd0pu3rzFyN.' \
+  -H 'origin: https://r.ele.me' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://r.ele.me/pikipek/wlKpi.html' \
+  -H 'sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36' \
+  --data-raw '{"params":{"request":{"planId":"202502011000000011946273"}}}' \
+  --compressed
+
+
+
+
+
+
+
+
+
+
+
+curl 'https://quark.alibaba.com/fbi/.json?action=report/ReportDownloadAction&event_submit_doDownloadWidgetData=true' \
+  -H 'authority: quark.alibaba.com' \
+  -H 'accept: application/json' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'bx-v: 2.5.28' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: cna=U/8EH3FJiwMCAXWFKV90eRxg; appInfo=lpd_meepo_ws,12898124; LOGIN_MODE=da; DA_APP_NAME=lpd_meepo_ws; xlly_s=1; DA_TOKEN_lpd_meepo_ws=229e2996-9bf7-4b64-95f2-99caa24def9a; DA_HEARTBEAT_lpd_meepo_ws=E80B92C1E7CACE58B9570F04AF304845; isg=BHd3CNCF3KLDpFhGBpWK80C3Bm3BPEueLiJefskgJcajeJC60Q-e7HkeWtgmkCMW' \
+  -H 'origin: https://quark.alibaba.com' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://quark.alibaba.com/dashboard/view/report.htm?id=1223726&DA_APP_NAME=lpd_meepo_ws&QUARK_PARAMS=Cxxz7Ynd3uGOOrF95FKXNgRWe5t++B5xdu/Eh0UkvmTu6aVpgbMrzf+WTS72O2JwmPlhwKg5mHRnPQrzezJslBHByTQb5RGj8SwIZIs5KD+9VO2aPHyypUVExUOLo+9Rwh2TpyZkWEn8KWFZ7KMP+5KYqZ9HnVK34RsqrPmquXqlXsmqb3IAq6LlIgl7I+bn71PsnyTLiRXXJ+XISlgvXOHnZCqkop/MXMElhnf3Ra5GPLzHzMFPoSaxKzdJ+WccEBKxRuddvAW+6cz2XKH1ScYt+ZCr2Vb6M1wcsNm1cOHre/2nymZp+96Fyd36t/obnvJzd3u9TlMB8ipQgEeE0Q==&DA_TICKET=fcdcff76-0778-47c0-846b-45c3125abcd9' \
+  -H 'sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36' \
+  --data-raw 'params=%7B%22reportId%22%3A1223726%2C%22widgetId%22%3A%22wwsd0q6k%22%2C%22queryId%22%3A%22mlitps6ze_7lfxtn%22%2C%22dataType%22%3A%22unifiedTable%22%2C%22reportIdToken%22%3A%22E47%2BUMWnEHhirXzaLKat8dtGY8aXdVlyCr6j%2FjWreLXthQeJx7zEGDTQpc7DqbwRHjLh1X1FsvsBABMlHWP2zYYXX4jNLYofU1CeTsaem1hfpobZ8RtZqan%2Fe0QMYFURsD%2B1SVqBvqt%2BBWXw1Vel54YoNugAQavXquIVNayBDUebGiy17BLiJ7bZ7%2B%2FUY757qMYxwKO9MYX5D6Z39MYXwejh6t5K8mlO7ZV3LSi%2FgrVV%2B40aen9ow5YF5p%2FhqBRGzaMwwt11OJ2Rgj0ju0K5EC6DoQK0bocChv3%2FcGhEhX8Axb3QhYi4Y9Ut%2FbGPQYeBEYyTm88dqRYTzrhaIG7Ldw%3D%3D%22%2C%22secureParams%22%3A%22MxT1v%2F3Ef3V3ZluKiOWPvnKqyqP3CQhWXYC1TyEsLLkjmuCAuHrkyFPM0e2ZeDRc0VzZCaRgF%2FaKh9BxMcm1EZASKiAUVtX%2BZtlhr%2FvN1DZ9CegSpS6gp003N3vNH3XxndRY3pABN11PJZTkHanw6rkYOih9J%2FpJtcinIW2a7C1G35o08ZK87XrFTiZzC%2B3cimhlvO8UC0Jtah6RyyXPCSrAVnuPm7bQtUi0ABSE8HYKl6plVOyGVf4m%2FyvIr0H0Vz5kHJBc%2FsQQur4RX0RemtxPP72gQBnN0neZZRs9ZSVL3WuHxJZwQHGIBN9aM9S8BfAvu%2FouraDzltcK2aheAQ%3D%3D%22%2C%22metaTime%22%3A%222025-01-24%2014%3A57%3A32%22%2C%22configs%22%3A%5B%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22download%22%2C%22config%22%3A%7B%22env%22%3A%22view%22%2C%22fileType%22%3A%22excel%22%2C%22skipComplexFields%22%3Afalse%2C%22skipAclt%22%3Afalse%2C%22notifyWay%22%3A%5B%5D%2C%22fileName%22%3A%22U%2B%E4%BB%A3%E7%90%86%E5%95%86%E6%98%8E%E7%BB%86%E5%B1%82%E6%95%B0%E6%8D%AE--%E9%A3%8E%E7%A5%9E%E7%89%88%E6%9C%AC_%E9%85%8D%E9%80%81%E7%BB%8F%E7%90%86--%E5%95%86%E5%9C%88%E7%89%87--%E5%95%86%E5%9C%88%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22datasetId%22%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22count%22%2C%22config%22%3A%7B%22needCount%22%3Atrue%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22field%22%2C%22config%22%3A%7B%22guids%22%3A%5B%22mliu0sl09_q3yaf4%22%2C%22mliu0stfd_jtgli5%22%2C%22mliu0soaa_2bu6cp%22%2C%22mliu0szzw_olrcor%22%2C%22mliu0smce_mmgik6%22%2C%22mlsvg25bx_ln96l4%22%2C%22mlsvg25bx_7g3rgm%22%2C%22mlj49babu_9yhbn0%22%2C%22mlj49babu_7yil9s%22%2C%22mlvany1w6_j5x1a4%22%2C%22mlmfnt55d_bruyp9%22%2C%22mm5xc8j7p_jtf1w3%22%2C%22mliu15otz_5l0uyr%22%2C%22mliu15gub_6l0goo%22%2C%22mliu15r83_u9a4po%22%2C%22mliu15gud_ejw0p5%22%2C%22mliu1fwgx_ggmop7%22%2C%22mliu15gud_ri6zn5%22%2C%22mliu68vk9_jgwhgs%22%2C%22mliu15gue_9xyegm%22%2C%22mm5xc8n59_7p1ze3%22%2C%22mlz7qxque_0zsfxm%22%2C%22mliu15gue_7yyk4d%22%2C%22mliu1grzp_a837kh%22%2C%22mliu1grzp_ey7dch%22%2C%22mliu1grzp_96a2en%22%2C%22mliu1grzp_859daz%22%2C%22mliu1grzq_vgbka0%22%2C%22mliu1grzq_fysk9m%22%2C%22mliu1jkz4_rpwy0n%22%2C%22mliu1juoy_dq5gz4%22%2C%22mliu1gmn9_5yppbf%22%2C%22mlkteqi1h_yee6d5%22%2C%22mliu1gmn9_e7ua2g%22%2C%22mliu1gayy_elqmc1%22%2C%22mloqx1a4t_tl4n30%22%2C%22mloqx217v_a6s2c7%22%2C%22mloqx217v_osv3ab%22%2C%22mliu1gmn9_f16m2a%22%2C%22mlktfnkcw_73q3vm%22%2C%22mliu1gmn9_9f423s%22%2C%22mm4toey01_6ib5ru%22%2C%22mliu1gmna_latd94%22%2C%22mliu1gmna_kyn99d%22%2C%22mlktoqi06_jo9r3f%22%2C%22mlktoqi07_c33aqb%22%2C%22mloqx1hsm_57mpvg%22%2C%22mliu1gmna_gxyyla%22%2C%22mliu1gmna_7j6bpf%22%2C%22mliu3fxtr_489ya5%22%2C%22mliu1juoz_9lt0ry%22%2C%22mliu3fwhn_2q0xrk%22%2C%22mliu1juoz_thevot%22%5D%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%22zs5ia17i%22%2C%22name%22%3A%22en-zs5ia17i%22%2C%22value%22%3A%7B%22start%22%3A%222025-04-01%22%2C%22end%22%3A%222025-04-01%22%7D%2C%22valueType%22%3A%22dateTimeRange%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%22o1wwo8nu%22%2C%22name%22%3A%22en-o1wwo8nu%22%2C%22value%22%3A%5B%5D%2C%22valueType%22%3A%22multiSelect%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%22fdrhxlzm%22%2C%22name%22%3A%22en-fdrhxlzm%22%2C%22value%22%3A%5B%5D%2C%22valueType%22%3A%22multiSelect%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%22shvwrvm5%22%2C%22name%22%3A%22en-shvwrvm5%22%2C%22value%22%3A%5B%5D%2C%22valueType%22%3A%22multiSelect%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%223ycirme8%22%2C%22name%22%3A%22en-3ycirme8%22%2C%22value%22%3A%5B%5D%2C%22valueType%22%3A%22multiSelect%22%7D%7D%2C%7B%22datasetGuid%22%3A41038029%2C%22type%22%3A%22condition%22%2C%22config%22%3A%7B%22id%22%3A%22q8cr0lf5%22%2C%22name%22%3A%22en-q8cr0lf5%22%2C%22value%22%3A%5B%5D%2C%22valueType%22%3A%22multiSelect%22%7D%7D%5D%7D' \
+  --compressed
+
+  {
+    "code": 0,
+    "data": "79f4ffb83e0df71c5d01a124b0de10e0",
+    "debugInfo": null,
+    "errorBizEntity": null,
+    "finalMessage": null,
+    "formatMessage": null,
+    "message": null,
+    "success": true,
+    "suggestion": null,
+    "traceId": null
+  }
+
+
+
+https://quark.alibaba.com/dashboard/downloads.htm?autoDownload=true&reportId=1223726
+https://quark.alibaba.com/dashboard/downloads.htm?autoDownload=true&reportId=1223726
+https://quark.alibaba.com/dashboard/downloads.htm?autoDownload=true&reportId=1223726
+
+curl 'https://quark.alibaba.com/.dox?action=DashboardAction&event_submit_doCheckDownloadTaskStatus=true&taskId=111236225' \
+  -H 'authority: quark.alibaba.com' \
+  -H 'accept: application/json, text/javascript, */*; q=0.01' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'bx-v: 2.5.28' \
+  -H 'cache-control: no-cache' \
+  -H 'cookie: cna=U/8EH3FJiwMCAXWFKV90eRxg; appInfo=lpd_meepo_ws,12898124; arms_uid=80ac18a8-d2a3-411d-8e81-bd024aad0018; LOGIN_MODE=da; DA_APP_NAME=lpd_meepo_ws; xlly_s=1; DA_TOKEN_lpd_meepo_ws=780df909-c658-4ec8-807d-342e5e16017b; DA_HEARTBEAT_lpd_meepo_ws=1A70E3777611454BA9E2A6F60CE7FA68; JSESSIONID=0F58DEBDAF04014B3104864C08F08CAC; tfstk=gI3me46_286CQdHdHYzXv6VbVHK8lsa_sAQTBPew48y7MiKbXdmoBYlv1nt_S0DZFoe2CnwNsADWG5p_u5DiTYUTHn9_Q0DjToHi1INaQAkgBmKJJjGb5PJKSeLKGtNWni007Ohzl5B1zGkWJjGfasXw908dIqX9NxyZQozPz5eP3PrVuQ2zsWsN3AzwZQVT1tyN7ZrPa5PL7Rka7QczF5cVdNyn74gyUTlHt8G-14V0mJlDAN7irwE0Ljyl7puuiUwEg8bN7-Bh4ilZQdbT8DMoSklHSaaxt0zzsVOFjRcZO2iLSEXQi0l3z-UeoswEk5caty-NaSux2DEmqK7geqnKYu06RZaqAb3uvqWyC7mrOANUmTISLbhKlugMKTysDWazsVOFjRcZO2iL8gzO4MPL0NNy64S1foP7ZJdp8A3SuB2LxQAlAnZ4NSppZQj1foP7gedkZMtb07Nvp; isg=BJ-foz0XBLocNwDOnt0i-1jvLvUpBPOmBmpm9jHsu86VwL5COdbl976OgFC-2Mse' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://quark.alibaba.com/dashboard/downloads.htm?autoDownload=true&reportId=1223726' \
+  -H 'sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --compressed
+
+
+curl 'https://quark.alibaba.com/.dox?action=DashboardAction&event_submit_doCheckDownloadTaskStatus=true&taskId=111236729' \
+  -H 'authority: quark.alibaba.com' \
+  -H 'accept: application/json, text/javascript, */*; q=0.01' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'bx-v: 2.5.28' \
+  -H 'cache-control: no-cache' \
+  -H 'cookie: cna=U/8EH3FJiwMCAXWFKV90eRxg; appInfo=lpd_meepo_ws,12898124; arms_uid=80ac18a8-d2a3-411d-8e81-bd024aad0018; LOGIN_MODE=da; DA_APP_NAME=lpd_meepo_ws; xlly_s=1; DA_TOKEN_lpd_meepo_ws=780df909-c658-4ec8-807d-342e5e16017b; DA_HEARTBEAT_lpd_meepo_ws=1A70E3777611454BA9E2A6F60CE7FA68; JSESSIONID=261C052A1B8403DE4033C34870530284; tfstk=g0_jFw6WsOQrwCDli-FyNQuyt-L_aOaeDfOOt13q6ELvWVBN_E-TmOz6fOWaiheDuN65KOgVQlY25hBHENJqu1P1COWKuhQwQNGcP9gZu-qc6VTwWJyU8y5DiFYTLAPKoSpDs_pTanekp03vWJyUz0lJm-8O3er3e01JECOxDnBte7OwtF3vXqn-eLA9WFpvXQCJiBktDKBOw7OMedL9Dj5tOCZXnsNvOOUbbkJfMLgtWaUMcp1xbV3OPItfWsp54g7WGn9pqfTIGw1dMwA1SWn6COsA3QX_R8TdxT_6v9erPOxCXZ8Rk8UpqhIOYhsrH7L9XZ_vPgznOLQf1atc4zckHMjPHQ_gK4JG2B6DkZerhFTWtHs138093M1RFH7rU28dxT_6v9erPOxO4Z0edlVKfbtn5Q9UN7iijhY7eZk5KbUpDQAX47NSHGxvZQ9UN7iFsndkG3P7NxIG.; isg=BF1daUfU5hDpnYJUMBMAYY6ZbD9XepHMkJxkzB8irbTj1nwI58msnb5QAspQFqmE' \
+  -H 'pragma: no-cache' \
+  -H 'referer: https://quark.alibaba.com/dashboard/downloads.htm?autoDownload=true&reportId=1223726' \
+  -H 'sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --compressed
+
+
+
+
+{
+  "id": "fe.sopush_service^^15B9E5C154FF47DDB8F3AA777C908F36|1743578519538",
+  "code": 200,
+  "result": {
+    "code": 200,
+    "message": "成功",
+    "data": [
+      {
+        "planInfo": {
+          "planId": "202503023000000000835307",
+          "name": "U+代理商202503考核方案-商圈片",
+          "status": null,
+          "totalDays": 31,
+          "leftDays": 0,
+          "planTimeRange": {
+            "periodStartAt": 1740758400000,
+            "periodEndAt": 1743436740000
+          },
+          "dataTimeRange": {
+            "periodStartAt": 1740758400000,
+            "periodEndAt": 1743350400000
+          },
+          "planFileLink": [
+            {
+              "fileName": "2025年3月快送服务商月度考核方案.pdf",
+              "fileHash": "7552baab2d6defa97314d2f9f63b9d33pdf",
+              "url": "https://lpd-team-ryze-lapetus-zbprod-zb1-oss-1.oss-cn-zhangjiakou.aliyuncs.com/7/55/2baab2d6defa97314d2f9f63b9d33pdf.pdf?Expires=1743610919&OSSAccessKeyId=LTAI5tPxa8MV1ycyfKeBS85f&Signature=qAFAzNh3AuyWxM2LvX1X8M8NSZc%3D"
+            }
+          ],
+          "planDescription": "",
+          "planDimension": null,
+          "relationPlanId": null,
+          "lowLevelRelationPlanId": null
+        },
+        "objects": [
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区星光大道商圈片 | ID：100000167030 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区宝龙商圈片 | ID：100000167035 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区宝龙广场商圈片 | ID：100000167036 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州富阳区国贸中心商圈片 | ID：100000167059 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区阿里巴巴商圈片 | ID：100000377021 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区红宝石商圈片 | ID：100000167041 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区凤凰山商圈片 | ID：100000212001 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区人民广场商圈片 | ID：100000167037 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区钱江世纪城商圈片 | ID：100000372016 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区新街商圈片 | ID：100000337075 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州西湖区转塘商圈片 | ID：100000167049 ",
+            "cityName": "杭州"
+          }
+        ]
+      },
+      {
+        "planInfo": {
+          "planId": "202502011000000011946273",
+          "name": "U+代理商202502考核方案-商圈片",
+          "status": null,
+          "totalDays": 28,
+          "leftDays": 0,
+          "planTimeRange": {
+            "periodStartAt": 1738339200000,
+            "periodEndAt": 1740758340000
+          },
+          "dataTimeRange": {
+            "periodStartAt": 1738339200000,
+            "periodEndAt": 1740672000000
+          },
+          "planFileLink": [
+            {
+              "fileName": "2025年2月快送服务商月度考核方案.pdf",
+              "fileHash": "ca1e214029b651a57dacb46483291942pdf",
+              "url": "https://lpd-team-ryze-lapetus-zbprod-zb1-oss-1.oss-cn-zhangjiakou.aliyuncs.com/c/a1/e214029b651a57dacb46483291942pdf.pdf?Expires=1743610919&OSSAccessKeyId=LTAI5tPxa8MV1ycyfKeBS85f&Signature=jVV7Z%2FGAzWGiuRs5vy1QUaRXBNI%3D"
+            }
+          ],
+          "planDescription": "",
+          "planDimension": null,
+          "relationPlanId": null,
+          "lowLevelRelationPlanId": null
+        },
+        "objects": [
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区凤凰山商圈片 | ID：100000212001 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区星光大道商圈片 | ID：100000167030 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区宝龙广场商圈片 | ID：100000167036 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州富阳区国贸中心商圈片 | ID：100000167059 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区宝龙商圈片 | ID：100000167035 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州西湖区转塘商圈片 | ID：100000167049 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区钱江世纪城商圈片 | ID：100000372016 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区红宝石商圈片 | ID：100000167041 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区新街商圈片 | ID：100000337075 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区人民广场商圈片 | ID：100000167037 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区阿里巴巴商圈片 | ID：100000377021 ",
+            "cityName": "杭州"
+          }
+        ]
+      },
+      {
+        "planInfo": {
+          "planId": "202412313000000000747792",
+          "name": "U+代理商202501考核方案-商圈片",
+          "status": null,
+          "totalDays": 31,
+          "leftDays": 0,
+          "planTimeRange": {
+            "periodStartAt": 1735660800000,
+            "periodEndAt": 1738339140000
+          },
+          "dataTimeRange": {
+            "periodStartAt": 1735660800000,
+            "periodEndAt": 1738252800000
+          },
+          "planFileLink": [
+            {
+              "fileName": "2024年12月快送服务商月度考核方案.pdf",
+              "fileHash": "b02148d569648f90626d0d01c694a64bpdf",
+              "url": "https://lpd-team-ryze-lapetus-zbprod-zb1-oss-1.oss-cn-zhangjiakou.aliyuncs.com/b/02/148d569648f90626d0d01c694a64bpdf.pdf?Expires=1743610919&OSSAccessKeyId=LTAI5tPxa8MV1ycyfKeBS85f&Signature=DreDYsroBiDPD0Ivu4xXTEZRfV8%3D"
+            }
+          ],
+          "planDescription": "",
+          "planDimension": null,
+          "relationPlanId": null,
+          "lowLevelRelationPlanId": null
+        },
+        "objects": [
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区阿里巴巴商圈片 | ID：100000377021 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区宝龙商圈片 | ID：100000167035 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区星光大道商圈片 | ID：100000167030 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区宝龙广场商圈片 | ID：100000167036 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州富阳区国贸中心商圈片 | ID：100000167059 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州西湖区转塘商圈片 | ID：100000167049 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区人民广场商圈片 | ID：100000167037 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区钱江世纪城商圈片 | ID：100000372016 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区红宝石商圈片 | ID：100000167041 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区新街商圈片 | ID：100000337075 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区凤凰山商圈片 | ID：100000212001 ",
+            "cityName": "杭州"
+          }
+        ]
+      },
+      {
+        "planInfo": {
+          "planId": "202412051000000011844230",
+          "name": "U+代理商202412考核方案-商圈片",
+          "status": null,
+          "totalDays": 31,
+          "leftDays": 0,
+          "planTimeRange": {
+            "periodStartAt": 1732982400000,
+            "periodEndAt": 1735660740000
+          },
+          "dataTimeRange": {
+            "periodStartAt": 1732982400000,
+            "periodEndAt": 1735574400000
+          },
+          "planFileLink": [
+            {
+              "fileName": "2024年12月快送服务商月度考核方案.pdf",
+              "fileHash": "b02148d569648f90626d0d01c694a64bpdf",
+              "url": "https://lpd-team-ryze-lapetus-zbprod-zb1-oss-1.oss-cn-zhangjiakou.aliyuncs.com/b/02/148d569648f90626d0d01c694a64bpdf.pdf?Expires=1743610919&OSSAccessKeyId=LTAI5tPxa8MV1ycyfKeBS85f&Signature=DreDYsroBiDPD0Ivu4xXTEZRfV8%3D"
+            }
+          ],
+          "planDescription": "",
+          "planDimension": null,
+          "relationPlanId": null,
+          "lowLevelRelationPlanId": null
+        },
+        "objects": [
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区宝龙商圈片 | ID：100000167035 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区阿里巴巴商圈片 | ID：100000377021 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区宝龙广场商圈片 | ID：100000167036 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州富阳区国贸中心商圈片 | ID：100000167059 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区新街商圈片 | ID：100000337075 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区人民广场商圈片 | ID：100000167037 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区红宝石商圈片 | ID：100000167041 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区钱江世纪城商圈片 | ID：100000372016 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区凤凰山商圈片 | ID：100000212001 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州西湖区转塘商圈片 | ID：100000167049 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区星光大道商圈片 | ID：100000167030 ",
+            "cityName": "杭州"
+          }
+        ]
+      },
+      {
+        "planInfo": {
+          "planId": "202411111000000011828419",
+          "name": "U+代理商202411考核方案-商圈片",
+          "status": null,
+          "totalDays": 27,
+          "leftDays": 0,
+          "planTimeRange": {
+            "periodStartAt": 1730649600000,
+            "periodEndAt": 1732982340000
+          },
+          "dataTimeRange": {
+            "periodStartAt": 1730649600000,
+            "periodEndAt": 1732896000000
+          },
+          "planFileLink": [
+            {
+              "fileName": "2024年11月快送服务商月度考核方案.pdf",
+              "fileHash": "b9600c0f6f904f4df60d3c9489573f14pdf",
+              "url": "https://lpd-team-ryze-lapetus-zbprod-zb1-oss-1.oss-cn-zhangjiakou.aliyuncs.com/b/96/00c0f6f904f4df60d3c9489573f14pdf.pdf?Expires=1743610919&OSSAccessKeyId=LTAI5tPxa8MV1ycyfKeBS85f&Signature=TNm%2F6oG0TG%2FWIHhPqELBnWZ7%2BrY%3D"
+            }
+          ],
+          "planDescription": "",
+          "planDimension": null,
+          "relationPlanId": null,
+          "lowLevelRelationPlanId": null
+        },
+        "objects": [
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区星光大道商圈片 | ID：100000167030 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州富阳区国贸中心商圈片 | ID：100000167059 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区人民广场商圈片 | ID：100000167037 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区红宝石商圈片 | ID：100000167041 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区宝龙商圈片 | ID：100000167035 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区宝龙广场商圈片 | ID：100000167036 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区新街商圈片 | ID：100000337075 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州西湖区转塘商圈片 | ID：100000167049 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区钱江世纪城商圈片 | ID：100000372016 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州萧山区凤凰山商圈片 | ID：100000212001 ",
+            "cityName": "杭州"
+          },
+          {
+            "objectId": "31002308",
+            "dimensionId": null,
+            "parentObjectId": null,
+            "parentDimensionId": null,
+            "name": "杭州滨江区阿里巴巴商圈片 | ID：100000377021 ",
+            "cityName": "杭州"
+          }
+        ]
+      }
+    ],
+    "success": true
+  },
+  "error": null
+}
+https://quark.alibaba.com/.dox?action=DashboardAction&event_submit_doDownloadLocal=true&taskId=111238637&fileOssKey=Fbi-20250402-153553-d02b0f62-e399-47e2-8f88-5d48aa190b48.xlsx&fileType=xlsx&fileName=U+%E4%BB%A3%E7%90%86%E5%95%86%E6%98%8E%E7%BB%86%E5%B1%82%E6%95%B0%E6%8D%AE--%E9%A3%8E%E7%A5%9E%E7%89%88%E6%9C%AC_%E9%AA%91%E6%89%8B%E6%98%8E%E7%BB%86_1743579352775.xlsx

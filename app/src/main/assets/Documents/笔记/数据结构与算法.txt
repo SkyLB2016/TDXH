@@ -1,0 +1,1109 @@
+数据结构与算法
+
+第一章 数据结构的划分
+第一节 数据结构的概念
+第二节 数据结构的划分：
+
+第二章 线性结构
+第一节 顺序表、单链表、双链表
+第二节 LRU算法
+第三节 队列（Queue）
+第四节 栈（Stack）
+第五节 HashMap的原理，10.0系统版本
+第六节 ThreadLocal
+第七节 容器总结
+
+第三章 树结构与图结构
+第一节 概念相关
+
+第四章 排序算法
+第五章 其他算法
+
+
+第一章 数据结构的划分
+第一节 数据结构的概念
+01.数据项、数据元素、数据对象、数据、数据结构 的概念
+1）数据项：一个数据元素由若干数据项组成。也可以称为字段、域、属性等
+2）数据元素：是组成数据的、有一定意义的基本单位，在计算机中通常作为整体处理。也被称为记录、元素、结点、顶点。
+3）数据对象：有相同性质的数据元素的集合，是数据的子集。
+
+4）数据：是描述客观事物的符号，是计算机中可以操作的对象，是能被计算机识别，并输入计算机中处理的符号集合。数据不仅仅包括整型，实型等数值类型，还包括字符及声音、图像、视频等数值类型。
+数据总体指的是计算机中的所有数据集合，而咱们一般说的数据指的是一条，一组数据，结合不同场景，有不同的意义。
+
+5）数据结构 是计算机存储、组织数据的方式。
+数据结构 是互相之间存在一种或多种特定关系的数据元素的集合。
+通常情况下，精心选择的数据结构可以带来更高效的运行或者存储效率。数据结构往往同高效的检索算法和索引技术有关。
+中文名：数据结构
+外文名：data structure
+解释：计算机存储、组织数据的方式
+具体指向：特定关系的数据元素的集合
+有关技术：检索算法和索引技术。
+
+ArrayList 就是一个数据结构，里边的数组 object[] elementData 就是数据对象，当然也可以说是数据。
+
+02.数据、数据对象、数据元素、数据项 之间的包含关系。
+数据 == N个数据对象（N个不同类型的 List 列表里的 array）
+一个数据对象 == N个同类型的数据元素（list里array中的元素）
+一个数据元素 == N个数据元素 + N个数据（java类实例化后含有的多个成员对象以及属性）
+数据项是数据不可分割的最小单位。
+数据元素可以包含数据元素（此数据元素内包含数据项）和 数据项。类似于树形结构，叶子结点之间的关系网。
+
+
+第二节 数据的结构：
+可分为 逻辑结构 和 物理结构（存储结构）
+
+01.逻辑结构：是指数据对象中数据元素之间的前后间关系；可分为三类：
+1）集合：（无逻辑关系）数据结构中的元素之间除了在"同属一个集合"的相互关系外，别无其他关系。
+2）线性结构：就是表中各个结点具有线性关系，元素存在一对一的相互关系。主要包括以下几点：
+3）非线性结构：表中各个结点之间具有多个对应的关系。起码有一个对应。
+
+02.线性结构：就是表中各个结点具有线性关系，元素存在一对一的相互关系。主要包括以下几点：
+1）线性结构是非空集。
+2）线性结构有且仅有一个开始结点和一个终端结点。
+3）线性结构所有结点都最多只有一个直接前驱结点和一个后继结点。
+
+线性表就是典型的线性结构，还有栈、队列和串等都属于线性结构。
+
+03.非线性结构：表中各个结点之间具有多个对应的关系。主要包括以下几点：
+01）非线性结构是非空集。
+02）非线性结构的一个结点可能有多个直接前驱结点和多个直接后继结点。
+
+多维数组、广义表、树结构和图结构等数据结构都属于非线性结构。
+树形结构：数据结构中的元素存在一对多的相互关系；
+图形结构：数据结构中的元素存在多对多的相互关系。
+
+04.数组为什么不是线性结构？
+一维数组有可能是线性的，也可能是非线性的，
+例如HashMap的实现是数组+链表，形象点说：竖直方向上是数组，横向上数组的每个结点又是一个链表；极端情况下，只在一个结点下存储元素，那他就是一个链表；或每个结点下都只有一个元素，那他就是一个数组，此时是线性的。
+多维数组都是是非线性的，不只有水平方向的前驱和后继，还有竖直方向的。
+
+05.物理结构（存储结构）：是指数据的逻辑结构在计算机中的存储形式。
+01）顺序存储结构（顺序映象）：借助元素在存储器中的相对位置来表示数据元素之间的逻辑关系。也就是其内存结构在物理方面是相连的。
+02）链式存储结构（非顺序映象）：借助指示元素存储位置的指针来表示数据元素之间的逻辑关系。其内存结构在物理方面基本是不相连。
+03）索引存储结构：非顺序的
+04）散列存储结构：非顺序的
+
+06.常用的数据结构：
+1）数组（Array）：是一种聚合数据类型，它是将具有相同类型的若干变量有序的组织在一起的集合，可以说是最基本的数据结构
+2）链表（LinkedList）：是一种数据元素按照链式存储结构进行存储的线性结构，所以物理上是非连续的。链表由一系列的数据结点构成，每个数据结点包括数据域和指针域两部分。
+其中指针域保存了数据结构中下一个元素存放的地址（单链表）；保存了两个就是双链表；尾部结点指点头部的就是循环链表。链表结构中数据元素的逻辑顺序是通过链表中的指针链接次序来实现的。
+3）队列（Queue）：也是一种特殊的线性表，队列只允许在表的一端进行插入，在另一端进行删除。一般来说，进行插入操作的一端称为队尾，进行删除操作的称为队头，队首。
+4）栈（Stack）：一种特殊的线性表，它只能在一个表的一个固定端进行数据结点的插入和删除操作。后进先出（先进后出，后来居上）。
+5）堆（Heap）：堆是一种特殊的属性结构，一般讨论的堆都是二叉堆。堆的特点是根结点的值是所有结点中最小的或最大的，并且根结点的两个子树也是一个堆结构。
+6）树（Tree）：树是典型的非线性结构，他包括，2个结点的有穷集合K。在树的结构中，有且仅有一个根节点，该结点没有前驱结点。在树的其他结点都有且仅有一个前驱结点，可以有两个后继结点。
+7）图（Graph）：图是另一种非线性数据结构。在图结构中，数据结点一般称为顶点，而边是顶点的有序偶对。如果两个顶点之间存在一条边，那么就表示这两个顶点具有相邻关系。
+8）散列表（Hash）：散列表源自于散列函数（Hash function）,其实就是哈希函数（这绕口的名称），Hash的实现是个单链表，所以也是一个线性表。在结构中查找时是从head开始往下进行key的比较查找的，所以查找的效率依赖于查找过程中所进行的比较次数。效率低。
+
+07.数组
+1）是一种聚合数据类型，最基本的数据结构。
+2）物理上占据连续内存：数组空间连续，按照申请的顺序存储，但必须制定数组大小。
+3）数组空间效率低：数组中有空闲的区域没有得到充分的应用。
+4）操作麻烦：数组的中间增加和删除操作很麻烦。中间插入操作是把这个位置之后的内存地址统一后移，而删除就是统一前移。
+
+第二章 线性结构
+线性表：多个元素有序排列的有限序列，只是逻辑层次上的，而不考虑物理（存储）层次。所以链表依然是线性表。
+在细分可以分为一般线性表和受限线性表。受限线性表主要包括栈和队列，受限表示对节点的操作受限制。
+
+第一节 顺序表、单链表、双链表
+01.顺序表: ArrayList，内部使用数组实现，所以物理结构为顺序存储结构
+每次add的时候都会检测数组长度，满了，就会增加原数组一半的长度。
+优点：尾部插入效率高，支持随机访问
+缺点：中间插入或删除效率低
+set(index,E)：修改指定位置的值，我都没用过
+
+02.什么情况下不要用ArrayList？在ArrayList中间增加删除为什么效率低？
+因为ArrayList内部使用数组实现的，而数组在内存空间上是连续的，所以在中间插入的时候，这个位置之后的元素都要复制往后移动一个位置。
+删除的时候是这个位置之后的元素都要往前移动一个位置。频繁移动时效率低下，所以涉及中间插入和删除的操作不不推荐用。还有排序也是。
+
+03.链表：物理结构为链式存储结构。
+特点是：用一组任意的存储单元存储线性表的数据元素，这组存储单元可以是连续的，也可以是不连续的。
+单链表：内含自身元素，与下一个结点。HashMap
+双链表：内含自身元素，以及上下两个结点。LinkedList
+
+04.顺序表、单链表、双链表的优缺点？
+1）顺序表：
+优点：存储空间连续，允许随机访问，尾插，尾删方便。
+缺点：中间插入和删除效率低，长度固定，造成空间浪费。
+
+2）单链表：
+优点：随意进行增删改，插入删除效率高，长度可以随意修改。
+缺点：内存不连续，不能随机查找，只能从头部开始一个一个往下找，其实就是顺序查找，所以效率慢。
+
+3）双链表：
+优点：随意进行增删改，插入删除效率高，长度可以随意修改，查找效率比单链表快。
+缺点：内存不连续，不能随机查找，只是双链表可以判断position与中间index的大小，选择从头还是从尾巴还是查找，也就是切半了，所以比单链表快。
+
+第二节 LRU算法
+CPU缓存：位于CPU与内存之间的临时存储器。解决CPU速度和内存速度的速度差异问题。
+
+01.内存淘汰机制
+1）FIFO (First In,First Out) 先进先出。队列
+2）LFU (Least Frequently Used) 最不常用的淘汰掉
+3）LRU (Least Recently Used) 最近最少使用的淘汰掉
+
+02.LruCache 的实现原理？
+此版本基于Android10.0或Androidx.collection 1.1.0版本。各版本代码稍有不同，但基本思想就是这样的。
+
+1）新建LruCache，设置可用最大内存缓存maxSize, 创建 LinkedHashMap ，最大容量，并把 AccessOrder 属性设为true，用来重排序。
+
+2）put对象时，需要区分key是否已存在，分两种情况：
+第一种：新添加的key，首先计算缓存size，put 完成后，与maxSize比较，超限移除head，最后返回null；
+第二种：key已存在，首先计算缓存size，put 会返回 previous（旧数据），重新计算缓存，并执行 entryRemoved(false, key, previous, value) 方法，与maxSize比较，超限移除head，最后返回被移除的 previous
+
+3）get对象时，value为空，返回null，可以重写 create(key) 方法，自定义一个对象，这之后就是put的流程了。不为空，直接返回该value，同时会在map中调用 afterNodeAccess(e) 把对象移动到队尾。
+
+4）remove对象时，map移除对象，计算当前内存size，在entryRemoved中返回移除的对象。
+
+5）resize(int maxSize) 设置缓存的大小。
+
+03.LinkedhashMap
+1）双链表结构，继承自HashMap；但HashMap是单链表；
+2）LinkedHashMapEntry 继承了 HashMap 的 Node，并增加了before和after两个字段；
+3）内部通过 accessOrder 属性来控制 afterNodeAccess(e) 方法的执行，默认为false；afterNodeAccess方法每次都会把 put（key存在则替换）或 get 的 node结点移到队尾。
+4）内部重写了 afterNodeInsertion （判断是否移除队首 head）方法，不过不用管此方法。
+
+第三节 队列（Queue）
+说明：一种特殊的线性表，队列只允许在表的一端进行插入（入队），称为队尾；在另一端进行删除（出队），称为队头/队首。队列中没有元素时，称为空队列。
+只有最早入队的元素才能最先出队，故队列又称为先进先出线性表。FIFO--first in first out
+
+01.循环队列：
+说明：为充分利用向量空间，克服假溢出，将向量空间构成一个首尾相接的圆环，并称这种向量为循环向量。
+存储在其中的队列称为循环队列（Circular Queue）。循环队列是把顺序队列首尾相连，把存储队列元素的表从逻辑上看成一个环，成为循环队列。
+
+ArrayBlockingQueue 是这么用的，因为数组内存是连续的，必须要重复利用，不然就会假溢出。其中有两个属性 putIndex（下一次放入的位置），takeIndex（下一次移除的位置），等于array的长度时，就至为0，从头开始循环；要是两者相等，那队列为空。还有一个 count 属性会在每次入队时，自加，出队时，自减。
+LinkedBlockingQueue 不是这么干的，因为内存不连续，所以不存在假溢出这个问题。其中数量count的自增自减使用的 AtomicInteger 乐观锁。
+
+注意 LinkedBlockingQueue 是单链表的线性表，LinkedList 是双链表的线性表。尼玛。
+
+02.双端队列：一种具有队列和栈的性质的数据结构。双端队列中的元素可以从两端插入与弹出，其限定插入和删除操作在表的两端进行。
+受限的双端队列：
+1）一端只允许插入和删除，另一端只允许插入
+2）一端只允许插入和删除，另一端只允许删除
+3）从某个端点插入的元素只能从该端点删除，则该双端队列就蜕变为两个底栈相邻的栈了。
+
+03.常用的双端队列：实现了 Deque 这个接口，继承自 Queue
+LinkedList
+ArrayDeque
+LinkedBlockingDeque：加了锁机制的双端队列
+
+04.优先级队列：
+1）MeaageQueue：就是一个优先级队列，根据消息的延迟时间来排序handler。
+2）PriorityQueue：
+PriorityBlockingQueue：一个支持优先级排序的无界阻塞队列。
+3）DelayQueue：一个使用优先级队列实现的无界阻塞队列。
+
+05.阻塞队列
+1）支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。
+2）支持阻塞的移除方法：意思是在队列为空时，获取元素的线程会等待队列变为非空。
+
+阻塞队列产用于生产者和消费者的场景。生产者插入，消费者取出。
+常用方法    抛出异常    返回特殊值   一直阻塞
+插入方法    add()       offer(e)    put(e)
+移除方法    remove()    poll()      take()
+检查方法    element()   peek()      不可用
+
+抛出异常：
+当队列满时，插入会抛出 IllegalStateException ("QueueFull")异常。
+当队列空时，获取会抛出 NoSuchElementException 异常。
+
+返回特殊值：
+插入时会返回元素是否插入成功。
+取出时，没有会返回null。
+
+一直阻塞：
+当队列满时，生产者线程put元素时，队列会一直阻塞生产者线程，直到队列可用或响应中断退出。
+当队列空时，消费者线程take元素，队列会阻塞消费者线程，直到队列不为空。
+
+常用阻塞队列：
+ArrayBlockingQueue：一个由数组结构组成的有界阻塞队列。主要
+LinkedBlockingQueue：一个由链表结构组成的有界阻塞队列。主要
+LinkedBlockingDeque：一个由链表结构组成的双向阻塞队列。双端队列
+
+LinkedTransferQueue：一个由链表结构组成的无界阻塞队列。
+DelayQueue：一个支持延时获取元素，使用优先级队列实现的无界阻塞队列。
+PriorityBlockingQueue：一个支持优先级排序的无界阻塞队列。
+SynchronousQueue：一个内部只包含一个元素的阻塞队列。put之后必须take，才能再次put。
+
+第四节 栈（Stack）
+说明：一种特殊的线性表，它只能在表的一个固定端进行数据结点的插入和删除操作。后进先出（先进后出，后来居上）。
+术语：压栈，进栈；出栈，退栈。空栈。
+有顺序结构，也有链式结构。
+
+01.Java中的 Stack 是通过 Vector 来实现的，这种设计被认为是不良的设计，说说你的看法？
+因为在 Vector 中可以定点插入删除数据，而继承了 Vector 的 Stack 自然也可以定点插入删除，这不符合栈的特性，所以它被认为是不良的设计。
+
+02.逆波兰表达式又叫做后缀表达式，就是把运算量写在前面，把运算符写在后面。
+
+
+第五节 HashMap的原理，12.0系统，版本31
+内部是通过数组+单链表的形式封装的。竖直方向上是一个数组，横向上数组的每个结点又是一个单链表；极端情况下，只在一个结点下存储元素，那他就是一个链表；或每个结点下都只有一个元素，那他就是一个数组，此时是线性的。
+JDK8之后，Hash冲突后不再是用链表来保存相同index的结点，而是改成红黑树（高性能的平衡树）来保存冲突结点。
+红黑树，，，，
+
+01.重要参数参数：
+table：内部的node数组。
+static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;==16 ：数组最初的容量，所以最初的 threshold 是12.
+loadFactor：加载引子，默认是0.75，用来计算threshold
+threshold：阈值，当前map达到这个容量后，就需要重新增大调整空间的大小
+
+02.HashMap初始化时的配置
+1）HashMap有四个构造函数：
+无参数：只是把加载因子 loadFactor 设为默认的 DEFAULT_LOAD_FACTOR
+2）有参数的有两个，都会转到两个参数的，初始容量，以及加载因子。初始容量会自动对齐2的n次幂。然后它赋值给了 threshold，capacity还是0。
+这三个构造函数，并没有初始化table，table会在put时，检测为空时调用 resize 方法初始化table，重新计算 threshold 与 capacity。
+
+3）还有一个构造函数是复制另一个HashMap。
+
+03.hash 的 put 方法原理
+先计算 key 的 hash ，然后根据 hash 计算对应的下标，再往链表中添加元素。
+详细情况如下：
+1）首先判断 table 是否为空；为空，通过 resize() 方法开始初始化。
+2）通过 hash(key) 方法计算 key 的 hash，然后根据 hash 计算下标。
+(length - 1) & hash 等价于 hash % length 。只有在 length 是 2的n次幂 时，这个等式才成立。
+检查此下标下是否已存在节点；
+不存在，直接创建新的节点，并加入数组中。计算数据容量，是否需要扩容，返回null。
+3）下标已存在，发生 hash 碰撞，轮询此结点的链表，对比 hash 和 key；
+没有相同的，在尾部添加一个节点，跳出循环。之后就是计算容量，检查容量，返回null。
+相同，替换此节点内部的value，返回被移除的value。还有一个没有实现的方法 afterNodeAccess() 是否需要重新排序，LinkedHashMap 中实现了此方法。
+
+04.resize() 方法的作用。
+因为构造函数还有扩容的问题，所以有三种情况
+1）table 为空，threshold 为空，默认的容量 capacity=16，threshold=12，
+2）table 为空，threshold 不为空，那就把 threshold 作为初始容量 newCapacity = threshold，重新计算threshold。
+3）达到阈值，扩容，oldCap 与 threshold 同时 左移一位就好，也就是扩大2倍。
+扩容会新建节点数组，把旧数据添加到新的数组中，还需要重新计算 hash碰撞产生的下标值。
+
+05.hash 的 get 方法原理
+检测 table 是否为空；为空返回 null。
+不为空，通过 hash(key) 方法计算 key 的 hash，计算数组下标，取出单链表，开始比对 hash 和 key；
+相等，返回此节点的 value。
+没有返回 null。
+
+06. hash 的 remove 方法
+检测table是否为空，为空返回null。
+不为空，通过 hash(key) 方法计算 key 的 hash，计算数组下标，取出单链表，开始比对 hash 和 key；
+相等，返回此节点的 value，关联下一个节点，并移除此节点。
+没有返回 null。
+
+07.为什么要使用 HashMap？
+ArrayList查找快，增删慢。
+LinkedList增删快，查找慢。
+HashMap结合两者，所以查找快，增删也快。不过要论单个，当然还是他们自己快。
+
+08.什么是 hash 碰撞？
+根据 hash 计算的下标会有重复，这就是 hash 碰撞。
+(length - 1) & hash 等价于 hash % length 。只有在 length 是 2的n次幂 时，这个等式才成立。
+1）(length - 1) & hash
+& 是二进制运算符。取交集。
+length 是 2的n次幂时。最高位上是1，其余位均为0。减去1后，最高位为0，其余位上均为1。与 hash 取交集后，获得的值介于0到 length -1 之间。
+之所以 必须是 2的n次幂，是只有这样 length - 1 后，低位才均为1，才能取交集。
+2）hash % length
+length 是2的n次幂，那 hash 的二进制位数中，等于和高于 length 位数的数值，都是 length 的整数倍；而低于 length 最高位的位数，也就是低位上剩余的数值就是余数。
+
+55 % 16
+=
+110111 % 10000
+=111
+=7
+
+71 % 16 =7
+
+09.为什么需要加载因子？
+因为hash 碰撞。容器内数据越少，hash 碰撞的就越少，当达到一定阈值时，hash 会频繁碰撞，为解决此问题就需要扩容；
+loadFactor就是指定容器达到多大的比重时，开始扩容。扩容后，元素会重新分配。
+
+第六节 ThreadLocal
+内部实现也是一个HashMap的变种，其中的entry继承自weakReference，只有一个value，没有链表。
+其中 key 是Threadlocal本身。
+
+01.set方法的实现
+1）首先获取当前线程，获取线程内的map threadLocals，为空就创建map。
+2）不为空，设置value。其中会先获取ThreadLocal的 hashCode，这是一个通过 AtomicInteger 实现的唯一值。
+3）然后通过 hashCode 计算下标，（这里才是重点）通过下标获取 node，为空跳出循环，插入数据，然后size自加，尝试清空过时条目与比较阈值，是否需要扩容。
+不为空， key 相等则设置，返回；不相等（也就是 hash 碰撞了），下次一循环（这里是让下标加1，查找下一个，而不是通过链表的next）；直到完成。
+
+02.get方法的实现
+1）首先获取当前线程，获取线程内的map threadLocals，为空就通过初始值创建map，并返回初始值。
+2）不为空，就通过map获取对应的node，取出对应的value，返回。
+
+第七节 容器总结
+01.ArrayList 既然继承自 AbstractList 抽象类，而 AbstractList 已经实现了 List 接口，那么 ArrayList 为何还要再继承 List 接口呢？
+为了方便实现动态代理类，动态代理是会获取接口信息，没有直接继承，就获取不到。
+
+02.ArrayList、LinkedList、Vector的区别
+1）ArrayList类似于C中的数组，查找方便，插入复杂；
+2）LinkedList类似于C中的链表，插入简单（只是把两个item的上下节点换了一下），查找复杂度高；
+3）Vector类似于ArrayList，在Java1.5之后就不推荐使用了
+
+03.Map、Set、List、Queue、Stack的特点与用法。
+1）map 根据 key 找 value。
+2）set 元素不能重复。
+3）list 类似数组。
+4）Queue 队列，先进先出。
+5）Stack 栈，先进后出。
+
+04.HashMap 和 HashTable 的区别（没用过）
+1）当需要同步时，用HashTable，反之用HashMap。但是因为在需要时，HashMap可以被同步，HashMap的功能比HashTable的功能更多，而且他不是基于一个陈旧的类，所以有人认为在各种情况下，HashMap都优先于HashTable。
+2）只有HashMap可以让你将控制作为key或value。key只能有一个空，不重复，value可以重复。
+
+05.HashMap 和 ConCurrentHashMap 的区别，
+1）有并发访问的时候用ConcurrentHashMap，效率比用锁的HashMap好。
+2）HashMap的底层源码是用（Entry）数组+链表的形式实现，详情看：http://liaokang-java.iteye.com/blog/1098404
+
+06.TreeMap、HashMap、LinkedHashMap的区别。
+1）LinkedHashMap 也是一个 HashMap，但是内部维持了一个双向链表可以保持顺序。
+2）TreeMap 可以用于排序（根据键排序，默认是升序）。
+3）HashSet 是通过 HashMap 实现的，TreeSet 是通过 TreeMap 实现的，只不过 Set 用的只是 Map 的 key，Map 的 key 和 Set 都有一个共同的特性就是集合的唯一性。TreeMap 只是多了一个排序的功能。
+
+07.Collection 包结构与 Collections 的区别？
+1）Iterable <- Collection <- list <- ArrayList，LinkedList，Vector
+2）Set  <-  HashSet，TreeSet
+3）Map  <-  HashMap，TreeMap，HashTable
+4）Collection是集合类的父级接口，子接口主要有Set和List、Map。
+5）Collections是针对集合类的一个帮助类，提供了操作集合的工具方法：一系列静态方法实现对各种集合的搜索、排序、线程安全化等操作。
+
+08.Collections：排序
+1）reverse()：翻转排序
+2）shuffle()：随机排序，乱序
+3）sort(list)：需要 list 中的 数据元素 实现 Comparable 接口，且在自身的数据调用 compareTo 时，为升序。
+例：this.xx.compareTo(other.xx)  升序
+例：other.xx.compareTo(this.xx)  降序
+
+4）sort(list,Comparator)：需要重写 Comparator 接口。
+o1.xx.compareTo(o2.xx)，这样是升序
+o2.xx.compareTo(o1.xx)，这样是降序
+o1.compareTo(o2)：需要 数据元素 实现 Comparable 接口。
+
+Collator.getInstance().compare(o1,o2) 排序是升序
+Collator.getInstance().compare(o2,o1) 排序是降序
+Collator 中compare 的参数只能为 String 类型。
+
+现在 java 可简化为如此写法了
+Collections.sort(list, String::compareTo);//我靠，简单是够简单了，但这他妈谁看的懂啊。
+
+09.Comparable 与 Comparator 有什么区别？
+1）Comparable 接口常用于 实体类 继承重写，内部 compareTo 方法只接收一个参数。
+this.xx.compareTo(other.xx)  是升序
+other.xx.compareTo(this.xx)  是降序
+2）Comparator 接口常以 匿名内部类的参数形式，自定义比较方式，传递给需要的方法，内部 compare 有两个参数
+o1.xx.compareTo(o2.xx) 是升序
+o2.xx.compareTo(o1.xx) 是降序
+3）实现 Comparable 接口的方式比实现 Comparator 接口的耦合性更强一些。如果 Comparable 接口的实现类中的比较算法不合适，还需要重写，这时候就可以用到 Comparator 接口，进行外部比较。有点类似于 策略模式。
+
+
+
+第三章 树结构与图结构
+第一节 概念相关
+01.什么是树结构？
+N个结点构成的有限集合；
+树中有一个称为"根（Root）"的特殊结点；
+奇鱼结点可分为若干个互不相交的树，称为原来结点的子树。
+
+1）父结点 或 双亲结点：若一个结点含有子结点，则这个结点称为其子结点的父结点。
+2）子结点：一个结点含有的子树的根节点称为该结点的子结点，解释：直接相连的上下关系，才是父与子的关系。
+3）结点的度：一个结点含有的子结点的个数称为 结点的度。
+4）树的度：一棵树中，最大结点的度称为树的度。解释：子结点最多的那棵子树的度 就是 整颗 树的度。
+5）树的高度或深度：树中结点的最大层次。解释：这栋楼房有多少层，从第一层算起。
+6）结点的层次：从根开始定义起，根为第一层，根的子结点为第2层，以此类推。解释：这层楼在第几层。
+7）叶结点 或 终端结点：度为0的结点。最边上的。
+8）非终端结点 或 分支结点：度不为0的结点。
+9）兄弟结点：具有相同父结点的结点互称为兄弟结点。
+10）堂兄弟结点：双亲在同一层的结点互为堂兄弟。
+11）结点的祖先：从根到该结点所经分支上的所有结点。
+12）子孙：以某结点为根的子树中任意结点都称为该结点的子孙。
+13）森林：由M棵互不相交的树的集合称为森林。
+
+02.树的种类
+1）无序树 或 自由树：树中任意节点的子结点之间没有顺序关系。
+2）有序树：树中任意节点的子结点之间有顺序关系。
+3）二叉树：每个节点最多含有两个子树的树。完全二叉树，满二叉树。
+4）完全二叉树：只有最下面两层的结点的度数可以小于2，并且最下层的结点都集中在该层最左边的若干位置上。左边层数要么等于右边层数，要么多一层。
+5）满二叉树：层数为K，结点总数是 2^k-1，就是满二叉树。
+5）哈弗曼树：带权路径最短的二叉树称为哈弗曼树或最优二叉树。
+
+03.二叉树：两个度的树
+1）完全二叉树：只有最下面两层的结点的度数可以小于2，并且最下层的结点都集中在该层最左边的若干位置上。左边层数要么等于右边层数，要么多一层。
+2）满二叉树：层数为K，结点总数是 2^k-1，就是满二叉树。
+3）哈弗曼树：带权路径最短的二叉树称为哈弗曼树或最优二叉树。
+4）二叉查找树 或 二叉排序树：左结点比右结点的数值小
+5）线索二叉树
+6）平衡二叉树
+7）红黑树
+8）B树
+9）二叉树其实就是个递归，翻转二叉树就是个递归调用。
+
+04.图结构
+树结构中，各结点之间除了父子关系是相互连接的以外，与其他任何层的结点都是不相连的，二图结构就是可以任意相连的。
+点到点间的最短路径
+
+
+
+第四章 排序算法
+十大排序算法
+冒泡排序，选择排序，插入排序，希尔排序，归并排序，堆排序，快速排序，计数排序，基数排序，桶排序。
+
+01.冒泡排序：两个for循环的嵌套，内部for循环从头开始，两相比较，顺序错误则交换。
+1）从数组头开始，比较相邻的元素，大（小）就交换。循环比较直到最后一对，这样最大（小）的就在队尾。
+2）再次重复步骤1，直到排序完成。
+冒泡优化：
+1）每次循环，减去已排好的队尾元素，这就是减i的由来。
+2）加入中断标志，默认为false，如果在某次循环时没有过交换，就证明已经排好序，需要跳出循环。以免重复无用循环比对。
+
+代码如下：
+private String bubbleSort(int[] array) {
+    int count = 0;//执行了多少次
+    long start = System.currentTimeMillis();
+    boolean flag;//中断标志，没有交换就证明已经排序完成，跳出循环
+    int temp;
+    //长度为10，循环10次（0-9），但在最后一次时，i=9,那么j=10-1-9=0，没必要在循环了。
+    for (int i = 0; i < array.length - 1; i++) {//第一层循环length-1次，
+        flag = false;
+        for (int j = 0; j < array.length - 1 - i; j++) {//减1是因为j+1，减i，是因为每循环一次，队尾就增加一个排好序的元素。
+            if (array[j] > array[j + 1]) {//选出大的后移，就是升序
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+                flag = true;
+            }
+            count++;
+        }
+        if (!flag) break;
+    }
+    return getArrayString(array) + "；" + count + "次";
+    //return getNumbers(count, start);
+}
+
+02.简单选择排序：同样是两个for循环的嵌套，每次选出最大或最小的放在队首，直到完成排序。
+首先，通过两两比较选出数组中最大（小）的元素。
+其次，将他它和第一个元素交换。
+再次从剩下的元素里找到最大（小）元素，与第二个位置交换，如此往复，直到最后。
+
+选择排序优化
+1）长度为10，循环10次（0-9），i=9,j=i+1=10,超限（其实就是只剩最后一个元素了），所以减1。就算不减1，内部循环中+1也就等于length了，一样通不过。
+2）j==i是不需要比较的，所以内部循环从j+1开始。
+3）min没有变化就结束此次循环
+
+代码如下：
+private String selectSort(int[] array) {
+    int count = 0;
+    long start = System.currentTimeMillis();
+    int temp;
+    int min;
+    //长度为10，循环10次（0-9），i=9,j=i+1=10,超限（其实就是只剩最后一个元素了），所以减1。
+    for (int i = 0; i < array.length - 1; i++) {
+        min = i;
+        for (int j = i + 1; j < array.length; j++) {//j=i=min，无须比较，所以j=i+1
+            if (array[j] < array[min]) {//选择小的就是升序
+                min = j;
+            }
+            count++;
+        }
+        if (min == i) continue;//没变，无需交换
+        temp = array[i];
+        array[i] = array[min];
+        array[min] = temp;
+    }
+    return getArrayString(array) + "；" + count + "次";
+    //return getNumbers(count, start);
+}
+
+03.插入排序：默认第一个元素就是排好序的，所以从第二个元素开始循环。
+1）对于未排序数据，在已排序序列中从后向前扫描，找到相应的位置并插入。
+2）为了给要插入的元素腾出空间，我们需要将插入位置之后的已排序元素向后移动一位。
+
+3）插入排序所需时间取决于输入中元素的初始顺序。如果最小的正好在最后边，效率就比较低了。
+
+一句话概括：把数组分成前后两部分，前面的是排好序的，后边的是待排序元素；后边每次选出第一个，往前比较，选出合适的位置，插入自己，过程中比此元素大的均会向后移动一位。
+
+总的来说，插入排序对于部分有序的数据十分高效，也很适合小规模数组
+代码如下：
+private String insertSort(int[] array) {
+    int count = 0;
+    long start = System.currentTimeMillis();
+    int index;
+    int item;
+    for (int i = 1; i < array.length; i++) {//第零个元素是排好序的，
+        index = i - 1;//排好序的队尾
+        item = array[i];//待排序元素
+        while (index >= 0 && array[index] > item) {//已排序元素大于待排序元素 item，后移一个位置
+            array[index + 1] = array[index];//元素后移，第一次后移，被占的位置就是 item 自身的位置。
+            index--;//排好序元素自减，也即是往前移动一位，进入下一次循环
+            count++;
+        }
+        //while完成之后，因为index自减的原因，所以需要再加一
+        array[index + 1] = item;
+    }
+    return getArrayString(array) + "；" + count + "次";
+    //return getNumbers(count, start);
+}
+
+04.希尔排序，也称缩小增量排序
+1）一种基于插入排序的快速的排序算法。插入排序对于大规模乱序数组很慢。
+2）希尔排序为了加快速度，简单的改进了插入排序，也称为缩小增量排序，同时该算法是突破 O(n^2) 的第一批算法之一。
+3）希尔排序是吧待排序数组按一定数量分组，对每组使用插入排序算法排序；然后缩小数量继续分组排序，随着数量逐渐减少，每组包含的元素越来越多，但数量减至1是，整个数组恰被分成一组，排序便完成了。这个不断缩小的数量，就构成了一个增量序列。
+
+插入排序与希尔排序：插入排序看成增量序列是1的希尔排序。
+增量序列：gap，目前无法证明哪种增量序列最好
+希尔增量序列：gap/2，一直1/2，往下分。
+Hibbard序列：{2^k-1,,,,3,1}
+Sedgewick序列：{9*4^i-9*2^i+1}，其中i=0，1，2，3，4，，，，   {...,109,41,19,5,1}
+
+代码如下：
+var count = 0//执行了多少次
+var index: Int
+var item: Int
+var gap = array.size / 2
+while (gap > 0) {
+    for (i in gap until array.size) {//默认第零个就是排好序的，从增量gap开始循环
+        index = i - gap//已排好序的队尾
+        item = array[i]//取得当前元素
+        //升序排列就是当前元素小于之前的元素，之前的元素就向后移动gap位；每一次循环前边的数据都是排好序的，所以当item大时，就放在index+gap的位置。
+        while (index >= 0 && array[index] > item) {
+            array[index + gap] = array[index]
+            index -= gap
+            count++
+        }
+        array[index + gap] = item
+    }
+    gap /= 2
+}
+
+05.归并排序：
+一句话概括：一个长度为n的数组拆分成n个只有一个元素的数组，在两两合并。
+
+1）是建立在归并操作上的一种有效的排序算法。该算法是采用分治法的一个非常典型的应用。
+2）对于给定的一组数据，利用递归与分治技术将数据序列划分成为越来越小的半子表，在对半子表排序后，再用递归方法将排好序的半子表合并成为越来越大的有序列表。
+3）为了提升性能，又是我们在半子表的个数小于某个数（比如15）的情况下，对半子表的排序采用其他排序算法，如插入排序。
+4）若将两个有序表合并成一个有序表，称为2路归并，与之对应的还有多路归并。
+/**
+     * 归并排序
+     */
+    private fun mergeSort(array: IntArray): String {
+        sortCount = 0
+        val time = System.currentTimeMillis()
+        if (array == null || array.size < 2) return ""
+        val result = splitArray(array)
+//        return getArrayString(result) + "${sortCount}次"
+        return getNumberOfTimes(sortCount, time)
+    }
+
+    /**
+     * 拆分数组
+     */
+    private fun splitArray(array: IntArray): IntArray {
+        if (array.size < 2) return array //只剩一个数组的时候返回
+        val mid = array.size / 2
+        val left = Arrays.copyOfRange(array, 0, mid)
+        val right = Arrays.copyOfRange(array, mid, array.size)
+        return mergeArray(splitArray(left), splitArray(right))
+    }
+
+    /**
+     * 合并数据，数组内只有一个元素时，两个数组对比后，合并成一个肯定是有序的。
+     */
+    private fun mergeArray(left: IntArray, right: IntArray): IntArray {
+        val result = IntArray(left.size + right.size)
+        var leftIndex = 0;
+        var rightIndex = 0;
+        for (i in result.indices) {
+            sortCount++
+            when {
+                //当leftIndex大于left数组长度时，左边的肯定已经加载完了，就剩右边的了，左右肯定会有一个先加载完的。
+                leftIndex >= left.size -> result[i] = right[rightIndex++]
+                rightIndex >= right.size -> result[i] = left[leftIndex++]
+                //升序情况下，先加载小的元素。
+                left[leftIndex] > right[rightIndex] -> result[i] = right[rightIndex++]
+                else -> result[i] = left[leftIndex++]
+            }
+        }
+        return result
+    }
+
+    var sortCount = 0//执行了多少次
+
+
+06.快速排序
+是对冒泡排序的一种改进，也是采用分治法的一个典型算法。
+1）首先任选某个位置的数据，以此数据作为基准数（pivot），所有小的放在前边，大的放在后边，这个过程称为一趟快速排序，也称为分区（partion）操作。
+2）通过一趟就把数据分成前后两部分，再按此方法，多次快排，就可完成排序。
+3）为了提升性能，在数据分割后，长度小于某个数后，可以采用其他排序算法。
+
+具体操作如下：
+选取一个基准数，然后换到队尾，开始轮询是分割指示器的下标从 start-1 的位置开始。条件判断如下：
+1）当前元素小于等于基准数据时，分割指示器右移一位，也就是加1；此时如果当前元素的下标等于分割指示器，元素保持不动；大于分割指示器，当前元素与分割指示器所指元素交换。
+2）当前元素大于基准数时，分割指示器和元素均保持不变。
+
+基准的选取：最好的情况是基准数据正好是无序数据的中位数，这样能够最大效率让两边排序，同时减少递归次数。但是你怎么知道哪个是中位数呢？所以一般遵循以下三种方式：
+1）选数组的第一个元素。
+2）选数组的最后一个元素。
+3）选第一，最后，还有中间，三个数据的中位数。
+
+dual-pivot 快排：双基准快速排序，其实就是用两个基准数，把整个数组分成三份来进行快速排序，这种算法，从实验来看，比单快排节省了10%的时间。
+目前JDK使用的快排就是双快排。
+    /**
+     * 快速排序
+     */
+    private fun quickSort(array: IntArray): String {
+        sortCount = 0
+        val time = System.currentTimeMillis()
+        quickArray(array, 0, array.size - 1)
+//        LogUtils.i("count==$count")
+//        LogUtils.i("数据==${getArrayString(array)}")
+        return getArrayString(array) + "${sortCount}次"
+//        return getNumberOfTimes(sortCount, time)
+    }
+
+    private fun quickArray(array: IntArray, start: Int, end: Int) {
+        //跳出递归的判断
+//        if (array == null || array.isEmpty() || start < 0 || end > array.size || start >= end) return
+        if (array.size < 2 || start >= end) return
+        val index = partionArray(array, start, end)//分割指示器
+        //当分割指示器大于起始位置的时候，证明左侧元素还未排序完成
+        if (index > start) {
+            quickArray(array, start, index - 1)
+        }
+        //当分割指示器小于尾部位置的时候，证明右侧元素还未排序完成
+        if (index < end) {
+            quickArray(array, index + 1, end)
+        }
+    }
+
+    private fun partionArray(array: IntArray, start: Int, end: Int): Int {
+//        val pivot = start + (Math.random() * (end - start + 1)).toInt()
+        //选取基准数的几种方式
+        //第一种：
+//        val pivot = end//取最后一个，好处是不用交换了
+        //第二种：
+//        val pivot = start//取第一个
+//        swap(array, pivot, end)//基准数移到尾部
+        //第三种：取中位数
+//        val pivot = getPivot(array, start, end) //取第一个与中间位置以及最后一个位置的中位数
+
+        var index = start - 1
+        val endNum = array[end]
+        for (i in start..end) {
+            if (array[i] <= endNum) {
+                index++
+                if (i > index) {
+                    swap(array, index, i)
+                }
+            }
+        }
+        return index
+    }
+
+    private fun getPivot(array: IntArray, start: Int, end: Int) {
+//        val mid = array.size / 2
+//        val s = array[start]
+//        val m = array[mid]
+//        val e = array[end]
+//        var max = s
+//        var index = 0;
+//
+//        if (m > max) {
+//            max = m
+//        }
+//        if (e > max) {
+//            max = e
+//        }
+
+    }
+
+    private fun swap(array: IntArray, pivot: Int, end: Int) {
+        val temp = array[pivot]
+        array[pivot] = array[end]
+        array[end] = temp
+        sortCount++
+    }
+
+    var length = 0;
+
+07.堆排序
+当需要找到一组数据中的最大（小）的几个元素时，用堆排序会非常好。
+堆排序是一种基于二叉树的数据结构，它是一个完全二叉树。
+常见的堆有二叉堆，裴波那契堆。
+特点：
+1）堆中某个节点的值总是不大于或不小于其父节点的值，也就是所谓的最大堆，最小堆。
+2）堆绝对是一个完全二叉树。
+
+知识扩展：计算公式
+1）最后一个非叶节点的位置为 (size/2)-1
+2）对于位置为k的结点，其左子结点=2*k+1，右子结点=2*(k+1)
+
+构建过程：
+首先取得数组长度，构建最大堆
+其次根元素与最后一个元素交换，长度减1；
+再次调整最大堆，交换，重复
+    /**
+     * 堆排序
+     */
+    private fun heapSort(array: IntArray): String {
+        sortCount = 0
+        val time = System.currentTimeMillis()
+        length = array.size
+        //首先构建最大堆
+        buildMaxHeap(array)
+//        LogUtils.i("数据==${getArrayString(array)}")
+        while (length > 0) {
+            swap(array, 0, --length)
+            adjustHeap(array, 0)
+        }
+//        LogUtils.i("count==$sortCount")
+//        LogUtils.i("数据==${getArrayString(array)}")
+//        return getArrayString(array) + "${count}次"
+        return getNumberOfTimes(sortCount, time)
+    }
+
+    private fun buildMaxHeap(array: IntArray) {
+        val lastRoot = length / 2 - 1
+        for (i in lastRoot downTo 0) {
+            adjustHeap(array, i)
+        }
+    }
+
+    private fun adjustHeap(array: IntArray, root: Int) {
+        val left = 2 * root + 1
+        val right = 2 * (root + 1)
+        //获取最大值的下标
+        var max = root
+        if (left < length && array[left] > array[max]) {
+            max = left
+        }
+        if (right < length && array[right] > array[max]) {
+            max = right
+        }
+        if (max != root) {//如果不相等，则根节点i上的元素需要与子结点max上的元素交换，同时因为子树的根节点max上的元素改变，所以需要判断子树的其他结点是否更大。
+            swap(array, root, max)
+            //子树的元素是否需要交换
+            adjustHeap(array, max)
+        }
+    }
+
+08.计数排序：排序时不比较元素的大小。
+一句话：用辅助数组（helper）对目标数组（source）中出现的数字计数，元素转下标，下标转元素。
+优点：在一定的范围内的整数排序速度非常快，一般快于其他算法，通过空间换取时间。
+缺点：只适用于整数排序，而且待排序元素值分布较连续，跨度小的情况。因为辅助数组是通过最大最小原来来确定长度的，当跨度过大时，浪费的内存也过大。
+    /**
+     * 计数排序
+     */
+    private fun counterSort(array: IntArray): String {
+//        LogUtils.i("数据==${getArrayString(array)}")
+        val time = System.currentTimeMillis()
+        var count = 0//执行了多少次
+        var min = array[0]
+        var max = array[0]
+        for (i in array) {
+            max = i.coerceAtLeast(max)
+            min = i.coerceAtMost(min)
+        }
+        val countArray = IntArray(max - min + 1)
+        for (i in array) {
+            countArray[i - min]++
+            count++
+        }
+//        LogUtils.i("数据==${getArrayString(countArray)}")
+        var index = 0
+        var i = 0
+        while (index < array.size) {
+            if (countArray[i] != 0) {
+                array[index++] = i + min
+                countArray[i]--
+                count++
+            } else {
+                i++
+            }
+        }
+//        LogUtils.i("count==$count")
+//        LogUtils.i("数据==${getArrayString(array)}")
+//        return getArrayString(array) + "${count}次"
+        return getNumberOfTimes(count, time)
+    }
+
+09.桶排序：
+把数据元素以某个基准数K为准分成若干个桶，每个桶中放k个不重复元素，单个元素可多次重复。
+然后每个桶可用其他排序算法排序；也可继续使用桶排序，直到每个桶里只有一个元素。
+
+桶排序的基准值作用就相当于快排中的划分，把大量数据分割成基本有序的数据块。再做排序。
+/**
+     * 桶排序
+     */
+    private fun bucketSort(array: IntArray): String {
+        sortCount = 0
+        val time = System.currentTimeMillis()
+        val result = bucketArray(array.toList(), 5)
+//        LogUtils.i("count==$count")
+//        LogUtils.i("数据==${result}")
+//        return getArrayString(array) + "${count}次"
+        return getNumberOfTimes(sortCount, time)
+    }
+
+    private fun bucketArray(array: List<Int>, bucketSize: Int): List<Int> {
+        if (array == null || array.isEmpty()) return array
+        var max = array[0]
+        var min = array[0]
+        for (i in array) {
+            max = i.coerceAtLeast(max)
+            min = i.coerceAtMost(min)
+        }
+        var bucketSize = bucketSize
+        val bucketCount = (max - min) / bucketSize + 1
+        val bucket = ArrayList<ArrayList<Int>>(bucketCount)
+        for (i in 0 until bucketCount) {
+            bucket.add(ArrayList<Int>())
+        }
+        for (i in array) {
+            bucket[(i - min) / bucketSize].add(i)
+        }
+
+        val result = ArrayList<Int>()
+//        for (i in bucket.indices)
+//            LogUtils.i("第" + i + "个桶==" + bucket[i])
+        for (item in bucket) {
+            if (bucketSize === 1) {
+                for (i in item) {
+                    result.add(i)
+                    sortCount++
+                }
+            } else {
+                //如果bucketCount等于1，表明bucketSize分配过大，减一
+                if (bucketCount === 1) {
+                    bucketSize--
+                }
+                //如果bucketSize 大于当前桶的长度，那取一半作为size，
+//                if (bucketSize > item.size){
+//                    bucketSize = item.size / 2
+//                }
+
+                val temp = bucketArray(item, bucketSize)
+                for (i in temp) {
+                    result.add(i)
+                    sortCount++
+                }
+            }
+        }
+        return result
+    }
+
+10.基数排序
+1）又叫 分配式排序（distribution sort），又称桶子法（bucket sort 或 bin sort）
+2）基数排序属于稳定性的排序，其时间复杂度为O(nlog(r)m），其中 r 为所采取的基数，而 m  为堆数，在某些时候，基数排序的效率高于其他的稳定性排序法。
+3）一句话：通过元素可以知道此类元素的基数，然后根据基数把元素放到对应的桶中，如整数就按个十百千...位来排序，直到排序完成。
+    /**
+     * 基数排序
+     */
+    private fun cardinalitySort(array: IntArray): String {
+//        LogUtils.i("数据==${getArrayString(array)}")
+        val time = System.currentTimeMillis()
+        var count = 0//执行了多少次
+        var max = array[0]
+        for (i in array) {
+            max = max.coerceAtLeast(i)
+        }
+        var maxDigit = 0
+        while (max != 0) {
+            max /= 10
+            maxDigit++
+        }
+        //-9..0..9一共是19个数
+        val bucket = ArrayList<ArrayList<Int>>(19)
+        for (i in 0..18) {
+            bucket.add(ArrayList<Int>())
+        }
+        var remainder = 10//取余使用
+        var divisor = 1//除数
+        for (i in 0 until maxDigit) {
+            for (item in array) {
+
+                bucket[(item % remainder) / divisor + 9].add(item)
+                count++
+            }
+            var index = 0
+            for (list in bucket) {
+                for (item in list) {
+                    array[index++] = item
+                    count++
+                }
+                list.clear()
+            }
+            remainder *= 10
+            divisor *= 10
+        }
+
+//        LogUtils.i("count==$count")
+//        LogUtils.i("数据==${getArrayString(array)}")
+//        return getArrayString(array) + "${count}次"
+        return getNumberOfTimes(count, time)
+    }
+
+知识扩展：基数是什么？
+十进制中基数是10，
+而进制中基数是2，
+字符如果使用的是8位扩展的ASCII字符集，基数就是256。
+
+
+基数排序有两种方法：
+MSD 从高位开始进行排序
+LSD 从低位开始进行排序
+这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：
+基数排序：根据键值的每位数字来分配桶
+计数排序：每个桶只存储单一键值
+桶排序：每个桶存储一定范围的数值
+
+11.基数排序 vs 计数排序 vs 桶排序
+基数排序有两种方法：
+MSD：从高位开始进行排序。
+LSD：从低位开始进行排序。
+
+这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差别：
+1）基数排序：根据健值的每位数字来分配桶。
+2）计数排序：每个桶只存单一键值，也就是下标。
+3）桶排序：每个桶存储一定范围的数字，但是到最后也会是一个单一的键值，也就变成了另一个种类的计数排序。
+
+知识扩展：内部排序，外部排序
+内部排序：全部在内存中完成的排序。
+外部排序：需要内存和外部存储器共同完成。
+
+12.排序算法的复杂度
+待排序的文件很大很多，内存容不下，需要拆分来进行排序，这时候使用的就是外部排序，一般是归并排序，把文件拆成若干份，逐个进行排序。两个文件合并时，合并一部分，保存一部分，分批进行。
+log n 是以10为底，n的对数。
+x=logn
+10的x次幂=n
+n的长度就算达到 long 的最大数值，x的最大值也不会超过64，因为 long 的最大值是2的64次幂。
+
+.	    平均时间复杂度	最好情况	    最坏情况	      空间复杂度	  稳定性	    比较算法
+冒泡排序		O(n2)		O(n)	    O(n2)           O(1)        稳定	是
+选择排序		O(n2)		O(n2)	    O(n2)           O(1)        不稳定	是
+插入排序		O(n2)		O(n)	    O(n2)           O(1)        稳定	是
+希尔排序	 不确定			O(n1.3)	    O(n2)           O(1)        不稳定	是
+归并排序	 O(nlog n)	    O(nlog n)	O(nlog n)	    O(n)	    稳定	是
+快速排序	 O(nlog n)	    O(nlog n)	O(n2)           O(log n)	不稳定	是
+堆排序	 O(nlog n)	    O(nlog n)	O(nlog n)	    O(1)	    不稳定	是
+计数排序	 O(n+k)	        O(n+k)	    O(n+k)	        O(k)	    稳定	否
+桶排序	 O(n+k)	        O(n+k)	    O(n2) 	        O(n+k)	    稳定	否
+基数排序	 O(n*k)	        O(n*k)	    O(n*k)	        O(n+k)	    稳定	否
+
+知识扩展 算法的稳定性：原数据中的相等的两个元素，排序后，前后关系不变，就是稳定的；变了就是不稳定的。
+稳定性只在当前数据中的位置是有意义的才有用。例如原数据是按价格高低排序的，现在要按销量高低排序，使用稳定性算法，可以使得相同销量的对象依旧保持者价格高低的排序。当然，如果没这要求的话，也就没啥意义，变了也不影响。
+
+知识扩展 算法的复杂度：取决于数据的规模大小和数据本身分布性质。
+空间复杂度：一个算法在运行时临时占用的内存大小
+时间复杂度：一个算法执行耗费的时间。
+O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n)
+
+在各种不同算法中，若算法中语句执行次数(占用空间)为一个常数，则复杂度为O(1)；
+当一个算法的复杂度与以2为底的n的对数成正比时，可表示为O(log n)；
+当一个算法的复杂度与n成线性比例关系时，可表示为O (n)，依次类推。
+
+冒泡、选择、插入排序需要两个for循环，每次只关注一个元素，平均时间复杂度为（一遍找元素O(n)，一遍找位置O(n)）O(n2)
+归并、快速、堆基于分治思想，log以2为底，平均时间复杂度往往和O(nlogn)（一遍找元素O(n)，一遍找位置O(logn)）
+而希尔排序依赖于所取增量序列的性质，在n2 -- n^1.3之间。
+
+从平均时间来看，快速排序是效率最高的：
+快速排序中平均时间复杂度O(nlog n)，这个公式中隐含的常数因子很小，比归并排序的O(nlog n)中的要小很多，所以大多数情况下，快速排序总是优于合并排序的。
+而堆排序的平均时间复杂度也是O(nlog n)，但是堆排序存在着重建堆的过程，它把根节点移除后，把最后的叶子结点拿上来后需要重建堆，但是，拿上的值是要比它的两个叶子结点要差很多的，一般要比较很多次，才能回到合适的位置。堆排序就会有很多的时间耗在堆调整上。
+虽然快速排序的最坏情况为排序规模（n）的平方关系，但是这种最坏情况取决于每次选择的基准， 对于这种情况，已经提出了很多优化的方法，比如三取样划分和Dual-Pivot快排。
+同时，当排序规模较小时，划分的平衡性容易被打破，而且频繁的方法调用超过了O(nlog n)为O(n^2)
+省出的时间，所以一般排序规模较小时，会改用插入排序或其他排序算法。
+
+13.查找算法的分类
+1）静态查找和动态查找：
+注：静态或动态都是针对查找表而言的。动态查找指标中有删除和插入操作的表
+2）无序查找和有序查找
+无序查找：被查找数列有序无序均可。
+有序查找：被查找数列必须为有序数列。
+
+14.查找算法有哪些？
+1）顺序查找--复杂度：O(n)
+说明：顺序查找适合于存储结构为顺序或链接存储的线性表，顺序查找也被称为线性查找，属于无序查找算法。
+2）二分查找--复杂度：O(log2n)
+说明：元素必须是有序的，如果无序的则要先进行排序操作，也称为折半查找，属于有序查找算法。
+3）插值查找--复杂度：O(log2n(log2n))
+说明：基于二分查找算法，将查找点的选择改进为自适应选择，可以提高查找效率。当然，插值查找也属于有序查找。
+注意：对于表长较大，而关键字分布又比较均匀的查找表来说，插值查找算法的平均性能比折半查找要好得多。反之，数组中如果分布非常不均匀，那么插值查找未必是很合适的选择。
+4）裴波那契查找--复杂度：O(log2n)
+说明：也是二分查找的一种提升算法，通过运用黄金比例的概念在数列中选择查找点进行查找，提高查找效率。同样的裴波那契查找也属于一种有序查找算法。
+5）树表查找之二叉查找树--复杂度：O(log2n)
+说明：二叉查找树是先对待查找的数据进行生成树，确保树的做分支的值小于右分支的值
+6）分块查找：
+说明：分块查找又称为索引顺序查找，他是顺序查找的一种改进方法。
+7）哈希查找--复杂度：O(1)
+说明：通过Hash表进行查找。
+
+
+第五章 其他算法
+01.布隆过滤器（Bloom Filter）：主要用于快速判断一个数据是否c存在于海量数据中。
+1970年由布隆提出，
+可以用于检索一个元素是否在一个集合中，因此它是一个空间效率极高的概率型算法；他由一个很长的二进制向量（我的理解是只存0、1的数组）和多个随机映射函数构成。
+仅仅保留数据的指纹信息，空间效率极高；
+查询效率极高，时间复杂度为：O（n）；
+信息安全性较高；
+优点：
+1）仅仅保留数据的映射信息，空间效率极高；
+2）查询效率极高，时间复杂度为：O(n)
+3）信息安全性极高，因为保存的只是通过函数算出的0、1值
+缺点：
+1）存在误判。不过总比频繁访问数据库好。
+2）数据删除困难（貌似就不能删，因为 hash 碰撞），不过在真正的数据中，貌似也没有删除数据的必要，只是对用户隐藏了而已。
+
+应用场景：Android studio 这种代码工具类里的错误提示应该就是。
+字处理软件中，单词的错误提示。
+网络爬虫中，网址是否被访问过。
+
+Google的guava包
+
+知识扩展：md5是信息摘要算法。
+
+02.图的拓扑排序算法
+统计一个工程的总时间，以及计算关键节点在哪些部位，以及到达各部位需要的时间，各部位最晚开工时间，工作时长等。
+入度：进入当前顶点的边有几条。
+出度：从当前顶点出发的有几条边。
+
+03.二分查找（折半查找）
+前提是数组必须有序，每次取得中间元素进行对比，小往前找，大往后找。
+
+04.贪心算法：哈弗曼树
+哈弗曼树是最优码，用来压缩文件，jpeg文件就是哈夫曼压缩的。
+
+05.B+树：MySql数据库索引是如何实现的
+索引的用处
+MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。
+当表中有大量记录时，若要对表进行查询，第一种搜索信息方式是全表搜索，是将所有记录一一取出，和查询条件进行一一对比，然后返回满足条件的记录，这样做会消耗大量数据库系统时间，并造成大量磁盘I/O操作；第二种就是在表中建立索引，然后在索引中找到符合查询条件的索引值，最后通过保存在索引中的ROWID（相当于页码）快速找到表中对应的记录。
+用平衡二叉树？
+数据库查询是数据库的最主要功能之一。我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。
+最基本的查询算法当然是顺序查找（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如二分查找、平衡二叉树查找。
+从理论上来说，似乎没有什么问题，但是如果仔细考虑我们对数据库的使用，会发现，
+第一，我们一个表中的数据存储量会很大，数据量在万以内的我们都认为这是个小数据量表，一般的表数据量都以十万计，百万级别的表也不在少数，用二叉树来索引的话，这个树就会是个很高很瘦的树，层次很深，查找的次数会有几十次次之多。
+第二，因为数据量很大，相应的索引也会很大，不可能全部存储在内存中，数据库是做数据持久化的地方，索引文件不可能永驻内存，因此索引往往以索引文件的形式存储的磁盘上，
+这样。索引查找过程中就要产生磁盘I/O消耗，相对于内存存取，I/O存取的消耗要高几个数量级，所以评价一个数据结构作为索引的优劣最重要的指标就是在查找过程中磁盘I/O操作次数的渐进复杂度。
+这样磁盘存取也成为我们在设计索引时必须要考虑的主要因素之一。
+
+磁盘存取原理
+盘片被划分成一系列同心环，圆心是盘片中心，每个同心环叫做一个磁道。磁道被沿半径线划分成一个个小的段，每个段叫做一个扇区，每个扇区是磁盘的最小存储单元。
+当需要从磁盘读取数据时，为了读取这个扇区的数据，需要将磁头放到这个扇区上方，为了实现这一点，磁头需要移动对准相应磁道，这个过程叫做寻道，所耗费时间叫做寻道时间，然后磁盘旋转将目标扇区旋转到磁头下，这个过程耗费的时间叫做旋转时间。
+由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘I/O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理：
+当一个数据被用到时，其附近的数据也通常会马上被使用。
+由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高I/O效率。预读的长度一般为4k的整数倍(这个4K大小的数据块，称为页)。
+B树(平衡多路查找树, B-树)
+综上所述，有没有一种既可以避免二叉树这种搜寻深度过深，又可以充分利用磁盘预读原理的数据结构呢。这个就是B树了。
+B树中一个节点可以允许有多个子节点，在实际使用时，一个B树节点的实际大小一般设为一个4K大小的页，这样每个节点只需要一次I/O就可以完全载入。
+同时，B树的每个节点有多个 key ，并且以升序排列。这样在查找时就很方便了。
+大家可以从图上看到，存储了27个数据，允许7个子节点的B树的层次比存储了20个数据的平衡二叉树要少，数据越多，层次相对于平衡二叉树就越少，而且B树的允许的子节点个数越多，这个B树也就层次越少。
+在硬盘上实际存储B树时，一个B树节点的实际大小一般设为一个4K大小的页，所以B树的允许子节点都非常大（通常在100到1000之间），所以即使存储大量的数据，B树的高度仍然比较小。
+每个结点中存储了关键字（key）和关键字对应的数据（data），以及孩子结点的指针。我们将一个 key 和其对应的data称为一个记录。但为了方便描述，除非特别说明，后续文中就用 key 来代替（key, value）键值对这个整体。在数据库中我们将B树（和B+树）作为索引结构，可以加快查询速速，此时B树中的key就表示键，而data表示了这个键对应的条目在硬盘上的逻辑地址。
+
+B+树
+Mysql等数据库系统实际使用的则是B+树，B+树是B-树的变体，其定义基本与B-树相同，主要的不同点在于：
+1、关键字（key）的个数比指向子结点的指针的个数要少1个。
+2、所有的非叶子节点上不包含数据信息，因此在内存页中能够存放更多的 key ，所有数据（或说记录）都保存在叶子结点中。
+3、叶子结点都是相链的，因此对整棵树的遍历只需要一次线性遍历叶子结点即可
+Mysql索引的实现
+MyISAM
+使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址，这里设表一共有三列，假设我们以Col1为主键，可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求 key 是唯一的，而辅助索引的 key 可以重复。如果我们在Col2上建立一个辅助索引，同样也是一颗 B+Tree，data 域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。MyISAM的索引方式也叫做“非聚集”的。
+InnoDB
+也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。
+第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按 B+Tree 组织的一个索引结构，这棵树的叶节点 data 域保存了完整的数据记录。这个索引的 key 是数据表的主键，因此InnoDB表数据文件本身就是主索引。
+叶节点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。
+第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域
+聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。
+
+

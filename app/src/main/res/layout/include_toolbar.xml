@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/appBar"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:fitsSystemWindows="true"
+android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+<!--    android:layout_height="?attr/actionBarSize"-->
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="?colorPrimary"
+    android:fitsSystemWindows="true"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    <TextView
+        android:id="@id/tvCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/tvRight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/wh_16"
+        android:drawablePadding="@dimen/wh_4"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/text_15" />
+</androidx.appcompat.widget.Toolbar>
+
+<com.google.android.material.tabs.TabLayout
+    android:id="@id/tabs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:tabIndicatorHeight="@dimen/wh_1"
+    app:tabSelectedTextColor="@color/color_333333"
+    app:tabTextAppearance="@style/AppTheme.SKY.TabsTextStyle"
+    app:tabTextColor="@color/color_666666" />
+</com.google.android.material.appbar.AppBarLayout>

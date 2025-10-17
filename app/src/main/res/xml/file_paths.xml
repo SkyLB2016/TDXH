@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<files-path name="name" path="path" /> //相当 Context.getFilesDir() + path, name是分享url的一部分-->
+
+    <!--<cache-path name="name" path="path" /> //getCacheDir()-->
+
+    <!--<external-path name="name" path="path" /> //Environment.getExternalStorageDirectory()-->
+
+    <!--getExternalFilesDir(String) Context.getExternalFilesDir(null)-->
+    <!--<external-files-path name="name" path="path" />-->
+
+    <!--<external-cache-path name="name" path="path" /> //Context.getExternalCacheDir()-->
+    <external-files-path
+        name="Pictures"
+        path="/" />
+    <external-files-path
+        name="Download"
+        path="/" />
+    <external-files-path
+        name="Documents"
+        path="/" />
+    <external-files-path
+        name="camera_photos"
+        path="/" />
+    <external-path
+        name="external_storage_root"
+        path="." />
+</paths>

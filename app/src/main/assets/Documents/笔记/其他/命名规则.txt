@@ -1,0 +1,65 @@
+命名规范
+
+01.包命名，小写：
+com+公司缩写（个人昵称）＋项目名称，如：com.sky.oa;
+
+02.类和接口命名，大驼峰规则，单词首字母大写。常用类的命名：
+activity类，命名以Activity为后缀，如：LoginActivity
+fragment类，命名以Fragment为后缀，如：ShareDialogFragment
+service类，命名以Service为后缀，如：DownloadService
+adapter类，命名以Adapter为后缀，如：CouponListAdapter
+工具类，命名以Util为后缀，如：EncryptUtil
+模型类，命名以entity或model为后缀，如：***Eneity
+接口实现类，命名以Impl为后缀，如：ApiImpl
+
+03.方法命名，小驼峰规则，第一个单词的首字母小写，其他单词的首字母大写。常用方法的命名：
+初始化方法，命名以init开头，例：initView
+按钮点击方法，命名以to开头，例：toLogin
+设置方法，命名以set开头，例：setData
+具有返回值的获取方法，命名以get开头，例：getData
+通过异步加载数据的方法，命名以load开头，例：loadData
+布尔型的判断方法，命名以is或has，或具有逻辑意义的单词如equals，例：isEmpty
+
+04.常量命名，全部为大写单词，单词之间用下划线分开。
+public final static int PAGE_SIZE = 20;
+
+05.变量命名
+{范围描述+}意义描述+类型描述的组合，用驼峰式，首字母小写。
+private TextView headerTitleTxt; // 标题栏的标题
+private Button loginBtn; // 登录按钮
+private CouponBO couponBO; // 券实例
+
+06.drawable、color、dimen的状态命名，
+背景颜色，添加bg前缀
+文本颜色，添加text前缀
+分割线颜色，添加div前缀
+
+图标类，添加ic前缀
+背景类，添加bg前缀
+分隔类，添加div前缀
+默认类，添加def前缀
+
+文本大小，text前缀
+控件宽高，wh前缀
+
+区分状态时，默认状态，添加normal后缀
+区分状态时，按下时的状态，添加pressed后缀
+区分状态时，选中时的状态，添加selected后缀
+区分状态时，不可用时的状态，添加disable后缀
+多种状态的，添加selector后缀（一般为ListView的selector或按钮的selector）
+
+shape corners gradient padding size solid stroke
+
+07. 动画文件命名，动画类型_动画方向。
+fade_in，淡入
+fade_out，淡出
+push_down_in，从下方推入
+push_down_out，从下方推出
+slide_in_from_top，从头部滑动进入
+zoom_enter，变形进入
+shrink_to_middle，中间缩小
+8.shape命名
+shapeName_corners_[tl,tr,bl,br]_strokeWidth_strokeColor_solidcolor
+8.select命名
+sel_shapeName_corners_[tl,tr,bl,br]_strokeWidth_normarC_pressedC
+

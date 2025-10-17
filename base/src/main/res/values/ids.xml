@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="appbar" type="id" />
+    <item name="toolbar" type="id" />
+    <item name="tvCenter" type="id" />
+    <item name="tvRight" type="id" />
+    <item name="tabs" type="id" />
+
+    <!--搜索栏-->
+    <item name="searchtoolbar" type="id" />
+    <item name="tvLeft" type="id" />
+
+
+    <item name="swipe" type="id" />
+    <item name="recycler" type="id" />
+</resources>

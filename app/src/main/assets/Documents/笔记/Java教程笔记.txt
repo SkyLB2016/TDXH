@@ -1,0 +1,582 @@
+Java教程笔记
+
+第一章 Java 基础定义
+第二章 Java关键字：共51个
+第三章 Java 运算符
+第四章 Java 常用类
+第五章 异常信息 Throwable
+
+名词解释：
+数据传输的基本单位：bit/b/位/比特
+数据存储的基本单位：Byte/B/字节，是能存储的最小一级的信息单位。
+1Byte == 8 bit
+01.字面量： 给基本类型变量赋值的方式就叫做字面量或者字面值.
+比如：int i=120; long j=10L;
+02.符号引用：包括类和方法的全限定名（例如 String 这个类，它的全限定名就是 Java/lang/String）、字段的名称和描述符以及方法的名称和描述符。
+03.直接引用：具体对象的索引值。
+
+
+第一章 Java 基础定义
+01.Java特性
+面向对象的；分布式的；体系结构中立的；可移植的；解释型的；高性能的；多线程的；
+动态的：云端更新类。
+
+02.一个 Java 程序可以认为是一系列对象的集合，通过调用彼此的方法来协同工作。彼此间的概念：对象，类，方法，变量.
+1）对象：对象是类的一个实例，有具体的状态和行为（方法）；比如一个人：种族，名字等是状态（属性），去干什么是行为。
+2）类：类是个模板，描述一类对象的行为和状态。
+3）方法：方法就是行为，也就是做什么。所有的操作均在方法中执行
+4）实例变量：每个对象都有自己独特的实例变量。对象的状态由实例变量的值决定。也就是状态，属性的变化。
+
+03.需要注意的
+1）大小写敏感；
+2）类名为大驼峰模式，即首字母大写；
+3）方法名为小驼峰模式；
+4）原文件名与类名相同
+5）主方法入口为：main
+
+04.Java标识符：
+1）所有标识符都以字母、美元符号$、下划线（_） 开头，之后随意。
+2）关键字不能作为标识符；
+3）大小写敏感
+
+05.Java变量：
+1）局部变量： 位于方法中，方法执行时创建，执行完毕后销毁；
+1、不能用修饰符修饰
+2、只在方法体内可见
+3、内存位置是分布在栈上的
+4、没有默认值，被声明后必须初始化，才可以使用。
+
+2）成员变量（非静态）： 位于类中方法块之外；
+1、对象创建后，其中的实例变量的值就跟着确定了；
+2、可使用修饰符修饰；
+3、八大基本类型有各自的默认值，其他类则为null。
+
+3）静态变量（类变量）：位于类中，方法块之外，static修饰的变量；
+1、在内存中只有一份拷贝，存储在静态存储区，经常被使用为常量，偶尔用作变量；
+2、类名直接使用。
+
+06.继承
+1）在Java中，一个类可以由其他类派生。如果你要创建一个类，而且已经存在一个类具有你所需要的属性或方法，那么你可以将新创建的类继承该类。
+2）利用继承的方法，可以重用已存在类的方法和属性，而不用重写这些代码。被继承的类称为超类（super class），派生类称为子类（subclass）。
+
+07.接口
+1）在Java中，接口可理解为对象间相互通信的协议。接口在继承中扮演着很重要的角色。
+3）接口只定义派生类（子类）要用到的方法，但具体实现完全取决于每个具体的派生类。
+
+08.接口 interface 和抽象类 abstract 的区别？
+1）接口中声明的变量默认都是 public final 修饰的，不可变更。抽象类的成员变量无限制。
+2）接口中所有方法都是抽象的。抽象类中可同时包含抽象和非抽象方法。
+3）类可以继承实现多个接口，但只能继承一个抽象类。
+4）类继承接口需实现接口内所有方法。类继承抽象类只需实现抽象方法。
+5）抽象类可以不实现接口的方法，留给子类实现。
+6）接口和抽象类都不可以被实例化，只有他们的实现类可以被实例化。匿名内部类的实现方式，也是先实现接口，然后再实例化。
+7）如果内部包含main方法的话是可以被调用的。
+
+09.构造方法：每个类都有默认构造方法（隐式的方法），不带参数；
+定义多个构造方法，默认的构造方法就不存在了，需要的话，需手动写出。
+
+10.创建对象的过程：
+1）声明：声明一个对象，也就是变量，包含对象名称和对象类型。
+2）实例化：使用new关键字来创建一个对象。
+3）初始化：使用new关键字来创建对象时，会调用构造方法来初始化对象。
+
+11.Java基本数据类型：变量就是申请内存来存储值，即创建变量就需要分配内存。内存管理系统根据变量的类型来为变量分配存储空间。
+1）内置数据类型：八种基本类型，都有对应的包装类。
+2）引用数据类型：由类的构造函数创建，变量的类型一旦声明后不可改变，默认值为null。
+3）Java常量：指不能改变的量，final符修饰的变量。
+
+12.Java/Android 支持的颜色模式
+1）ARGB8888：四通道高精度（32位）
+2）ARGB4444：四通道低精度（16位）
+3）RGB565：Android 默认模式（16位）
+4）Alpha8：仅有透明通道（8位）
+ARGB888：表示有四个通道ARGB，每个通道都是8位描述，0-255，也就是ff
+
+13.颜色定义
+1）A（Alpha）：0-255，透明到不透明
+2）R（Red）：0-255，无色到红色
+3）G（Green）：0-255，无色到绿色
+4）B（Blue）：0-255，无色到蓝色
+
+14.转义字符序列
+01）\n 	换行 (0x0a)
+02）\r 	回车 (0x0d)
+03）\f 	换页符(0x0c)
+04）\b 	退格 (0x08)
+05）\s 	空格 (0x20)
+06）\t 	制表符
+07）\" 	双引号
+08）\' 	单引号
+09）\ 	反斜杠
+10）\ddd 	八进制字符 (ddd)
+11）\uxxxx 	16进制Unicode字符 (xxxx)
+
+
+第二章 Java关键字：共51个
+01.访问控制类修饰符：4个；
+public：属性或方法对所有类可见；修饰外层类。
+protected：属性和方法只在同包以及子类中可见；现在不可修饰最外层的类
+default：默认的，属性和方法只能同包（文件夹）可见；
+private：私有的，仅自己可见，外类和接口不能声明为私有。
+
+02.非访问控制类修饰符：6个；
+static：静态类，静态方法，静态属性，可直接使用；值可变。不参与序列化。
+final：变量不可变，方法不可重写，类不可继承；
+abstract：抽象类或方法的修饰符；
+synchronized：同步修饰符，同一时间只能有一个线程访问此代码块；
+volatile：强制同步到共享内存，读取时强制性共享内存读取，可见性，有序性，不能保证原子性。多读一写的情况下可以保证原子性（但写的时候不能读），多写的时候不行。可以把volatile看成一个微型的多读一写的显示锁。
+transient：修饰不需要序列化的字段。
+
+03.类、接口、枚举符：3个；
+class：定义类；
+interface：定义接口；
+enum：枚举类。
+
+04.继承符：2个；
+extends：单继承，唯一；泛型中的继承
+implements：继承接口，可多个。
+
+05.创建符：1个；
+new：分配新的类实例，也即是创建新对象。
+
+06.本类与父类引用符：2个；
+this：指代自身；
+super：指代自身的父类/基类/超类。泛型中有使用
+
+07.对比符：1个；
+instanceof：判断一个对象是否是某个类的实例，多态的应用。
+
+08.八大基本属性：六中数字类型（四个整型，两个浮点型），一种字符类型，一种布尔型。
+byte（Byte -> Number）：8bit，1字节,-128~127，有0的，非常少用，基本没用过；
+short（Short -> Number）：16bit，2字节，-32768~32767，有0的，没用过；
+int（Integer -> Number）：32bit，4字节，-2^31~2^31-1，有0的，最常用，数字默认即为int；
+long（Long -> Number）：64bit，8字节，-2^63~2^63-1，有0的，次常用，后缀L，l；
+float（Float -> Number）：32bit,4字节，不过我没闹明白它的位数问题，有效数位7位；
+double（Double -> Number）：64bit，8字节，我也没闹明白他的位数问题，浮点数是不精确的，不能对浮点数进行精确比较；亲测精度只到16位，位数再多的话将无法比较大小；
+boolean（Boolean -> Serializable,Comparable<Boolean>）：布尔数据类型，只有true与false；在JVM规范中，boolean变量作为int处理，也就是4字节；boolean数组当做byte数组处理。
+char（Character -> Serializable,Comparable<Character>）：16bit，2字节，字符型，用单引号''表示，只能有一个字符，本质就是个数字，Unicode字符；最小值’\u0000’（0），最大值’\uffff’（即为65,535）
+
+字符串包装类型：String：不是关键字，是类，值是char类型数组，final修饰，值无法改变，每次更改都是创建新的对象，如频繁操作，应使用 StringBuilder
+
+09.中断操作符：2个；
+break：跳出循环或者 lable 标签标记的代码段，在判断和循环中用的多；
+continue：中断本次循环操作，在循环中用。
+
+10.判断符：2组，4个关键字；
+if..else..：多组判断；
+switch..case与default..break：选择语句。
+
+11.循环符：3组，3个关键字；break：结束整个循环，continue：结束本次循环；
+for：
+while：
+do{}while：do代码块一定会执行一次。
+
+12.捕捉符：3个；
+try..catch..finally：捕捉异常，finially代码块一定会执行，可做一些关闭操作；
+
+13.异常符：2个；
+throw：抛出异常，程序崩溃；
+throws：抛出可能的异常，留个下个类或方法捕捉。
+
+14.assert：断言条件是否满足；为 true 时，程序正常执行，为 false 时，中断执行，抛出 AssertionError 异常。
+assert true/false:"为false时 输出的错误信息，可省略"
+
+15.定义C++方法符：1个；
+native：定义c++方法。
+
+16.其他：8个；
+package：定义包的路径；
+import：引入包；
+return：返回需要的数据；
+void：表示方法没有返回值；
+null：空值
+
+未用过：
+const：未使用；
+goto：未使用；
+strictfp：浮点数比较使用严格的规则。
+
+
+第三章 Java 运算符
+01）算术运算符
+02）关系运算符
+03）位运算符
+04）逻辑运算符
+05）赋值运算符
+06）条件运算符
+07）其他运算符
+
+01.算术运算符：7个；
+01）+ 	加法 - 相加运算符两侧的值
+02）- 	减法 - 左操作数减去右操作数
+03）* 	乘法 - 相乘操作符两侧的值
+04）/ 	除法 - 左操作数除以右操作数
+05）％ 	取余 - 左操作数除以右操作数的余数
+06）++ 	自增 - 操作数的值增加1
+07）-- 	自减 - 操作数的值减少1
+
+02.关系运算符：6个；
+01）== 相等为真。
+02）!= 不相等为真。
+03）>  大于为真。
+04）<  小于为真。
+05）>= 大于或等于为真。
+06）<= 小于或等于为真。
+
+03.位运算符：二进制运算符，7个，转换成二进制后，二进制之间的运算。
+二进制转换：Integer.toBinaryString(a)
+01）＆ 按位与操作符，都为真时才为真，位操作时都为1，才是1，相当于交集。
+02）|  按位或操作符，都为假时才为假，位操作时都为0，才为0，相当于并集。
+03）^  按位异或操作符，相同为0，不同为1，位操作时不同，才为1，相当于交集在并集中的绝对补集。
+04）~  取反操作符，按位补运算符，翻转操作数的每一位，是32位都取反。
+
+05）<<	按位左移运算符。二进制整体左移n位。 	60 << 2得到240，即 1111 0000 ，相当于A*2的2次方
+06）>> 	按位右移运算符。二进制整体右移n位。 	60 >> 2得到15即 1111 ，相当于A除以2的2次方
+07）>>>	按位右移补零操作符。二进制整体右移n位，移动得到的空位以零填充。    A >>> 2得到15即0000 1111
+
+04.逻辑运算符
+01）&& 	短路与，称为逻辑与运算符。当且仅当两个操作数都为真，条件才为真。 	（A && B）为假。
+02）|| 	称为逻辑或操作符。如果任何两个操作数任何一个为真，条件为真。 	（A | | B）为真。
+03）！ 	称为逻辑非运算符。用来反转操作数的逻辑状态。如果条件为true，则逻辑非运算符将得到false。 	！（A && B）为真。
+
+05.赋值运算符
+= 	简单的赋值运算符，将右操作数的值赋给左侧操作数 	C = A + B将把A + B得到的值赋给C
++= 	加和赋值操作符，它把左操作数和右操作数相加赋值给左操作数 	C + = A等价于C = C + A
+-= 	减和赋值操作符，它把左操作数和右操作数相减赋值给左操作数 	C - = A等价于C = C - A
+*= 	乘和赋值操作符，它把左操作数和右操作数相乘赋值给左操作数 	C * = A等价于C = C * A
+/= 	除和赋值操作符，它把左操作数和右操作数相除赋值给左操作数 	C / = A等价于C = C / A
+％= 	取余和赋值操作符，它把左操作数和右操作数取模后赋值给左操作数 	C％= A等价于C = C％A
+<<=	左移位赋值运算符 	C << = 2等价于C = C << 2
+>>=	右移位赋值运算符 	C >> = 2等价于C = C >> 2
+＆= 按位与赋值运算符 	C＆= 2等价于C = C＆2
+^= 	按位异或赋值操作符 	C ^ = 2等价于C = C ^ 2
+|= 	按位或赋值操作符 	C | = 2等价于C = C | 2
+
+06.条件运算符（?:）；也被称为三元运算符。该运算符有3个操作数，并且需要判断布尔表达式的值。该运算符的主要是决定哪个值应该赋值给变量。
+
+07.instanceOf 运算符，该运算符用于操作对象实例，检查该对象是否是一个特定类型（类类型或接口类型）。
+
+08.位运算符示例
+假设A = 60，和B = 13;它们的二进制格式表示将如下：
+A = 0011 1100
+B = 0000 1101
+-----------------
+A&B = 0000 1100
+A | B = 0011 1101
+A ^ B = 0011 0001
+~A= 1100 0011
+下表列出了位运算符的基本运算,假设整数变量A的值为60和变量B的值为13：
+
+01.＆ 按位与操作符，两位全为1，结果才为1；相当于取交集（既属于A，又属于B）。
+0 & 0 = 0；
+1 & 0 = 0；
+0 & 1 = 0；
+1 & 1 = 1；
+例：
+A&B
+=
+0011 1100
+&
+0000 1101
+=
+0000 1100
+=
+12；
+
+特殊用法：
+（1）清零，如果想将一个单元清零，也就是全部二进制位为0，那就与0相交。
+（2）取出一个数中指定的位数，在对应位数与1相交，1&1=1；0&1=0；所以就可以取出对应位置的对应数据。
+例如 MeasureSpec中取size与mode时
+private static final int MODE_SHIFT = 30;//位移的位数
+private static final int MODE_MASK = 0x3 << MODE_SHIFT;
+
+取正二进制为：
+MODE_MASK == 11000000000000000000000000000000
+
+取反二进制为：
+~MODE_MASK == 00111111111111111111111111111111
+
+public static final int UNSPECIFIED = 0 << MODE_SHIFT;
+二进制为：UNSPECIFIED ==0，0左移多少位都是0
+
+public static final int EXACTLY = 1 << MODE_SHIFT;
+二进制为：EXACTLY ==01000000000000000000000000000000；位置在第31位上
+public static final int AT_MOST = 2 << MODE_SHIFT;
+二进制为：AT_MOST ==10000000000000000000000000000000；位置在第32位上
+
+public static int makeMeasureSpec(int size, int mode) {
+    if (sUseBrokenMakeMeasureSpec) {
+        return size + mode;
+    } else {
+        return (size & ~MODE_MASK) | (mode & MODE_MASK);
+    }
+}
+假设size为60，即 0011 1100
+mode为 AT_MOST，
+
+size & ~MODE_MASK
+=
+0000 0000 0000 0000 0000 0000 0011 1100
+&
+0011 1111 1111 1111 1111 1111 1111 1111
+=
+0000 0000 0000 0000 0000 0000 0011 1100
+
+
+mode & MODE_MASK
+=
+1000 0000 0000 0000 0000 0000 0000 0000
+&
+1100 0000 0000 0000 0000 0000 0000 0000
+=
+1000 0000 0000 0000 0000 0000 0000 0000
+
+(size & ~MODE_MASK) | (mode & MODE_MASK)
+=
+0000 0000 0000 0000 0000 0000 0011 1100
+|
+1000 0000 0000 0000 0000 0000 0000 0000
+=
+1000 0000 0000 0000 0000 0000 0011 1100
+
+
+public static int getMode(int measureSpec){
+    return measureSpec & MODE_MASK;
+}
+
+measureSpec & MODE_MASK
+=
+1000 0000 0000 0000 0000 0000 0011 1100
+&
+1100 0000 0000 0000 0000 0000 0000 0000
+=
+1000 0000 0000 0000 0000 0000 0000 0000
+
+public static int getSize(int measureSpec){
+    return measureSpec & ~MODE_MASK;
+}
+measureSpec & ~MODE_MASK;
+=
+1000 0000 0000 0000 0000 0000 0011 1100
+&
+0011 1111 1111 1111 1111 1111 1111 1111
+=
+0000 0000 0000 0000 0000 0000 0011 1100
+
+
+02.| 按位或操作符，一个为1，结果就为1；相当于取并集（AB合在一起）。
+0 | 0 = 0；
+1 | 0 = 1；
+0 | 1 = 1；
+1 | 1 = 1；
+例：
+A | B
+=
+0011 1100
+|
+0000 1101
+=
+0011 1101
+=
+61；
+
+特殊用法：对一个数据的某些位置设置值为1，因为0|1=1；
+
+03.^ 按位异或操作符，相同位置上的数据，相同是0，不相同是1；相当于取补集(交集在并集中的绝对补集)；
+A ^ B
+=
+0011 1100
+^
+0000 1101
+=
+0011 0001
+=
+49;
+
+04.〜 取反与操作符，翻转二进制的每一位，即0变1，1变0；
+〜A
+
+~0011 1100
+=
+11111111111111111111111111000011
+
+05.<<	按位左移运算符。二进制整体左移n位。 	A << 2得到240，即 1111 0000 ，相当于A*2的2次方
+
+06.>> 	按位右移运算符。二进制整体右移n位。 	A >> 2得到15即 1111 ，相当于A除以2的2次方
+
+07.>>>	按位右移补零操作符。二进制整体右移n位，移动得到的空位以零填充。 	A>>>2得到15即0000 1111
+
+
+
+第四章 Java 常用类
+01.Number Math 常用的方法，多为静态方法
+1）xxxValue：将 number 对象转换为对应数据类型的值，并返回
+2）compareTo() ： 将number对象与参数比较。
+3）equals() ： 判断number对象是否与参数相等。
+4）valueOf() ： 返回一个Integer对象指定的内置数据类型
+5）toString() ： 以字符串形式返回值。
+6）Integer.parseInt(a) ： 将字符串转换为int类型。
+7）Math.abs(-19) ： 绝对值。
+8）Math.pow(2,4) ： a的n次方幂。
+9）Math.ceil(10.7) ： 向上取整。
+10）Math.floor(10.7) ： 向下取整。
+11）Math.round(10.6) ： 四舍五入。
+12）Math.random() ： 随机数。
+13）Math.min(10,11) ： 两个数的最小值。
+14）Math.max(10,11) ： 两个数的最大值。
+15）Math.sqrt(16) ： 求平方根。
+15）Math.sin(30) ： 正弦值。
+16）Math.cos(30) ： 余弦值。
+17）Math.tan(30) ： 正切值。
+18）Math.rint(10.51) ： 取最近的整数他妈的，变相的四舍五入，但是10.5会舍弃。
+19）Math.exp(2) ： 以自然数底数e的n次方。
+20）Math.log(100) ： 以e为底数的对数值。
+21）Math.log10(1000) ： 以10为底的对数值。
+22）Math.asin(30) ： 反正弦值。
+23）Math.acos(30) ： 反余弦值。
+24）Math.atan(30) ： 反正切值。
+25）Math.atan2(30,30) ： 将笛卡尔坐标转换为极坐标，并返回极坐标的角度值。
+26）Math.toDegrees(1) ： 将参数转化为角度。
+27）Math.toRadians(30) ： 将角度转换为弧度。
+
+02.Character 类的常用方法，多为静态方法：
+1）isLetter() ： 是否是一个字母
+2）isDigit() ： 是否是一个数字
+3）isWhitespace() ： 是否一个空格
+4）isUpperCase() ： 是否是大写字母
+5）isLowerCase() ： 是否是小写字母
+6）toUpperCase() ： 转换成字母的大写形式
+7）toLowerCase() ： 转换成字母的小写形式
+8）toString() ： 返回字符的字符串形式，字符串的长度仅为1
+
+03.String 类的常用方法，
+1）char charAt(int index) ： 返回指定索引处的 char 值。
+2）int compareTo(Object o) ： 把这个字符串和另一个对象比较。
+3）int compareTo(String anotherString) ： 按字典顺序比较两个字符串。
+4）int compareToIgnoreCase(String str) ： 按字典顺序比较两个字符串，不考虑大小写。
+5）String concat(String str) ： 将指定字符串连接到此字符串的结尾。
+6）boolean contentEquals(StringBuffer sb) ： 当且仅当字符串与指定的StringButter有相同顺序的字符时候返回真。
+7）static String copyValueOf(char[] data) ： 返回指定数组中表示该字符序列的 String。
+8）static String copyValueOf(char[] data, int offset, int count) ： 返回指定数组中表示该字符序列的 String。
+9）boolean endsWith(String suffix) ： 测试此字符串是否以指定的后缀结束。
+10）boolean equals(Object anObject) ： 将此字符串与指定的对象比较。
+11）boolean equalsIgnoreCase(String anotherString) ： 将此 String 与另一个 String 比较，不考虑大小写。
+12）byte[] getBytes() ： 使用平台的默认字符集将此 String 编码为 byte 序列，并将结果存储到一个新的 byte 数组中。
+13）byte[] getBytes(String charsetName) ： 使用指定的字符集将此 String 编码为 byte 序列，并将结果存储到一个新的 byte 数组中。
+14）void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) ： 将字符从此字符串复制到目标字符数组。
+15）int hashCode() ： 返回此字符串的哈希码。
+16）int indexOf(int ch) ： 返回指定字符在此字符串中第一次出现处的索引。
+17）int indexOf(int ch, int fromIndex) ： 返回在此字符串中第一次出现指定字符处的索引，从指定的索引开始搜索。
+18）int indexOf(String str) ： 返回指定子字符串在此字符串中第一次出现处的索引。
+19）int indexOf(String str, int fromIndex) ： 返回指定子字符串在此字符串中第一次出现处的索引，从指定的索引开始。
+20）String intern() ： 返回字符串对象的规范化表示形式。
+21）int lastIndexOf(int ch) ： 返回指定字符在此字符串中最后一次出现处的索引。
+22）int lastIndexOf(int ch, int fromIndex) ： 返回指定字符在此字符串中最后一次出现处的索引，从指定的索引处开始进行反向搜索。
+23）int lastIndexOf(String str) ： 返回指定子字符串在此字符串中最右边出现处的索引。
+24）int lastIndexOf(String str, int fromIndex) ： 返回指定子字符串在此字符串中最后一次出现处的索引，从指定的索引开始反向搜索。
+25）int length() ： 返回此字符串的长度。
+26）boolean matches(String regex) ： 告知此字符串是否匹配给定的正则表达式。
+27）boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len) ： 测试两个字符串区域是否相等。
+28）boolean regionMatches(int toffset, String other, int ooffset, int len) ： 测试两个字符串区域是否相等。
+29）String replace(char oldChar, char newChar) ： 返回一个新的字符串，它是通过用 newChar 替换此字符串中出现的所有 oldChar 得到的。
+30）String replaceAll(String regex, String replacement) ： 使用给定的 replacement 替换此字符串所有匹配给定的正则表达式的子字符串。
+31）String replaceFirst(String regex, String replacement) ： 使用给定的 replacement 替换此字符串匹配给定的正则表达式的第一个子字符串。
+32）String[] split(String regex) ： 根据给定正则表达式的匹配拆分此字符串。
+33）String[] split(String regex, int limit) ： 根据匹配给定的正则表达式来拆分此字符串。
+34）boolean startsWith(String prefix) ： 测试此字符串是否以指定的前缀开始。
+35）boolean startsWith(String prefix, int toffset) ： 测试此字符串从指定索引开始的子字符串是否以指定前缀开始。
+36）CharSequence subSequence(int beginIndex, int endIndex) ： 返回一个新的字符序列，它是此序列的一个子序列。
+37）String substring(int beginIndex) ： 返回一个新的字符串，它是此字符串的一个子字符串。
+38）String substring(int beginIndex, int endIndex) ： 返回一个新字符串，它是此字符串的一个子字符串。
+39）char[] toCharArray() ： 将此字符串转换为一个新的字符数组。
+40）String toLowerCase() ： 使用默认语言环境的规则将此 String 中的所有字符都转换为小写。
+41）String toLowerCase(Locale locale) ： 使用给定 Locale 的规则将此 String 中的所有字符都转换为小写。
+42）String toString() ： 返回此对象本身（它已经是一个字符串！）。
+43）String toUpperCase() ： 使用默认语言环境的规则将此 String 中的所有字符都转换为大写。
+44）String toUpperCase(Locale locale) ： 使用给定 Locale 的规则将此 String 中的所有字符都转换为大写。
+45）String trim() ： 返回字符串的副本，忽略前导空白和尾部空白。
+46）static String valueOf(primitive data type x) ： 返回给定data type类型x参数的字符串表示形式。
+
+04.StringBuilder
+1）deleteCharAt(index) 删除指定位置的字符
+2）replace(start,end,char) 替换start到end位置的字符串为 newchar
+3）reverse() ：翻转输出
+
+05. StringBuilder > StringBuffer > String
+1）String是字符串常量，不可变，每次修改都相当于生成一个新的对象，所以不适合经常变更值的场景
+2）StringBuffer是线程安全的，使用了synchronized修饰，适用于多线程
+3）StringBuilder不是线程安全的，适用于单线程，所以效率略快于StringBuffer。
+4）速度上面String不断地复制和变更是创建不同的对象进行操作，如String a="a"+"b"+"c"，其内部会自动转成StringBuilder的拼接，数据多的时候会创建循环来拼接，builder的创建有可能会放在循环里边，会影响GC的回收，要避免。
+5）StringBuffer和StringBuilder只是处理同一个对象，不影响GC的回收。
+6）字符串重新赋值，是回收旧值，把值赋给一个新的str，也就是内存地址已换，是一个新的对象；
+用System.identityHashCode(entity))来获取内存地址。
+
+06.常量池 与 String
+常量池有很多概念，包括运行时常量池、class 常量池、字符串常量池。
+虚拟机规范只规定以上区域属于方法区，并没有规定虚拟机厂商的实现。
+常量池严格来说可分为 静态常量池 和 运行时常量池。
+静态常量池是存放字符串字面量、符号引用以及类和方法的信息。
+运行时常量池存放的是运行时一些直接引用。
+运行时常量池是在类加载完成之后，将静态常量池中的符号引用值转存到运行时常量池中，类在解析之后，将符号引用替换成直接引用。
+这两个常量池在 JDK1.7 版本之后，就移到堆内存中了，这里指的是物理空间，而逻辑上还是属于方法区（方法区是逻辑分区）。
+
+名词解释：
+01.字面量： 给基本类型变量赋值的方式就叫做字面量或者字面值.
+比如：int i=120; long j=10L;
+02.符号引用：包括类和方法的全限定名（例如 String 这个类，它的全限定名就是 Java/lang/String）、字段的名称和描述符以及方法的名称和描述符。
+03.直接引用：具体对象的索引值。
+
+07.String 对象是如何实现的？
+了解了 String 对象的实现后，你有没有发现在实现代码中 String 类被 final 关键字修饰了，而且变量 char 数组也被 final 修饰了。
+我们知道类被 final 修饰代表该类不可继承，而 char[]被 final+private 修饰，代表了 String 对象不可被更改。
+Java 实现的这个特性叫作 String 对象的不可变性，即 String 对象一旦创建成功，就不能再对它进行改变。
+
+在 Java 中，通常有两种创建字符串对象的方式， 一种是通过字符串常量的方式创建，如 String str=“abc”；
+这种方式首先会检查该对象是否在字符串常量池中，如果在，就返回该对象引用，否则新的字符串将在常量池中被创建。这种方式可以减少同一个值的字符串对象的重复创建，节约内存。
+
+另一种是字符串变量通过 new 形式的创建，如 String str = new String(“abc”)。
+这种方式，首先在编译类文件时，"abc"常量字符串将会放入到常量结构中，在类加载时，“abc"将会在常量池中创建；
+其次，在调用 new 时，JVM 命 令将会调用 String 的构造函数，同时引用常量池中的"abc” 字符串，在堆内存中创建一个 String 对象；
+最后，str 将引用 String 对象。
+如果调用 intern 方法，会去查看字符串常量池中是否有等于该对象的字符串的引用，如果没有会把首次遇到的字符串的引用添加到常量池中；如果有，就返回常量池中的字符串引用。（这个版本都是基于 JDK1.7 及以后版本）
+
+
+第五章 异常信息 Throwable
+01.异常信息 Throwable <-(Exception,Error)
+可分为 Error 与 Exception  异常，都可以捕获
+1）Error 是编译时错误和系统错误，系统错误在特殊情况下出现，不需要管，编译错误，编译期会提示。还有就是自己定义的一些错误。
+2）Exception 是可以被抛出的异常的基本类型，主要操作的就是这个类。
+可分为 RunTimeException 、IOException 和 其他 Exception
+
+02.Error 错误，编译时错误和系统错误
+01）OutOfMemoryError：堆内存溢出
+02）StackOverflowError：栈溢出
+03）NoClassDefFoundError：方法数量超标，伴随着InnerClasses
+04）AssertionError：使用断言符 assert 后，为 fasle 时，抛出的异常。
+05）AWTError
+06）VirualMachineError
+
+03.RunTimeException：运行时异常，只会在程序运行时出现。
+01）ClassCastException：类转换异常，类操作错误
+02）ArithmeticException：计算异常
+03）IllegalArgumentException：非法参数，超出限制，超出 65535 个方法数。
+<- NumberFormatException：数据转换异常
+04）IndexOutOfBoundsException：数组下标越界
+<- ArrayIndexOutOfBoundsException：数组下标越界
+05）NoSuchElementException：队列为空，没有元素可取出。
+<- InputMismatchException：队列为空，没有元素可取出。
+06）IllegalStateException：队列满了，不能再放入。
+07）NullPointerException：空指针异常
+08）UnsupportedOperationException：越界操作，越轨了。
+
+04.IOException：操作 IO 流时出现的问题。
+01）FileNotFoundException：文件找不到
+02）UnknownHostException：地址找不到
+03）MalformedJSONException：json解析异常
+04）MalformedURLException：URL解析异常
+05）EOFException
+
+05.其他 Exception
+01）ClassNotFoundException：类找不到
+02）SQLException：数据库异常
+03）CloneNotSupportException

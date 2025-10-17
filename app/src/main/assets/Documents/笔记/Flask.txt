@@ -1,0 +1,65 @@
+Flask 开发笔记
+
+1.__name__:代表当前app.py这个模块
+1）以后出现bug，可以帮助快速定位。
+2）对于寻找模块文件，有一个相对路径
+
+2.# 路由映射。根路由
+@app.route('/')
+
+3.基本配置
+1）debug模式：在pycharm 中设置
+开启debug模式后，不需要重启项目，保存后就会自动加载。
+开启debug模式后，浏览器上就会显示错误信息。
+2）修改host
+让其他电脑能访问我的电脑上的flask 项目
+--host=0.0.0.0  快速自动指代我自己电脑的ip地址，也可以去查询自己电脑的正确ip地址
+
+2）修改port
+--host=0.0.0.0 --port=8088
+
+4.url 的构成：协议/域名/端口/自定义地址
+https://www.baidu.com/path
+1）协议
+http://  自带端口 80
+https:// 自带端口 443
+2）域名：www.baidu.com
+
+5.URL 携带参数
+/path/<int:id> get请求，必带，通用的
+
+/path/<int:id>?page==1
+
+
+6.参数类型
+string
+int
+float
+path
+uuid
+any
+
+7.与视图的交互
+render_template(string,arg)：template里的视图名称，参数
+也可以传递对象，遵循传统调用规则
+
+8.过滤器,jinjia2自带的方法， 用 | 衔接，有30来个。
+1）abs
+2）default(value,default_value,boolean=True)
+3)escape(value)
+4）filesizeformat(value,binary=False)
+5）fist
+6）float
+7）format
+8）groupby
+
+9.自定义过滤器
+
+
+
+
+
+
+
+
+

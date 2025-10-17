@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<head>
+    <title>首页</title>
+    <script>
+        let flag1 = true
+        let flag2 = true
+
+        //让原生调用的方法1
+        function cat() {
+            document.getElementById('div1').innerHTML = flag1 ? "小肥咪" : "大肥咪"
+            flag1 = !flag1
+        }
+
+        //让原生调用的方法2
+        function sayHello() {
+            document.getElementById("div2").innerHTML = flag2 ? "喵喵喵喵叫" : "嗷嗷叫"
+            flag2 = !flag2
+            return "我是js方法的返回值"
+        }
+
+
+        function showPromptDialog() {
+            prompt("myscheme://myAddress?userName=张三&password=123456")
+        }
+    </script>
+
+    <style>
+        .body {
+            background-color: #c7edcc;
+            margin: 0;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-left: 6.0185vw;
+            margin-right: 6.0185vw;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .btnDiv {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body class="body">
+<div class="container">
+    <h1>我是WebView</h1>
+    <div id="div1">从前有只猫</div>
+    <div id="div2">奶牛猫好乖啊啊</div>
+    <div class="btnDiv">
+        <button class="btn" onclick="window.android.getNative1('张三')">addJavascriptInterafce</button>
+        <button class="btn" onclick="document.location = 'myscheme://myAddress?userName=张三&password=123456'">shouldOverrideUrlLoading</button>
+        <button class="btn" onclick="showPromptDialog()">onJsPrompt</button>
+    </div>
+</div>
+</body>
+
+</html>

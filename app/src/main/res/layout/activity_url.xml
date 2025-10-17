@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_toolbar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.sky.base.widget.MyRecyclerView
+            android:id="@id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/wh_16"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:srcCompat="@android:drawable/ic_dialog_dialer" />
+    <!--app:backgroundTint="@color/colorAccent"-->
+    <!--app:backgroundTintMode="screen"-->
+    <!--app:layout_anchor="@id/appbar"/>-->
+    <!--app:layout_anchorGravity="end|center|bottom"/>-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,17 @@
+
+第一节 AndroidStudio 相关插件
+1.ASM Bytecode Viewer Support Kotlin：字节码查看
+2.GsonFormat-Plus：Json格式化工具
+3.AndroidStudio内置的内存分析软件 Monitor
+
+4.禁止XML文件重排序：选择：File → Settings → Editor → Code Style → XML，
+右侧的面板上有一个设置按钮，选择 Restore Defaults 后重启 Android Studio 即可：
+
+第二节 常用的实用Jar包
+1.字节码插桩工具：
+org.ow2.asm:asm:7.1
+org.ow2.asm:asm-commons:7.1
+
+2.Androidx 的jar
+androidx.
+

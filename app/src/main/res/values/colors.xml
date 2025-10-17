@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/color_FFC107</color><!--标题栏颜色 -->
+    <color name="colorPrimaryDark">@color/color_FFC107</color><!--状态栏颜色 -->
+    <color name="colorAccent">@color/color_FF4081</color>
+
+    <color name="color_FFC107">#FFC107</color>
+    <color name="color_FF4081">#FF4081</color>
+
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="color_333333">#FF333333</color>
+    <color name="color_666666">#FF666666</color>
+    <color name="color_999999">#FF999999</color>
+    <color name="color_cccccc">#FFcccccc</color>
+    <color name="color_f5f5f5">#f5f5f5</color>
+    <color name="color_alpha">#ff000000</color>
+    <color name="color_CB03810F">#CC5ABF64</color>
+    <color name="color_CB038F">#CB03810F</color>
+    <color name="color_3599f4">#3599F4</color>
+    <color name="color_FFD000">#FFD000</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#F12B2A</color>
+    <color name="green">#00ae21</color>
+    <color name="yellow">#FFD000</color>
+    <color name="alpha_00">#00000000</color>
+    <color name="alpha_66">#66000000</color>
+    <color name="alpha_99">#99000000</color>
+
+    <color name="color_437DFF">#437DFF</color>
+    <color name="color_06CAFD">#06CAFD</color>
+    <color name="color_FFC512">#FFC512</color>
+    <color name="color_DFDFDF">#DFDFDF</color>
+    <color name="color_B4B4B4">#B4B4B4</color>
+
+    <color name="color_BFE12A">#BFE12A</color>
+    <color name="color_F86A55">#F86A55</color>
+    <color name="color_4C97EE">#4C97EE</color>
+    <color name="color_8B6AFF">#8B6AFF</color>
+    <color name="color_E2EBFF">#E2EBFF</color>
+    <color name="color_89a5b1">#89a5b1</color>
+
+
+
+</resources>

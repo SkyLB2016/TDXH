@@ -1,0 +1,1034 @@
+gradle教程
+http://www.groovy-lang.org/style-guide.html#_omitting_parentheses
+
+第一章 groovy 基础定义
+第二章 projects 与 tasks
+第三章 gradle 构建与命令
+第四章 gradle 依赖配置
+第五章 Android 的 gradle 配置
+第六章 gradle 文件，基于 Project 对象内的方法
+第七章 gradle.properties 属性配置
+第八章 gradle 调用 Ant
+第九章 gradle 注意事项
+
+第一章 groovy 基础定义
+groovy 下载地址：https://groovy.apache.org/download.html
+groovy 中基本数据类型都是以对象的形式存在。
+groovy 中所有的类型都是 public 的。
+所有的类都继承自 GroovyObject。
+trait 类似于 abstract，但继承使用 implements
+
+00.特性说明
+1）基于声明和约定的构建
+2）为以依赖为基础的编程方式提供语言支持
+3）构建结构化
+4）多种方式管理依赖
+5）是一个构建集成工具
+6）易于移植
+7）自由和开源：gradle是一个开源项目，并遵循ASL 许可
+
+01.变量与字符串
+1）强类型定义，对应的就是 Java 的数据类型
+int variable =1
+boolean variable =false
+
+2）弱类型定义，使用 def 修饰，必须有初始值，否则会抛 NullPointException 异常
+def 修饰的变量，变量的类型是可以随意转换的
+def variable =1
+def variable = true
+小数的类型是BigDecimal
+
+def 修饰，引用方法时有时会没有提示。
+
+3）字符串
+String variable ="字符串"
+def variable ="字符串"
+
+02.引号问题
+1）单引号中的内容遵循Java的 String，支持换行符，但不支持$符号转义，
+2）双引号在单引号的基础上支持$转义的表达式。
+3）三引号在单引号的基础上支持随意换行，支持 ' " 等特殊字符的直接显示。
+
+03.String 常用的 API
+def a = "hello"
+def b = "Hello"
+def c = "lo"
+println a>b
+println a[1..2]
+println a.minus(c)
+println a.reverse()//逆序
+println a.capitalize()//首字母大写
+println a.isEmpty()//是否有数字或字符
+
+04.函数定义 与 Java 函数类似，参数可以不指定类型
+void/def/String test(a,b){ }
+void/def/String test(int a,int b){ }
+
+1）void：无返回值
+2）def：可以返回任意类型，最后一行代码的结果就是返回值，与 kotlin 相似
+3）String：返回指定的类型。
+
+05.闭包的定义与使用
+匿名内联函数，称为闭包。
+本质上，闭包是将函数内部和函数外部连接起来的桥梁。
+闭包（closure）等同于 Java 的 Consumer，近似于 lambda 表达式
+格式是 ：
+def xxx= { paramters -> code }
+def xxx= { println it } 默认有一个参数
+def xxx= { -> println it } 无参数
+
+最后一行代码就是返回值。
+def closure = { String str, int value -> println "str=$str,value=$value" }
+def closure2 = { str, value -> println "str=$str,value=$value" }
+def closure3 = { println "str=$it" }
+
+调用方式
+1)closure("dsfdl", 3333)
+2)closure2.call("dsfdl", "shdkjf")
+
+无参数时，单独执行 closure3 输出的是这个变量。
+要执行必须加括号 closure3() 这样才会执行。
+
+06.闭包做为函数的参数时，必须上下文对应，不对应会报错。（简单是简单，但看起代码来很懵逼啊）
+闭包只作为最后一个参数出现；
+def testClosure(closure) {
+    closure()
+}
+
+def testClosure(a1, closure) {
+    closure("二个参数") //调用闭包
+}
+
+def testClosure(a1, b1, closure) {
+    closure(66) //调用闭包
+}
+
+1）只有一个闭包作为参数时，在调用函数的时候可以省略圆圈括号。如：
+testClosure {
+    println "closure 省略圆括号，默认参数是$it"
+}
+
+2）有多个参数时，闭包如作为最后一个参数，闭包的大括号可以在圆括号里，也可以在外边
+testClosure("test") {
+    println "closure 在外部，默认参数是$it"
+}
+testClosure(4, "test", {
+    println "closure 在内部，默认参数是$it"
+})
+testClosure("fff", "test", {
+    println "closure 在内部，默认参数是$it"
+})
+
+3）doLast { println "dolast" }
+等同于
+doLast( { println "dolast" } ）
+
+07.String 常用的闭包方法：
+1）each：遍历
+2）multiply()：复制
+3）find{}：查找第一个符合条件的字符
+4）findAll{}：返回所有符合条件的字符集合
+5）any{}：是否有符合条件的字符
+6）every{}：是否所有字符都符合条件
+7）collection{}：字符转集合
+8）count{}：统计符合条件的数量
+
+08.闭包的三个重要变量
+1）this：代表闭包定义的类，最外层的类。
+2）owner：代表闭包定义处的类或者对象。代表当前变量所处位置的类。
+3）delegate：代表任意对象，delegate 默认为 owner 指向的对象。可手动更改。
+
+09.容器类
+1）List：链表，底层对应Java的List接口，一般用ArrayList作为真正的实现类。
+def list = [1,2,3,4]
+获取 list[2]
+添加 list.add(6)
+ list<<6
+ list+6
+
+移除
+ list-6
+ list-[6,8]
+
+不会产生数组下标越界的错误。
+添加数据时，下标越界，值自动存入，数组长度自动变更到当前长度，中间越过的元素为空；
+获取数据时，下标越界，获得的值为 null，不会报错；
+
+2）Map：键值表，底层对应Java 的 LinkedHashMap
+def map=['key':'value','key2':true,key3:33,(key4):44]
+用[]定义map的时候 key 可以不用加单引号或者双引号；
+不加引号与自定义属性同名时，要是想用自定义属性的值，需要加括号；
+通过 [] 调用的时候需要加引号。
+获取值：
+map['key']
+map[key]
+map.key
+设置值：
+map['key'] = 77
+map.key = 99
+
+3）Range：范围，是对List的一种扩展，类似于 kotlin 的范围设定
+def range = 1..9
+def range1 = 1..<9 不含最后一个数
+获取数值时，不会产生数据下标越界的问题，值为 null。
+添加数据时，下标不可以越界。
+
+获取数值：
+range[1]
+range.from：起点
+range.to：终点
+range.step(2) 隔（2-1）个获取，类似于 kotlin
+range.contains(1)
+
+10.多个类都相同的方法名。
+1）each：遍历
+2）find{}：查找第一个符合条件的字符
+3）findAll{}：返回所有符合条件的字符集合
+4）any{}：是否有符合条件的字符
+5）every{}：是否所有字符都符合条件
+6）collection{}：字符转集合
+7）count{}：统计符合条件的数量
+8）groupBy{}： 分组
+
+11.JSON解析
+1）对象转字符串 JsonOutput
+toJson()
+prettyPrint("")//格式化
+2）字符串转对象
+new JsonSlurper().parse("".getBytes())
+
+12.XML
+1）读取XML文件
+def xmlSluper = new XmlSlurper()
+def result = xmlSluper.parseText(xml)
+println result.@package
+println result.test.text()
+
+//result.declareNamespace('android': 'http://schemas.android.com/apk/res/android')
+println result.application.@'android:name'
+println result.application.activity.@'android:name'
+println result.application.activity[0].@'android:name'
+
+result.application.activity.each{
+    println it.@'android:name'
+}
+2）生成XML文件
+def xmlOut = new StringWriter()
+def xmlBuilder = new MarkupBuilder(xmlOut)
+xmlBuilder.html(){
+    title(id:123,'name':'android','xml生成'){
+        person()
+    }
+    body('name':'java'){
+        activity(id: 001,class:'MainActivity','具体内容')
+        activity(id: '002',class:'Main2Activity','具体内容2')
+    }
+}
+println xmlOut
+
+13.File的方法
+1）def file = new File("$rootDir/build.gradle")
+file.eachLine { line ->
+    println line
+}
+println file.bytes
+println file.text
+println file.readLines()
+println file.readLines().toListString()
+
+println file.withReader {
+    def buffer = new char[100]
+    it.read(buffer)
+    buffer
+}
+file.withWriter {writer->writer.write("")}
+
+2）文件流
+def src = new File("$rootDir/build.gradle")
+def target = new File("$rootDir/build/复制文件.txt")
+if (!target.exists()) {
+    target.createNewFile()
+    println "创建文件"
+}
+target.withOutputStream { os ->
+    src.withInputStream { is ->
+        os << is //把数据从is 输出到 os 中。（真懵逼）
+    }
+}
+
+14.os << is：<<是重载符，把数据从is输出到os。（他妈的你倒是反过来啊）
+<< ：表示把右边的数据添加到左侧中。
+
+
+
+第二章 projects 与 tasks
+1）Groovy 兼容 Java 语法，最终还是会转成Java代码运行在JVM 上的；
+可以在 task 中调用 Groovy 或 Java 的方法来完成操作。
+
+2）description 参数project，model，task，都可以设置。
+
+3）方法执行时，可以省略圆括号，无参数不能省略圆括号（个人觉得纯属多余）
+println("abc")
+println "abc"
+
+01. task
+task clean(type:Delete)：相当于是 Delete 类的派生任务，其实就是内部任务衍生
+定义默认任务 defaultTasks 'a','hello','checkFile' 必须要加引号
+
+创建任务的方式：
+1)
+task hello{}
+task(hello){}
+task('hello'){}
+tasks.create(name:'hello'){}
+2)
+task copy(type:Copy)
+task(copy,type:Copy)
+tasks.create(name:copy,type:Copy)
+
+3)
+project.task("copyFile6")
+project.task("copyFile6",type:Copy)
+
+4)tasks.create("task6")
+
+02.任务中插入任务
+dofirst：队头插入，谁最后插入，谁就先执行。
+dolast：队尾插入，最后就是最后。
+
+调用方式
+1）：任务内直接使用
+task lastTest{
+doLast{ }
+doFirst{ }
+}
+2）：任务已存在，通过 . 调用
+lastTest.doLast{}
+lastTest.doFirst{}
+
+03.任务依赖 dependsOn
+a.dependsOn('b') {  任务a依赖b。
+    dolast{
+        println "依赖b的同时再次在队尾插入一个任务"
+    }
+}
+调用方式
+1）task count(dependsOn: upper) {}
+task count(dependsOn: [upper,task2]) {}
+2）task1.dependsOn(task2, task3)
+3）count.dependsOn('delay')
+4）任务内使用 depensOn task1
+
+任务顺序按代码顺序;
+依赖任务在前面已经声明，可以不带引号；
+在之后才声明，需要带引号；
+动态任务遵循此规则。
+
+04.动态任务：times；遵循代码顺序的引用规则。
+4.times { count ->
+    task "task$count" {//创建任务
+        doLast {
+            println "动态任务$count"
+        }
+    }
+}
+
+05.任务内自定义属性，只在任务内使用，直接使用 def/String 定义。
+1）需要在其他任务内使用，用 ext.custom  定义。
+2）gradle.properties 与 build.gradle的ext 内定义的属性可以直接使用，gradle.properties的优先级高。
+3）不能在 doLast 和 doFirst 中定义，外部任务默认会加载，doLast 与 doFirst 中是执行此任务后才会加载。
+
+06.任务依赖，动态修改 version ,status 等字段的属性。只适用于当前gradle文件
+//所有任务的不同输出，每次执行任务都会执行以下方法
+gradle.taskGraph.whenReady {
+    taskGraph ->
+        if (taskGraph.hasTask(b)) {
+            version = "动态更改字段属性【version】"
+            status = "动态更改字段属性【status】"
+        } else {
+            version = "动态更改字段属性【version】任务名称==${taskGraph.allTasks[0]}"
+            status = "动态更改字段属性【status】任务名称==${taskGraph.allTasks[0]}"
+        }
+        println "version==$version"
+        println "status==$status"
+}
+
+07.任务排序
+task1.mustRunArter(task2)：task1必须在 task2 后执行
+task1.shouldRunArter(task2)：task1 应该在 task2 后执行。
+
+1）一起执行时才会有效果，单独执行时没限制。
+2）一起执行时，如果有 --continue 命令，task2执行失败，task1 也会执行。
+3）依赖形成循环后，同样会失效
+
+08.任务跳过：
+1）onlyIf{}：为真时任务才会继续执行。
+   task1.onlyIf{ true }：为 true 才会执行任务 task1
+2）抛出异常 StopExecutionException，多任务依赖时，可用到。
+抛出此异常后，此任务会中断，继续执行下一个任务
+
+09.任务覆盖：overwrite:true：重写现有的任务
+task clean(overwrite:true)：clean任务会被覆盖，貌似已被废弃。
+
+10.enable：任务的启用与禁用
+task1.enable = false/true 禁用/启用
+
+11.任务是否改变
+inputs.file srcFile：源文件
+outputs.dir destDir：目标目录
+第一次执行时：1 actionable task: 1 executed
+第二次文件未变，执行后：1 actionable task: 1 up-to-date
+
+任务inputs 属性时TaskInputs类型，任务 outPuts 属性时 TaskOutputs 类型。
+如何实现：
+在第一次执行任务之前，Gradle 对输入进行一次快照。这个快照包含了输入文件集和每个文件的内容的哈希值。然后 Gradle 执行该任务。如果任务成功完成，Gradle 将对输出进行一次快照。该快照包含输出文件集和每个文件的内容的哈希值。Gradle 会保存这两个快照，直到任务的下一次执行。
+之后每一次，在执行任务之前，Gradle 会对输入和输出进行一次新的快照。如果新的快照和前一次的快照一样，Gradle 会假定这些输出是最新状态的并跳过该任务。如果它们不一则， Gradle 则会执行该任务。Gradle 会保存这两个快照，直到任务的下一次执行。
+
+12.定义特定名称规则的任务
+tasks.addRule('pattern:ping<ID>') { taskName ->
+    if (taskName.startsWith("ping")) {
+        task(taskName) {
+            println "pinging:" + taskName
+            println "pinging:" + (taskName - 'ping')
+        }
+    }
+}
+部分同名任务的联动依赖
+task groupPing {
+    dependsOn pingServer1, pingServer2
+}
+
+13.析构器任务 finalizedBy ，更应该解释为把某任务加在此任务之后执行，即使失败也执行。
+task1.finalizeBy task2：无论 task1 是否执行成功，task2都会执行。
+
+14.外部脚本配置
+task outGradleConfigure {
+    doLast {
+        def pos = configure(new java.text.FieldPosition(10)){
+            beginIndex=8
+            endIndex=19
+        }
+        // Apply the script
+//        apply from: 'other.gradle', to: pos
+        println pos.beginIndex
+        println pos.endIndex
+    }
+}
+文件 other.gradle 配置
+beginIndex=8
+endIndex=19
+
+15.Project 类常用的属性
+01）属性：project.name ：String 	项目的名称。
+02）属性：project.path ：String 	项目内引用项目的写法
+03）属性：project.description ：String 	项目的描述。
+04）属性：project.rootDir ：File 	整个项目的根目录。
+05）属性：project.projectDir ：File 	自己的根目录。
+06）属性：project.buildDir ：File 	自己的缓存目录
+07）属性：project.buildFile ：自己的 gradle 配置文件
+08）属性：project.parent ：父级项目
+09）属性：project.group ：Object 	所属 group 划分
+10）属性：project.version ：Object 	可动态指定
+11）属性：project.status ：Object 	可动态指定
+
+16.Gradle 类常用的属性
+01）属性：gradle.gradleVersion ： 版本号
+02）属性：gradle.gradleHomeDir ： 当前使用版本 gradle 的具体路径
+03）属性：gradle.gradleUserHomeDir ： gradle仓库的路径
+04）属性：gradle.rootProject ： 根项目
+05）属性：gradle.parent ：
+06）属性：gradle.gradle ：
+
+
+第三章 gradle 构建与命令
+任务名可简化，可以写一半，可驼峰缩写执行；同时执行两个任务，空格隔开
+
+01.gradle init：构建项目，AS工具创建项目，本质上执行的就是这条命令。
+
+02.gradle -q a b c：执行任务a，b，c，输出内容
+    -q,-quiet：只输出需要的内容；可前可后
+
+03.gradle -q a b c -x b 执行时排除b，
+    -x：排除任务；多用于多任务联动时，排除指定任务，但此任务的依赖会照常执行。
+
+04.gradle -v：查询版本号
+
+05.gradle clean：删除 build 目录以及所有构建完成的文件
+
+06.gradle check 编译并测试代码。一些其他插件也可能会增强这个任务的功能。例如，如果采用了 Code-quality 插件，这个任务会额外执行 Checkstyle。
+
+07.gradle build 编译并打包jar文件，但不会执行单元测试。一些其他插件可能会增强这个任务的功能。例如，如果采用了War插件，这个任务便会为你的项目打出War包。
+
+08.打包命令 assemble
+gradle assemble：编译并打Debug和Release包
+gradle assembleDebug：编译并把本项目下所有模块所有渠道的Debug版本打包
+gradle assembleRelease 编译并把本项目下所有模块所有渠道的Release版本打包
+gradle assemble渠道名：生成渠道名的Debug和Release版本
+gradle assemble渠道名Release：渠道release版本
+gradle assemble渠道名Release -p app：打包app工程下渠道名的release版本（-p 决定执行哪个）
+gradle installRelease：打包Release版本并安装
+gradle uninstallRelease：卸载Release版本包
+
+09.-i,--info：在默认设置中，Gradle构建不会提供大量的输出信息。通过这个选项可以将Gradle的日志级别改变到INFO以获得更多信息。如果你想要知道构建中发生了什么，这个选项非常有用。
+
+10.-s,--stacktrace：如果构建在运行中出现错误，你会想要知道错误是从哪里开始的。-s选项在有异常抛出时会打印出简短的堆栈跟踪信息，帮助你进行调度。
+
+11.其他命令
+gradle projects 显示所有 module ，以及说明（设置了 description 才显示）
+gradle tasks (--all) 显示所有可执行的任务
+gradle tasks|less 分页显示可执行的任务信息
+gradle model 显示定义的所有任务
+gradle app:properties|less 显示app的所有属性，并分页
+gradle androidDependencies 查看所有的依赖包
+gradle app:Dependencies 查看app的依赖关系
+
+12.命令行增加属性
+gradle -q -P commandLineProjectProp=P添加的属性 -D org.gradle.project.systemProjectProp=D动态定义系统属性 printPropers
+-P：增加新的属性；key=value 的形式。
+-D：增加新的系统属性，需要指定系统位置：写法：org.gradle.project. key=value
+
+参考任务 printPropers
+gradle.properties 内定义的属性：
+
+gradlePropertiesProp=自定义的属性
+systemProjectProp=通过命令 -D 修改属性
+envProjectProp=未通过 systemPro.xx 添加的属性，不能通过 System.properties 获取
+systemProp.system=通过 systemPro.xx 添加的属性会被添加到系统属性里，且只有根目录的 gradle.properties 可以，项目内的 gradle.properties 不可以，可以通过sSyetem.properties['key']获取
+
+13.其他
+1）--continue：有错误也会继续执行。
+2）--recompile-scripts ：抛弃已有的 .gradle 缓存，重新构建
+3)-b：指定构建文件的路径（单个文件）;现在已经不能指定，需要与 setting.gradle 关联
+gradle -q -b app/build.gradle projectInfo
+-p：指定构建目录的路径（目录中有多个构建文件时），
+4）添加系统属性（没成功）
+systemProperties 'property': '添加系统属性'
+
+
+
+第四章 gradle 依赖配置
+subprojects {}
+allprojects {}//model 的 dependencies 使用
+android{}//对应的是 APPExtension 插件
+配置本地服务器缓存仓库
+nexus
+artifactory
+01.ext {//在此设置需要的参数,也可以放在buildscript中
+    KOLINT_VERSION = '1.5.21'
+}
+ext.STOREFILE = 'sky.jks'
+ext.STOREPASSWORD = '1qaz2wsx'
+
+02.buildscript {//构建项目使用。android{}中的配置使用
+01）配置项目的基础仓库
+repositories {
+    google()
+    mavenCentral()//maven中央仓库
+    //阿里云的 maven 地址
+    //isAllowInsecureProtocol=true //gradle会默认禁用非官方的仓库，如需使用，需要先声明。
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    //阿里云的 maven 地址
+
+    //maven{ url uri("地址")} //自定义的本地仓库
+}
+02）基于整个项目的环境配置
+dependencies {
+    classpath 'com.android.tools.build:gradle:7.0.3'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+    //classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'//resguard 加密打包工具
+}
+03）其他参数配置
+configurations {//全局排除指定模块
+    all*.exclude group: 'com.google.code.gson', module: 'gson'
+}
+
+configurations.all {//全局排除指定模块
+      exclude group: 'com.google.code.gson', module: 'gson'
+  }
+}
+
+03.task clean(type: Delete) {//Delete类的派生任务
+    delete rootProject.buildDir
+}
+description = "项目的根目录"
+
+04.发布到maven 仓库
+apply plugin: 'maven-publish'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://localhost/tmp/myRepo/")
+            repository(url:"本地或远程地址")
+        }
+    }
+}
+uploadArchives {
+    repositories {
+        ivy {
+            credentials {
+                username "username"
+                password "pw"
+            }
+            url "http://repo.mycompany.com"
+        }
+    }
+}
+
+
+
+第五章 Android 的 gradle 配置
+01.plugins 模块划分
+1）id 'com.android.application'：主模块
+2）id 'com.android.library'：jar包模块
+3）id 'kotlin-android' ：Android版本kotlin支持
+4）id 'kotlin-android-extensions' ：kotlin view 注入模块
+id 'kotlin-parcelize'
+5）id 'java-library'：Java的lib模式
+6）id 'kotlin'：Java模式的kotlin
+6）id 'maven-public'： 发布到maven仓库
+id 'maven' 新版已经废弃
+
+02.引入其他gradle配置文件
+apply from: "$rootDir/common.gradle"
+
+02.dependencies 具体依赖的jar 配置，遵循 group:name:version
+implementation group: 'androidx.core', name: 'core-ktx', version: '1.3.2'
+
+1）implementation：访问隔离，只在此module中依赖，编译期，每个module使用自己独有的jar，但打包时，会把每个 module 重复的jar 选取最新版本打包到apk中。
+可以指定单独的依赖环境
+debugImplementation：只在 debug 模式下使用
+testImplementation：只在 test模式下使用
+releaseImplementation：只在 release 模式下使用
+2）api：依赖可继承，相当于原来的compile
+debugApi：只在 debug 模式下使用
+testApi：只在 test模式下使用
+releaseApi：只在 release 模式下使用
+3）compileOnly：编译期使用，不打包到apk中。
+4）runtimeOnly：不参与编译，打包到apk中。
+
+03.exclude ：排除指定模块，
+格式：exclude gropu:'group',module:'name'
+1）引入时排除
+implementation('com.squareup.retrofit2:converter-gson:3.14.7'){
+exclude group:'com.google.code.gson',module:'gson'
+}
+2）全局屏蔽
+configurations.all {
+exclude group:'com.google.code.gson',module:'gson'
+}
+或
+configurations{
+all*.exclude group:'com.google.code.gson',module:'gson'
+}
+
+03.dependencies 设置依赖的jar
+01）引用 libs 文件夹里所有的 jar包与 aar包
+implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+02）引用指定的jar
+implementation files("path/xx.jar","path/xx.jar")
+03）引用指定的aar
+implementation (name:'apiutils',ext:'aar')
+04）exclude 除去此 jar 内部引用的 jar
+implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION") {
+  ） exclude group: 'com.google.code.gson', module: 'gson'
+}）
+05）引用项目内的 jar 模块
+implementation project(':common')
+06）引用远程仓库内的 jar，遵循 group:artifactId:version
+androidx.core:core-ktx:1.3.2
+androidx.appcompat:appcompat:1.2.0
+com.google.android.material:material:1.3.0
+
+org.greenrobot:eventbus:3.2.0
+com.google.code.gson:gson:2.8.7
+
+    //navigation 工具jar
+androidx.navigation:navigation-fragment-ktx:2.1.0
+androidx.navigation:navigation-ui-ktx:2.1.0
+    //navigation 工具jar
+
+    //refresh 工具jar
+com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7
+com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
+androidx.swiperefreshlayout:swiperefreshlayout:1.0.0
+    //refresh 工具jar
+
+04.获取自定义文件中的属性
+def key = new Properties()// key:value 的形式
+1）已关联的 xx.properties 中的参数 以及 xx.gradle 的 ext 中的参数，只要不与默认参数重名，可以直接使用。也可以通过文件调用。
+gradle.properties 内的属性优先级高与build.gradle
+def keyPass = rootProject.file("gradle.properties")
+key.load(new FileInputStream(keyPass))
+
+2）自定义文件中的参数必须载入才能获取
+def textkey = rootProject.file("text.txt")
+key.load(new FileInputStream(textkey))
+
+05.compileSdk targetSdk minSdk 的区别
+compileSdk 代表着编译的时候，会采用该api的规范进行代码检查和警告，但是并不会编译进apk中。
+targetSdk 代表着目标版本，在编译的时候会将该版本的api编译进apk中。
+minSdk 代表着最低版本，在编译的时候兼容到该参数指定最低版本api。
+
+minSDK xx --  targetSDK xx：兼容从xx到xx之间所有api的变化；
+三者关系：minsdk <= TargetSdk <= compileSdk;
+理想关系：minsdk <= TargetSdk == compileSdk，目标与依赖相同
+
+06.defaultConfig 参数的意思
+1）applicationId "com.sky.xs"
+2）minSdk 21           //适配的最低版本
+3）targetSdk 31        //目标版本，打包时的最高版本
+4）versionCode 1       //版本号
+5）versionName "1.0"   //版本名
+6）multiDexEnabled true//添加分包支持，突破65535的限制
+7）vectorDrawables.useSupportLibrary = true //库支持矢量图
+8）flavorDimensions "sky" //渠道号
+9）manifestPlaceholders = [CHANNEL_VALUE: "umeng"]//默认是umeng的渠道
+10）ndk {
+    //添加对应cpu类型的.so库。
+    abiFilters 'armeabi-v7a', 'armeabi-v8a', 'armeabi', 'x86'
+}
+
+07.signingConfigs 签名文件配置
+storeFile file("$rootDir/${STOREFILE}")
+storePassword STOREPASSWORD
+keyAlias KEYALIAS
+keyPassword KEYPASSWORD
+
+08.buildTypes 打包方式配置
+minifyEnabled true//开启系统混淆
+zipAlignEnabled true //Zipalign优化
+versionNameSuffix "-release"
+signingConfig signingConfigs.release
+shrinkResources true// 移除无用的resource文件
+proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+createName()：自定义方法
+
+09.MVVM模式配置
+buildFeatures {
+    dataBinding = true
+    viewBinding true
+}
+
+dataBinding 可以自定义 binding 的类名，viewBinding 不行。
+dataBinding 可以将View 和界面上的数据进行双向绑定，viewBinding 不行。
+
+
+10.设置对应的Java版本
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+11.kotlin的Java版本配置
+kotlinOptions {
+    jvmTarget = '11'
+}
+
+12.通道配置，应用市场或者主地址配置
+//    flavorDimensions "sky"
+    productFlavors {
+        sky {//搭配下方的 productFlavors.all 使用
+            dimension "sky"
+        }
+//        baidu{
+//            manifestPlaceholders = [CHANNEL_VALUE: baidu]
+//        }
+        te {
+            buildConfigField 'String', 'API_URL', '"https://xxx/"'
+            buildConfigField 'String', 'APK_SUFFIX', '"SKYP"'
+        }
+    }
+    productFlavors.all { flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name] }
+
+13.sourceSets 源码路径（资源目录）设置，通常都是老项目转AS才会用到
+1）manifest.srcFile：manifest文件路径
+src/main/AndroidManifest.xml
+2）java.srcDirs：Java文件路径
+src/main/java
+3）res.srcDirs：android资源文件路径
+src/main/res
+4）assets.srcDirs
+src/main/assets
+5）jniLibs.srcDirs
+src/main/jniLibs
+
+6）src/test/java ：测试资源文件
+7）resources.srcDirs：java 资源文件路径
+src/main/resources
+8）aidl.srcDirs：aidl的路径
+src/main/aidl
+9）renderscript.srcDirs
+src/main/rs
+10）androidTest.setRoot('tests')
+11）debug.setRoot('build-types/debug')
+12）release.setRoot('build-types/release')
+
+14.执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+lintOptions {
+    abortOnError false
+    checkReleaseBuilds false
+    // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+    disable 'MissingTranslation'
+}
+15.声明配置，没用过
+packagingOptions {
+    exclude 'META-INF/NOTICE.txt' // will not include NOTICE file
+    exclude 'META-INF/LICENSE.txt' // will not include LICENSE file
+}
+
+def createName() {
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name == "debug")
+                outputFileName = "${variant.baseName}-${variant.versionName}.apk"
+            else
+                outputFileName = "${variant.baseName}-${variant.versionName}-${buildTime()}.apk"
+        }
+    }
+}
+
+
+
+第六章 gradle 文件，基于 Project 对象内的方法
+01.file(obj)方法：可以接收任何对象，通常都会是 String 或 file对象，会转换为一个绝对路径的 File 对象。
+可以识别URL：file:/xxx/xxx.txt
+
+02.文件集合：files(obj...)：FileCollection 接口，表示文件的集合
+FileCollection collection = files('src/file1.txt', new File('src/file2.txt'), ['src/file3.txt', 'src/file4.txt'])
+
+1）一个文件集合是可迭代的，并且可以使用 as 操作符转换为其他类型的对象集合。您还可以使用+运算符把两个文件集合相加，或使用-运算符减去一个文件集合。这里是一些使用文件集合的例子。
+collection.each {File file ->
+    println file.name
+}
+2）implementation files("xx/xx.jar","xx/xx.jar")//files()方法的使用
+
+
+2）def collection = files { srcDir.listFiles() }
+相当于 Java 成员变量，闭包是方法，只有在成员变量调用这个方法时，才会执行。
+
+03.文件树🌲：fileTree(dir)：FileTree 接口，继承自 FileCollection
+文件数可以表示一个目录树 或 ZIP 文件的内容。
+gradle 中几个对象都实现了 FileTree 接口，如 sourceSets
+
+04.压缩文件的文件树：zipTree(),tarTree(),同样会返回一个 FileTree
+zip,tar,jar,war,ear,aar
+
+1）FileTree zip = zipTree('someFile.zip')
+2）FileTree tar = tarTree('someFile.tar')
+3）FileTree someTar = tarTree(resources.gzip('someTar.ext'))
+
+05.指定一组输入文件，可以用file(),files(),fileTree(),zipTree(),tarTree();
+
+06.文件复制 Copy ，继承自 CopySpec 接口，Project 类也自带 copy 方法。
+01）from 源文件，同文件类方法一样，接收任何参数，可以是文件，可以是目录，可以是个任务
+02）into 接收目录，
+03）include 包含哪些文件
+04）exclude 排除哪些文件
+05）rename(新名字,旧名字) 重命名
+
+07.Sync 同步，继承自Copy
+08.Zip 压缩，继承自 Copy
+打包后的zip 文件在 build/distributions 下，名称是 项目名.zip(project.name.zip)内部是目录结构
+01）from 需要压缩的源文件，
+02）into 压缩后的目标目录，
+
+03）archiveBaseName：基本名称，不设置，名称就是 project.name.zip
+baseName 已弃用，
+04）archiveAppendix：后缀
+05）archiveVersion：版本，不设置就是 project.version
+06）archiveClassifier：又一个后缀
+07）archiveExtension：扩展名称
+
+08）distsDirName：文件路径，依赖于归档类型。JAR包和 WAR包会生成到 project.buildDir/libraries中。ZIP文件和 TAR文件会生成到project.buildDir/distributions中。
+自定义的路径也是在 buildDir 文件夹之下
+09）archiveFileName：文件的绝对路径以及名称，优先级最高
+10）archiveFile：不知道
+
+第七章 gradle.properties 属性配置
+01.org.gradle.daemon
+当设置为 true 时，Gradle 守护进程会运行构建。对于本地开发者的构建而言，这是我们最喜欢的属性。开发人员的环境在速度和反馈上会优化，所以我们几乎总是使用守护进程运行 Gradle 作业。由于 CI 环境在一致性和可靠性上的优化，我们不通过守护进程运行 CI 构建（即长时间运行进程）。
+
+02.org.gradle.java.home 为 Gradle 构建进程指定 java home 目录。
+这个值可以设置为 jdk 或 jre 的位置，不过，根据你的构建所做的，选择 jdk 会更安全。如果该设置未指定，将使用合理的默认值。
+#org.gradle.java.home=/Applications/Android Studio.app/Contents/jre/Contents/Home
+#org.gradle.java.home=/Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home
+
+03.org.gradle.jvmargs 指定用于该守护进程的 jvmargs。该设置对调整内存设置特别有用。目前的内存上的默认设置很大方。
+org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+
+04.org.gradle.configureondemand
+启用新的孵化模式，可以在配置项目时使得 Gradle 具有选择性。只适用于相关的项目被配置为在大型多项目中更快地构建。
+
+05.org.gradle.parallel
+如果配置了这一个，Gradle 将在孵化的并行模式下运行。
+
+06.通过 systemProp.https 配置 HTTPS 代理服务器
+systemProp.https.proxyHost=www.somehost.org
+systemProp.https.proxyPort=8080
+systemProp.https.proxyUser=userid
+systemProp.https.proxyPassword=password
+systemProp.https.nonProxyHosts=*.nonproxyrepos.com|localhost
+#通过 systemProp.https 配置 HTTPS 代理服务器
+NTLM 身份验证
+#如果您的代理服务器需要 NTLM 身份验证，您可能需要提供验证域，以及用户名和密码。有两种方法可以向 NTLM 代理提供验证域：
+#
+#将 http.proxyUser 系统属性设置为一个这样的值：域/用户名。
+#通过 http.auth.ntlm.domain 系统属性提供验证域。
+
+07.android.useAndroidX=true
+#Android 插件会使用对应的 AndroidX 库而非支持库。
+
+08.android.enableJetifier=true
+Android 插件会通过重写现有第三方库的二进制文件，自动将这些库迁移为使用 AndroidX。
+注意 enableJetifier 标志可能会导致构建时间变长，除非有必要，否则不应使用它们。
+如果您的项目已有 enableJetifier 标志且已开启，您可以运行 Build Analyzer 的 Jetifier 检查，确认是否确实需要该功能。Build Analyzer 检查从 Android Studio Chipmunk 开始提供。
+
+
+第八章 gradle 调用 Ant
+build.xml 文件
+<project>
+    <!--    1.测试实例，以及依赖实例-->
+    <target name="antHello1" depends="antHello3">
+        <echo>antHello1 依赖于 antHello3</echo>
+    </target>
+    <!--    2.gradle 中设置属性值，ant 中通过任务依赖获取属性值-->
+    <target name="antHello4" depends="printAnt">
+        <echo>customDir = ${customDir}</echo>
+    </target>
+    <!--    3.自定义属性，在 gradle 获取-->
+    <property name="antProp" value="a property defined in an Ant build" />
+
+    <!--    4.Ant中设置引用ID，在 gradle 设置具体参数 -->
+    <path refid="classpath" />
+    <!--    5.设置引用，在 gradle  中获取-->
+    <path id="antPath" location="libs" />
+
+</project>
+ant.importBuild 'ant/build.xml'
+
+01.调用ant
+task antHello {
+    doLast {
+        def greeting = "hello from Ant"
+        ant.echo(message: greeting)
+    }
+}
+02.gradle 任务依赖于 ant 任务
+task antHello2(dependsOn: antHello1) {
+    doLast {
+        println "antHello2 依赖 antHello1 "
+    }
+}
+03.ant中任务依赖于 gradle 中的任务
+task antHello3 {
+    doLast {
+        println "antHello3 被 antHello1 依赖"
+    }
+}
+
+04.gradle 中设置自定义属性, ant 通过任务依赖获取属性。
+task printAnt {
+    doLast {
+//        设置自定义属性的方式
+        ant.customDir = buildDir
+        ant.properties.customDir = buildDir
+        ant.properties['customDir'] = buildDir
+        ant.property(name: 'customDir', location: buildDir)
+        println ant.customDir
+        println ant.properties.customDir
+        println ant.properties['customDir']
+    }
+}
+
+05.gradle 获取 ant 中的自定义属性
+task printAnt2 {
+    doLast {
+        println ant.antProp
+        println ant.properties.antProp
+        println ant.properties['antProp']
+    }
+}
+
+06.ant 设置自定义引用名，gradle 设置具体参数
+task printAnt3 {
+    doLast {
+//        设置自定义引用的方式
+        ant.path(id: 'classpath', location: 'libs')
+        ant.references.classpath = ant.path(location: 'libs')
+        ant.references['classpath'] = ant.path(location: 'libs')
+        println ant.references.classpath
+        println ant.references['classpath']
+    }
+}
+
+07.gradle 获取 ant 中的引用
+task printAnt4 {
+    doLast {
+        println ant.references.antPath
+        println ant.references['antPath']
+    }
+}
+
+08.可以利用 AntBuilder 执行 and.loadfile
+
+
+
+第九章 gradle 注意事项
+01.java运行失败在.idea/gradle 的GradleProjectSettings下加入
+<option name="delegatedBuild" value="false" />
+
+02.gradle 是系统环境变量里配置的gradle
+./gradlew 是项目自身配置的gradle
+如果版本一样就没有区别。
+
+03.gradlew 错误
+zsh: permission denied: ./gradlew
+运行 chmod +x gradlew
+
+04.MAC 下删除Android开发缓存
+1）AndroidStudio所在目录：rm -rf /Applications/Android\ Studio.app
+SDK所在目录：rm -rf ~/Library/Android/sdk
+或者也可以这么写：rm -rf ~/Library/Android*
+
+2）AndroidStudio的缓存，~是根目录：/Users/sky
+rm -rf ~/Library/Application\ Support/Google/AndroidStudio*
+rm -rf ~/Library/Caches/Google/AndroidStudio*
+rm -rf ~/Library/Logs/Google/AndroidStudio*
+rm -rf ~/Library/Preferences/com.google.android.studio.plist
+rm -rf ~/Library/Preferences/AndroidStudio*（无）
+
+3）删除gradle关联文件 (caches & wrapper)
+rm -rf ~/.gradle
+
+4）删除模拟器
+rm -rf ~/.android
+
+第十章：一些文件的配置属性
+01.gradle-wrapper.properties 文件里的属性配置
+distributionBase：下载的Gradle压缩包解压后存储的主目录
+distributionPath：相对于distributionBase的解压缩后的Gradle压缩包的路径
+zipStoreBase：同distributionBase，只不过是存放zip压缩包的
+zipStorePath：同distributionPath，只不过是存放zip压缩包的
+distributionUrl：Gradle发行版压缩包的下载地址
+
+02.buildscript 中的 repositories 和 allprojects 的 repositories 的作用和区别是什么呢？
+1）buildscript 里是gradle脚本执行所需依赖，分别是对应的 maven 库和插件
+2）allprojects 里是项目本身需要的依赖，比如我现在要依赖我自己maven库的toastutils库，那么我应该将maven {url 'https://dl.bintray.com/calvinning/maven'}写在这里，而不是buildscript中，不然找不到。
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "My"
+include ':app'

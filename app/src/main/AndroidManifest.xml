@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--    获取deviceId-->
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.SKY.NoActionBar">
+        <!--        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">-->
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ArticleActivity" />
+        <activity
+            android:name="com.sky.oa.activity.MethodTestActivity"
+            android:description="@string/act_method_d"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_method">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SolarActivity"
+            android:description="@string/act_solar_d"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_solar">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SlidingActivity"
+            android:description="@string/act_poetry_d"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_poetry">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ImageUrlActivity"
+            android:description="@string/act_bit_d"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_bitmapurl">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.PhotoActivity"
+            android:description="@string/act_uri_d"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_bit_uri">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.CanvasActivity"
+            android:description="@string/act_canvas_d"
+            android:exported="true"
+            android:hardwareAccelerated="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_canvas">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.NinthPalaceActivity"
+            android:description="@string/act_ninth"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_ninth">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+                <category android:name="android.intent.category.CAR_MODE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.FragmentTestActivity"
+            android:description="@string/act_fragment"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_fragment">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+                <category android:name="android.intent.category.CAR_MODE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.WebActivity"
+            android:description="@string/act_web"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_web">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MipmapActivity"
+            android:description="@string/act_drawable"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/act_drawable">
+            <intent-filter>
+                <action android:name="com.sky.oa" />
+            </intent-filter>
+        </activity>
+        <!--        <activity android:name="com.sky.oa.activity.PhotoActivity" />-->
+
+
+    </application>
+
+</manifest>

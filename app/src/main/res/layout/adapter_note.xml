@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvDisplay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:letterSpacing="0.1"
+    android:lineSpacingMultiplier="1.4"
+    android:paddingLeft="@dimen/wh_16"
+    android:paddingRight="@dimen/wh_16"
+    android:textIsSelectable="true"
+    android:textSize="@dimen/text_16" />

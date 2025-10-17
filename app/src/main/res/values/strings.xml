@@ -1,0 +1,123 @@
+<resources>
+    <string name="app_name">天地玄黄</string>
+
+    <string name="nav_home">示例</string>
+    <string name="nav_notes">笔记</string>
+    <string name="nav_article">文章</string>
+    <string name="nav_my">我的</string>
+
+    <!--icomoon字体应用-->
+    <string name="font">&#xe900;</string>
+    <string name="font01">&#xe906;</string>
+    <string name="font02">&#xe907;</string>
+    <string name="font03">&#xe90b;</string>
+    <string name="font04">&#xe91c;</string>
+    <string name="font05">&#xe91d;</string>
+    <string name="font06">&#xe97f;</string>
+    <string name="font07">&#xe982;</string>
+    <string name="font08">&#xe983;</string>
+
+    <string name="ibu"><i><b><u>下划线加粗斜体</u></b></i></string>
+
+    <!--卫星菜单选择-->
+    <string name="left_top">左上</string>
+    <string name="left_bottom">左下</string>
+    <string name="right_top">右上</string>
+    <string name="right_bottom">右下</string>
+    <string name="center_top">中上</string>
+    <string name="center_bottom">中下</string>
+    <string name="center">正中</string>
+    <string name="center_left">中左</string>
+    <string name="center_right">中右</string>
+    <!--卫星菜单选择-->
+
+    <!--json数据测试-->
+    <string name="jsonobj">{
+        "className":"天",
+        "componentName":"地",
+        "img":1,
+        "describe":"玄黄",
+        "objList":[
+        {"className":"人", "componentName":"之", "img":1, "describe":"初"},
+        {"className":"性", "componentName":"本", "img":2, "describe":"善"},
+        {"className":"性", "componentName":"相", "img":2, "describe":"近"},
+        {"className":"习", "componentName":"相", "img":3, "describe":"远"}
+        ]
+        }
+    </string>
+    <string name="jsonobject">{
+        "className":"天",
+        "componentName":"地",
+        "img":1,
+        "describe":"玄黄",
+        "version":4.4
+        }
+    </string>
+    <string name="jsonlist">{ "objList":[
+        {"className":"人", "componentName":"之", "img":1, "describe":"初"},
+        {"className":"性", "componentName":"本", "img":2, "describe":"善"},
+        {"className":"性", "componentName":"相", "img":2, "describe":"近"},
+        {"className":"习", "componentName":"相", "img":3, "describe":"远"}
+        ]}
+    </string>
+    <string name="jsonlistnull">{ "objList":[
+        {"className":null, "componentName":"之", "img":null, "describe":"初","version":3},
+        {"className":"性", "componentName":"本", "img":2, "describe":"善","version":6.6},
+        {"className":"性", "componentName":"本", "img":2, "describe":"善","version":6.6}
+        ]}
+    </string>
+    <string name="jsonarray"> [
+        {"className":"人", "componentName":"之", "img":1, "describe":"初","version":3},
+        {"className":"性", "componentName":"本", "img":2, "describe":"善","version":3.3},
+        {"className":"性", "componentName":"相", "img":2, "describe":"近","version":3.5},
+        {"className":"习", "componentName":"相", "img":3, "describe":"远","version":5.3}
+        ]
+    </string>
+    <!--json数据测试-->
+
+    <string name="format01">1.整数替换：%d ；%n</string>
+    <string name="format02">2.字符替换：%s ；%n</string>
+    <string name="format03">3.浮点数替换：%f ；%n</string>
+    <string name="format04">4.浮点数替换，保留两位：%.2f ；%n</string>
+    <string name="format05">5.组合替换：字符：%s；数字：%d：%n</string>
+    <string name="format06">6.指定替换顺序：数字：%2$d；字符：%1$s ；小数：%3$.2f ；\n</string>
+    <string name="format07">7.转成四位数：%04d：%n</string>
+    <string name="format08">8.转成三位数：%03d：%n</string>
+    <string name="format09">9.科学计数法：整数：%,d；浮点数：%,.2f：%n</string>
+    <string name="format016">转换的类型需要一一对应，否则会报转换异常； \n
+    %d：替换整数； \n
+    %s：替换字符； \n
+    %f：替换浮点数，默认后6位； \n
+    %.2f：保留两位浮点数； \n
+    %,.2f：科学计数法； \n
+    %,d：科学计数法； \n
+    %n：换行，相当于 杠n； \n
+    %2$s：2可以指定顺序替换，必须从1开始； \n
+    %3$s：3可以指定顺序替换，必须从1开始； \n
+    </string>
+
+
+    <string name="act_method">01.方法组合类</string>
+    <string name="act_method_d">常用的方法：字符替换与数组化，数组排序筛选，json转换，时间地址选择等等</string>
+    <string name="act_solar">02.卫星式菜单栏</string>
+    <string name="act_solar_d">支持九个方向，采用属性动画ObjectAnimator编写，三角函数正余弦的顺逆时针（参考笔记）</string>
+
+    <string name="act_poetry">03.诗文，语言，笔记，英语</string>
+    <string name="act_poetry_d">争取做到每日至少背诵一百字，SlidingMenu结合FlowLayout</string>
+
+    <string name="act_bitmapurl">04.网络图片，图库与相机</string>
+    <string name="act_bit_d">AsyncTask图片加载，CircleImageView圆形控件，多布局加载，LruCache，图库与相机，兼容7.1版本，4.4以上；DisLurCache</string>
+
+    <string name="act_bit_uri">05.载入本地图片</string>
+    <string name="act_uri_d">自定义线程池加载，FIFO,FILO,PopWindow弹窗，图片的缩放显示，待优化</string>
+
+    <string name="act_canvas">06.图形绘画总结应用</string>
+    <string name="act_canvas_d">线性渐变，三次贝赛尔曲线，maskFilter，pathEffect，移动布局坐标，文字基线绘制，画布状态保存与回溯</string>
+
+    <string name="act_ninth">07.九宫解锁图案</string>
+
+    <string name="act_fragment">08.fragment的切换</string>
+    <string name="act_web">09.web相关</string>
+    <string name="act_drawable">10.所有的drawable和mipmap</string>
+
+</resources>

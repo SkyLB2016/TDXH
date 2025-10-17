@@ -1,0 +1,566 @@
+命令行集锦
+
+第一章 ADB 命令
+第二章 Keystore 签名命令
+第三章 Window 的 Shutdown命令
+第四章 Mac 终端命令，Linux也适用
+
+第五章 Git 命令
+第一节 Git提交的基本流程
+第二节 更新远程的方式：
+第三节 分支管理
+第四节 撤销提交
+第五节 远程库
+第六节 其他（重要）
+第七节 SSH 设置
+
+第六章 Mac 与 Window 的环境配置
+第一节 Mac 配置
+第二节 Window 配置
+
+
+第一章 ADB（Android Debug Bridge）命令行：
+01.adb devices 查看当前运行设备
+1）-l:详细内容
+
+02.安装apk：adb install apk路径
+01）-r：重新安装apk，解决已存在问题：NSTALL_FAILED_ALREADY_EXISTS
+02）-s：安装到sd卡（基本没用了）
+03）-t：解决：INSTALL_FAILED_TEST_ONLY
+
+03.adb uninstall package（apk的包名）
+-k：表示只删除该程序，保留它的缓存目录和数据
+
+04.电脑向手机推送文件：
+adb push 电脑文件绝对路径 手机绝对路径
+
+05.电脑从手机拉取文件：
+adb pull 手机文件绝对路径 电脑绝对路径
+
+06.录制视频：
+adb shell screenrecord 文件绝对路径（MP4格式）
+
+07.查看系统盘符：
+adb shell df
+
+
+第二章 Keystore 签名命令
+01.创建秘钥
+keytool -genkey -alias 秘钥名称 -keyalg RSA -validity 36500 -keystore 文件名（.keystore/.jks）
+
+02.查看秘钥内的信息，获取SHA1
+keytool -list -v -keystore 文件相对路径
+
+03.删除秘钥
+keytool -delete -alias 秘钥名称 -keystore 文件名
+
+04.命令的意思：
+1）-genkey 生成
+2）-alias 秘钥名称
+3）-keyalg RSA(加密方式)
+4）-validity 36500（有效期/天）
+5）-keystore 文件名
+
+
+第三章 Window 的 Shutdown命令
+01.示例
+1）定时关机：在22点关机，at 22:00 shutdown -s ，系统会提前30秒出现提示，然后自己把自己关掉。
+2）倒计时关机： shutdown（.exe） -s -t 7200 单位秒
+3）取消自动关机：shutdown -a
+
+02.参数
+01）a：取消关机
+02）c “消息内容”：输入关机对话框中的消息内容(不超127个字符)
+03）f：强行关闭应用程序
+04）i：显示图形用户界面，但必须是Shutdown的第一个选项，可以打开设置自动关机对话框，对自动关机进行设置
+05）l：注销当前用户
+06）m 计算机名：控制远程计算机
+07）r：关机并重启
+08）s：表示关闭本地计算机
+09）t 时间（秒）：多长时间后关闭计算机
+
+
+第四章 Mac 终端命令，Linux也适用
+01.小知识：
+01）tab键：自动补全目录名称。
+02）清屏：command +K（真清屏） ；Ctrl + L（直接移动到第一行）
+03）中止执行：Ctrl + C
+04）~ 代表用户根目录
+05）以.开头的文件或文件夹，是隐藏文件
+06）.代表当前目录，..代表上级目录，多一个点多上一级。
+07）& 表示同时执行命令，&& 表示串行执行命令。
+08）光标移动到行首行尾：Ctrl + A与Ctrl + E
+09）删除至行首行尾：Ctrl + U(整行)与Ctrl + K
+10）删除至单词开始：Ctrl + W
+11）搜索历史命令：Ctrl + R
+12）Mac终端上选中即复制，单击滚轮粘贴。
+13）按住 ⌘ ，单击路径可以打开此地址
+14）sudo lsof -i:8888  查找占用此端口号的程序
+15）sudo kill pid  停止该对应pid 的程序
+
+02.快捷小命令
+01）history （num）：显示使用过的历史命令
+02）open . ：打开当前目录
+03）pwd：(print working directory的缩写)显示当前文件夹的绝对路径。
+04）which 应用名：显示应用的配置信息，.bash_profile里$path里配置的信息，或者其他地方配置的信息
+05）w/who 查看当前登录用户
+06）ifconfig  查看网络连接
+07）df 查看分区信息
+08）file （-b不显示名称）文件：显示文件信息
+09）man 具体命令：查阅此命令的说明
+10）say "hello" 朗读hello
+11）echo 文字（输出文字）
+12）sleep 10 睡10秒
+13）hostname 查看主机名
+14）scp 远程拷贝
+15）date 显示当前系统时间
+16）find 用于在文件系统中搜索文件的命令行工具，它可以在指定的目录及其子目录中查找匹配特定条件的文件。
+基本语法如下：
+find [path...] [expression]
+其中，[path...] 是要搜索的目录路径列表，[expression] 是用于指定搜索条件的表达式。
+
+以下是一些常用的 find 表达式选项：
+    -name pattern：按文件名搜索匹配给定模式的文件。
+    -type type：按文件类型搜索，其中 type 可以是 f（普通文件）、d（目录）、l（符号链接）等。
+    -size n[c]：按文件大小搜索，其中 n 是文件大小的数字值，c 表示单位（例如 k 表示千字节）。
+    -mtime n：按文件的修改时间搜索，其中 n 是时间间隔的数字值（天数）。
+    -user username：按文件所有者搜索。
+    -group groupname：按文件所属组搜索。
+    -exec command {} \;：对匹配的文件执行指定的命令。
+
+示例：
+    在当前目录及其子目录中查找名为 "example.txt" 的文件：
+    find . -name "example.txt"
+    在 /home/user 目录中查找所有符号链接文件：
+    find /home/user -type l
+    在 /var/log 目录中查找大小超过 10MB 的文件：
+    find /var/log -size +10M
+    在 /home/user 目录中查找最近 7 天内修改过的文件：
+    find /home/user -mtime -7
+
+17）grep 搜索文本文件中的匹配包含特定模式的文本行，并将这些行打印到标准输出。
+基本语法如下：
+grep [options] pattern [file...]
+其中，pattern 是要搜索的模式，可以是简单的字符串或正则表达式。file 是要搜索的文件或文件列表。
+以下是一些常用的 grep 选项：
+    -i：忽略大小写。
+    -v：反转匹配，打印不匹配的行。
+    -n：显示匹配行的行号。
+    -c：只显示匹配行的数量。
+    -r 或 -R：递归搜索子目录。
+    -l：仅显示包含匹配行的文件名。
+    -w：匹配整个单词。
+    -x：匹配整行。
+示例：
+    在当前目录下的所有文件中搜索字符串 "hello"：
+    grep "hello" *
+    在文件 example.txt 中搜索字符串 "hello"：
+    grep "hello" example.txt
+    在当前目录下的所有文件中递归搜索字符串 "hello"：
+    grep -r "hello" *
+    在文件 example.txt 中忽略大小写地搜索字符串 "hello"：
+    grep -i "hello" example.txt
+参数列表过长，这样搜：
+find . -type f -print0 | xargs -0 grep -l "340604198507260411"
+find . -type f -exec grep -l "340604198507260411" {} +
+搜出来的是匹配的文件列表
+
+03.ls：（List directory contents）列出目录下的文件和文件夹
+01）-l：列出详细的目录清单
+02）-a：连隐藏文件一起显示
+03）-la（al）：详细清单，包含隐藏文件的
+
+04.cd：（change directory）切换目录
+01）cd 无参数：进入初始默认根目录;
+02）cd ~ 返回默认根目录；
+03）cd path：进入此目录；
+04）cd .. ：进入父级目录
+05）cd ../.. ：进入父级的父级目录，等同于 cd ...
+06）cd - ：返回上一个访问的目录，可以用于两个目录的来回切换。
+
+05.mkdir a b c：（make directory）创建文件夹，单个多个
+01）mkdir -p a/b：创建层级嵌套目录
+02）touch a b c 创建文件，单个多个
+
+06.cp ：（copy）复制文件
+cp [options] source dest
+cp [options] source... directory
+
+01）不带命令时，只复制文件，属性参数不参与复制。而且不能新建文件夹
+02）-a (archive)：通常在复制文件夹时使用，保留所有属性权限。
+03）-R (recursive)：复制文件夹时使用，a的弱化。权限属性是新的。可以忽略。
+04）-v ：可以看到复制过程
+
+07.mv ：（move）移动文件时，也可以重命名
+mv [options] source dest
+mv [options] source... directory
+
+01）-b : 当目标文件或目录存在时，在执行覆盖前，会为其创建一个备份。
+02）-i : 如果指定移动的源目录或文件与目标的目录或文件同名，则会先询问是否覆盖旧文件，输入 y 表示直接覆盖，输入 n 表示取消该操作。
+03）-f : 如果指定移动的源目录或文件与目标的目录或文件同名，不会询问，直接覆盖旧文件。
+04）-n : 不要覆盖任何已存在的文件或目录。
+05）-u : 当源文件比目标文件新或者目标文件不存在时，才执行移动操作。
+
+08.rm 文件：（remove）彻底删除文件
+rm [options] source
+
+01）无附加命令时，只能删除文件，不能删除文件夹
+02）-f ：强制删除，无需再次确认
+03）-r ：递归的删除该目录下所有文件
+04）rm -rf *：删除当前目录下的内容。不带f，需要再次确认，但当 * 为具体目录时，无需确认。
+
+09.cat （-n显示行号）文件名：在终端下查看文件，全部输出，ctrl+o 终止输出；
+01）less 文件名：在终端下查看文件，单页输出；
+02）more 文件名：与less一样；
+03）tail
+    ctrl+f（space） 下页，ctrl+b 上页，不加ctrl也可以；
+
+10.端口被占用：
+1）sudo lsof -i tcp:端口号  查看被占用的端口号
+COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+java    21475  sky  103u  IPv6 0x3346561e541e9da7      0t0  TCP *:ddi-tcp-1 (LISTEN)
+
+2）sudo kill 21475 (PID) 关闭端口
+
+10.Linux文件系统
+01）/  根目录
+02）/root root用户的目录
+03）/home 存放各用户的目录
+04）/usr/local 常用于安装自定义包
+05）/lib 公共库
+06）/var 常用于存放经常变化的文件
+07）/sbin 存放系统命令
+08）/bin 存放普通命令
+09）/tmp 存放临时文件
+
+11.文件编辑 vim 与 emacs
+vim 1.txt 打开并编辑（如果没有此文件，会创建）
+三种状态：只有回到普通状态后才会进入另一个状态。
+1）normal :进入为此状态
+2）edit：摁 a  i  等命令进入编辑状态。摁 esc 回到普通状态。
+3）command：摁 shift + ：进入命令状态。摁 esc 回到普通状态。
+4）命令
+1、w 保存
+2、q 退出
+3、wq 保存并退出
+5）其他按键
+k j h l 对应 上、下、左、右，也可用方向键
+r 替换 i 光标前插入 a光标后插入 x删除一个字符
+
+12.nano 　编写脚本语言　　ctrl+o存储
+02）nano ....sh　　　　打开
+03）bash ....sh　　　　运行脚本
+04）echo "...$i..."　　　输出语句
+05）tar -zxf abc.tar.gz     tar文件解压
+06）ssh root@192.168.1.222   以root账号远程连接222服务器
+07）unrar x abc.rar     rar文件解压，需要安装rar工具
+
+08）curl 网址 ：查看网址源码
+09）curl -o 文件名 网址
+
+
+第五章 Git 命令
+git命令，与 iterm 搭配使用
+红色代表add之前，
+绿色代表add之后
+
+简拼：
+gcf    -> git config --list 显示Git的配置信息
+          git config --global user.email "邮箱"
+          git config --global user.name "名字"
+          git config --global --unset user.name "名字"  移除
+gcl    -> git clone <repo> <dir> 拉取远程仓库，可以指定位置
+gst    -> git status 显示修改的内容以及在缓存区的状态
+gss    -> git status -s 只显示修改的文件
+ga     -> git add <file> 添加到缓存区
+gaa    -> git add .或--all 添加全部有改动的文件到缓存区
+gd     -> git diff 查看尚未add的缓存内容
+gdca   -> git diff --cached 查看已缓存的内容
+       -> gd head 查看head里的所有修改的内容
+       -> gd --stat 显示尚未缓存的文件
+grh    -> git reset 撤销已缓存的文件
+       -> grh <file> 单独撤销文件
+gcmsg  -> git commit -m "" 提交到本地库
+gp     -> git push 推送到git远程仓库
+gl     -> git pull 从远程仓库拉取
+gup    -> git pull -rebase
+
+gstl   -> git stash list 拉取仓库前，缓存代码列表
+gstp   -> git stash pop stash@{0} 载入此缓存，并移除
+gstaa  -> git stash apply 载入此缓存
+gstd   -> git stash drop 移除此缓存
+gstc   -> git stash clear 清除缓存
+gb     -> git branch <name> 创建分支
+gco    -> git checkout 检出分支
+gcm    -> git checkout master
+gcd    -> git checkout develop
+gcb    -> git checkout -b <name> 创建并检出到此分支
+gm     -> git merge <name> 合并此<name>到当前分支下
+grb    -> git rebase <name> 把当前分支合并到此<name>下
+
+gr     -> git remote 远程仓库
+grv    -> git remote -v 远程仓库地址
+gcp    -> git cherry-pick name
+
+git层级：
+第一层：未缓存，也即未add前，状态为：未缓存；红色。
+第二层：暂存区，add后，commit前，状态为：已缓存；绿色
+第三层：本地仓库，commit后，push前，本地版本库，状态为：已提交；
+第四层：远程仓库，push后，github云端刷新，状态为：已推送。
+总结：只要没有push，本地可以随便玩。
+
+第一节 Git提交的基本流程
+01.git config --list 显示Git的配置信息;
+   简拼：gcf
+   配置邮箱与名字
+   git config --global user.email "邮箱"。
+   git config --global user.name "名字"。
+
+02.git clone <repo> <directory> 拉取远程仓库；
+   简拼：gcl
+
+03.git status 显示内容在缓存区里的状态；
+   简拼：gst
+   git status -s 只显示有改动的文件；
+   简拼：gss
+
+04.git add  <file> 添加单个文件；
+   简拼：ga
+   git add .（--all） 缓存全部内容;
+   简拼：gaa
+
+05.git diff 尚未add缓存的改动，add前应该先diff一下，看一下修改的缓存内容；
+   简拼：gd
+   git diff --cached 查看已add的缓存的内容；
+   简拼：gdca
+   git diff head 查看head里已缓存的与未缓存的所有改动；
+   简拼：gd head
+   git diff --stat 显示尚未缓存的文件；
+   简拼：gd --stat
+
+06.git reset 取消全部add到缓存里的内容；
+   简拼：grh
+   git reset <file>  取消此文件add到缓存里的内容";
+   简拼：grh file
+
+07.git commit -m "注释" 提交到本地库;
+   简拼：gcmsg
+   git commit --amend 修改最后一次提交的内容，先add需要提交的文件。
+   简拼：无
+
+08.git push 提交到远程；
+   简拼：gp
+
+09.git rm <file> 删除文件，如果已经添加到add中，则需要加-f
+   git rm --cached <file> 移除缓存区里的内容，暂时感觉与git reset head 没什么不同
+   git rm -r * 删除此目录下的内容
+   git mv <file> <file> 移动或者重命名
+
+第二节 更新远程的方式：
+01.第一种
+1）git stash 先将本地修改存储起来(后来居上)，再拉取文件,
+2）拉取远程融合的两种方式：
+    git pull 拉取当前分支远程库中的内容 ==fetch merge；
+    简拼：gl
+    git pull --rebase 拉取当前分支远程库中的内容 ==fetch rebase；
+    简拼：gup
+3）融合本地 stash：
+    git stash list stash的列表；
+    简拼：gstl
+    git stash pop stash@{0} 恢复编号里的本地内容，同时移除此编号；
+    简拼：gstp stash@{0}
+    git stash apply stash@{0} 恢复编号里的本地内容，不移除此编号;
+    简拼：gstaa
+    git stash drop stash@{0} 删除此编号存储;
+    简拼：gstd
+    git stash clear 清空全部；
+    简拼：gstc
+4）gaa、gcmsg 、gp 提交完成
+
+02.第二种
+1）把当前修改commit
+2）退回修改之前的节点
+3）拉取远程最新节点
+4）用rebase或者merge来合并自己的本地节点与远程节点
+5）提交push
+
+我用的：
+1）git  stash
+2）gl
+3）git stash pop stash@{0}
+4）gaa
+5）gcmsg
+6）gp
+
+第三节 分支管理
+01.git branch name  创建分支;
+   简拼：gb name
+   gb 查看分支
+   git branch -d name 删除本地分支；
+   简拼：gbd  name
+   git push origin :name 删除远程分支，与-d配合，两步相继执行，删除远程；
+   简拼：gp origin :name
+   git branch -f master HEAD~<num> 把master移动到从HEAD所在位置向上移动num步；
+   简拼：gb -f master HEAD~<num>
+   git branch -f master hash码 -> 把master移动到hash码所在的位置；
+   简拼：gb -f -f master hash码
+
+02.git checkout name  切换分支；
+   简拼：gco
+   特例：
+       alias gcm='git checkout master'
+       alias gcd='git checkout develop'
+   git checkout -b name 创建并切换到此分支；
+   简拼：gcb
+   git checkout name^ 从name的所在位置，向上移动一个提交记录，跟几个^，就向上移动几步；
+   git checkout name~<num> 从name的所在位置，向上移动num个提交记录。
+   git checkout HEAD~<num> 从HEAD的所在位置，向上移动num个提交记录。
+   以下两个待理解：
+   git checkout -b 分支 origin/master 分支跟踪另一分支
+   git branch -u origin/master 分支
+
+03.git merge name  合并此<name>分支到当前所在分支下；
+   简拼：gm
+   特例：
+       alias gmom='git merge origin/master'
+
+04.git rebase name  把当前分支合并到此<name>分支之下；
+   简拼：grb
+   特例：
+       alias grbm='git rebase master'
+       alias grbd='git rebase develop'
+   git rebase name1 name2 把<name2>合并到此<name1>分支之下;
+   git rebase -i HEAD~2 交换提交记录的顺序；
+   简拼：grbi
+
+第四节 撤销提交
+01.git reset HEAD~1 本地撤销到上一步记录
+
+02.git revert HEAD  远程撤销到上一步
+
+第五节 远程库
+01.git remote 查看远程库；
+简拼：gr
+
+02.git remote -v 远程库的地址
+简拼：grv
+
+第六节 其他（重要）
+01.git rebase -i HEAD~2 交换提交记录的顺序；
+简拼：grbi
+
+02.git cherry-pick name 把指定记录移动到当前的记录之下；
+简拼：gcp
+
+03.git tag "describe" master 为master设置tag；
+简拼：
+示例：
+    alias gts='git tag -s'
+    alias gtv='git tag | sort -V'
+
+04.git describe master 对master的描述；
+
+05.git log -num 查看提交记录；
+
+第七节 SSH 设置
+01.创建公钥：
+ssh-keygen -t rsa -C "1136096189@qq.com"
+之后需要设置带路径的rsa文件名，密码。示例：
+名称：.ssh/github_id_rsa，默认名称是：.ssh/id_rsa
+密码：tdxhyzhh，不设置密码，那提交的时候就不用输入密码
+
+02.查看生成的公钥：
+cat ~/.ssh/github_id_rsa.pub
+
+03.复制公钥：
+1）Windows:
+clip < ~/.ssh/id_rsa.pub
+2）Mac:
+pbcopy < ~/.ssh/id_rsa.pub
+3）GNU/Linux (requires xclip):
+xclip -sel clip < ~/.ssh/id_rsa.pub
+
+04.多账号需要添加识别ssh key，默认只识别：id_rsa
+ssh-agent bash
+ssh-add ~/.ssh/github_id_rsa
+ssh-add ~/.ssh/名称
+
+05.多账号还需要设置config
+1）创建文件：
+touch .ssh/config
+
+2）需要添加的内容
+#Default gitHub user Self
+Host github.com
+HostName github.com
+User git
+IdentityFile ~/.ssh/github_id_rsa
+
+#Add gitLab user
+Host gitlab.com
+HostName gitlab.com
+User git
+IdentityFile ~/.ssh/gitlab_id_rsa
+
+06.测试连接：需要rsa的密码
+ssh -T git@github.com
+ssh -t git@gitlab.com
+
+7)目前产生的问题：
+Hi SkyLB2016! You've successfully authenticated, but GitHub does not provide shell access.
+在仓库目录下调用：
+git remote set-url origin git@github.com:SkyLB2016/XS.git
+
+
+第六章 Mac 与 Window 的环境配置
+第一节 Mac 配置
+在Users/用户目录下打开 .bash_profile，没有就创建 touch .bash_profile
+详细配置内容：两种配置方法
+
+01.第一种：直接配置路径文件，但是以后更新不方便，还得一个一个改。
+#Android所需配置
+#export PATH=/Applications/Android\ Studio/Contents/jre/jdk/Contents/Home/bin:$PATH
+#export PATH=/Applications/Android\ Studio/Contents/gradle/gradle-5.1.1/bin/:$PATH
+#export PATH=/Users/sky/Library/Android/sdk/platform-tools/:$PATH
+#export PATH=tools/:$PATH
+#Android所需配置
+
+02.第二种：配置整体的路径，在单独配置细节变量
+1）#自己下载的JDK安装位置
+#JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home
+#AndroidStudio内部的JDK
+JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+ANDROID_HOME=/Users/sky/Library/Android/sdk
+GRADLE_HOME=/Users/sky/.gradle/wrapper/dists/gradle-7.0.2-bin/857tjihv64xamwrf0h14cai3r/gradle-7.0.2
+FLUTTER=/Users/sky/Library/Android/flutter
+
+2）#配置各自的细节变量
+PATH=$PATH:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$GRADLE_HOME/bin:$FLUTTER/bin
+
+3）让配置生效。
+export JAVA_HOME
+export ANDROID_HOME
+export GRADLE_HOME
+export FLUTTER
+export PATH
+
+03.#配置其他变量
+#export LANG="en_US.UTF-8"
+#export LC_ALL="en_US.UTF-8"
+
+第二节 Window 配置
+进入系统信息页面：从文件夹点此电脑的属性就可以进入，要么就从控制面板里找。
+高级系统设置 -> 环境变量 -> 系统变量（用户变量里也行） -> Path环境变量 -> 新建 然后添加相应的路径
+
+1)git 地址配置
+C:\Program Files\Git\cmd
+2）platform-tools 是 adb 的配置：
+C:\Android\sdk\platform-tools
+3）Android 工具配置
+C:\Android\sdk\tools
+4）JDK配置
+C:\Android\Android Studio\jre\bin
+5）gradle地址配置
+C:\Users\Sky\.gradle\wrapper\dists\gradle-7.0.2-bin\857tjihv64xamwrf0h14cai3r\gradle-7.0.2\bin
+
+一路确定，完成即时生效。

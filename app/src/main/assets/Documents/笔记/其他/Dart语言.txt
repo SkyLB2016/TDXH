@@ -1,0 +1,246 @@
+Dart语言
+flutter 使用的语言
+
+第一章 关键字
+01.assert（变量==value）：断言，仅在检查模式下有效，值必须为true，否则会有异常。
+02.final：变量只能被赋值一次，使用时被初始化
+03.const：只能赋值一次，编译时常量，是一个隐式的final。
+04.常量是类级别的用static const来修饰
+
+
+01.dart小知识
+1）web开发
+2）跨平台移动应用开发flutter
+3）脚本或服务端开发
+4）var声明变量，可以赋予不同的值，默认值为null。
+5）final只能赋值一次。
+6）const来定义常量，
+7）/（浮点型）、~/（取整）、%（取余）
+8）isNaN
+9）isEven 偶数;isOdd 奇数;round 四舍五入;floor 向下取整;ceil 向上取整;
+10）
+11）
+12）
+13）
+14）字符串可以用单引号'或双引号"，创建。三引号是创建多行的字符串。r'\n'：可以禁止\n的作用。
+15）字符串也可运算，+、*、==、[]（当成数组，取值）
+16）dynamic：动态类型，值可以是任意类型，
+17）! 取反
+18）&& 并且
+19）|| 或者
+20）??=  前边的变量为空时，赋值。类似kotlin的问号
+21）true?a:b  三目运算符
+22）a??b  a不为空，即用a;为空，用b
+23）for in相当于for each
+24）switch...case  增加了continue可以代替break跳转到有指定标签的case
+25）call方法，一种另类的构造函数。
+26）external  平台语言，其方法由具体的平台实现
+
+02.dart内置的数据类型
+1）数值型——Number：num，包含int，double
+2）字符串——String
+3）布尔型——Boolean
+4）键值对——Map
+5）列表——List
+6）Runes、Symbols
+
+03.List中的元素可以是不同的类型。
+1）list的forEach方法的参数是个方法，其实就是个遍历。
+2）shuffle：随机排序
+3）asMap转成一个map。
+
+04.Map
+1）使用大括号创建，key可以是任何类型。
+2）keys,values获取全部key或value
+3）forEach。
+
+05.方法的特性，可以作为一个参数。
+1）=> expr 是{return expr;}的缩写，只适用于一个表达式。
+2）返回值类型、参数类型可以省略
+3）方法也是对象，并且有具体类型的Function。
+4）都有返回值。没有指定的是return null。
+5）可选参数必须在固定参数后边，
+6）大括号中的可选参数，可以根据名称来选择
+7）中括号中的可选参数，参数位置是确定的，必须按位置来填入。
+8）方法的参数可以直接用=设置默认值
+9）匿名方法(参数1...){}
+10）闭包，方法a中包含方法b和局部变量，其中方法b使用局部变量，最后返回值是方法b。
+
+06.类与对象
+1）class，new（可省略），基类都是Object
+2）默认生成get、set，也可以单独设置。
+3）使用final的属性，只有get方法。
+4）方法不能被重载overload，就是不能有同名的方法。
+
+06.类及成员的可见性
+1）dart的可见性是以library（库）为单位的
+2）默认情况下，每一个Dart文件就是一个库
+3）使用_表示库的私有性，只在这个文件内可见。
+4）使用import导入库。
+5）构造方法中的this参数在方法执行前赋值，这样可以给final的变量赋值。
+6）构造方法
+7）命名构造方法
+8 ）常量的构造方法，const修饰，变量全为final
+
+07.工厂构造方法，有点单例的意思
+1）类似于工厂模式
+2）用factory修饰，有返回值
+
+08.初始化列表，大括号之前的操作
+1）初始化列表会在构造方法体执行之前执行。
+2）使用逗号分隔初始化表达式。
+3）初始化列表常用于设置final变量的值。
+
+09.静态成员
+1）使用static关键字来实现类级别的变量和函数。
+2）静态成员不能访问非静态成员，非静态成员可以访问静态成员
+3）类中的常量需要使用static const声明。
+
+10.对象操作符
+1）条件成员访问：?.
+2）类型转换：as
+3）是否指定类型：is（是），is!（不是）
+4）级联操作符：..
+object..name=""
+      ..age=3
+      ..function();
+
+11.面向对象扩展
+1）继承，继承中的构造方法
+2）抽象类
+3）接口
+4）mixins，操作符的覆写
+
+12.继承
+1）extends
+2）子类会继承父类可见的属性和方法，不会继承构造方法。
+3）子类能够复写弗雷德方法、getter和setter
+4）单继承、多态性。
+
+13.继承中的构造方法
+1）子类的构造方法默认会调用父类的无名无参数构造方法。
+2）若果父类没有无名无参构造方法，则需要显示调用父类构造方法。
+3）在构造方法参数后使用 : 显示调用父类构造方法。
+
+14.接口
+1）所有类本身就是一个接口，不过还是建议用抽象类来写接口，还是用implement。
+
+15.mixins：
+1）类似于多继承，是在多类继承中重用一个类代码的方式，如重用类中有重名方法，会使用继承的最后一个类的方法。
+2）作为Mixin的类不能有显示声明的构造方法。
+3）作为Mixin的类只能继承自Object，但可以实现多个接口。
+4）使用关键字with连接一个或多个Mixin
+5）class car = 轮胎  with 电力;
+
+16.操作符覆写：
+1）==，>，<，[]等这些符号可以在类里边重新定义其功能，以方便对类进行比较。
+
+17.枚举
+1）枚举是一种有穷序列集的数据类型
+2）使用关键字enum定义一个枚举
+3）常用于代替常量，控制语句等。
+4）默认有index属性，从0开始，依次累加
+5）不能指定原始值。
+6）不能添加方法。
+
+18.泛型T
+
+19.
+
+
+Compiled from "GenericType.java"
+public class com.sky.oa.entity.GenericType<T> {
+  public com.sky.oa.entity.GenericType();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public void setData(T);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #2                  // Field data:Ljava/lang/Object;
+       5: return
+
+  public T getData();
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field data:Ljava/lang/Object;
+       4: areturn
+}
+
+Classfile /Users/sky/Documents/WorkSpace/Chowder/app/src/main/java/com/sky/oa/model/GenericType.class
+  Last modified 2021-7-23; size 527 bytes
+  MD5 checksum 539263212aafbd0c509887c4fe8b631e
+  Compiled from "GenericType.java"
+public class com.sky.oa.entity.GenericType<T extends java.lang.Object> extends java.lang.Object
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #4.#22         // java/lang/Object."<init>":()V
+   #2 = Fieldref           #3.#23         // com/sky/oa/model/GenericType.data:Ljava/lang/Object;
+   #3 = Class              #24            // com/sky/oa/model/GenericType
+   #4 = Class              #25            // java/lang/Object
+   #5 = Utf8               data
+   #6 = Utf8               Ljava/lang/Object;
+   #7 = Utf8               Signature
+   #8 = Utf8               TT;
+   #9 = Utf8               <init>
+  #10 = Utf8               ()V
+  #11 = Utf8               Code
+  #12 = Utf8               LineNumberTable
+  #13 = Utf8               setData
+  #14 = Utf8               (Ljava/lang/Object;)V
+  #15 = Utf8               (TT;)V
+  #16 = Utf8               getData
+  #17 = Utf8               ()Ljava/lang/Object;
+  #18 = Utf8               ()TT;
+  #19 = Utf8               <T:Ljava/lang/Object;>Ljava/lang/Object;
+  #20 = Utf8               SourceFile
+  #21 = Utf8               GenericType.java
+  #22 = NameAndType        #9:#10         // "<init>":()V
+  #23 = NameAndType        #5:#6          // data:Ljava/lang/Object;
+  #24 = Utf8               com/sky/oa/model/GenericType
+  #25 = Utf8               java/lang/Object
+{
+  public com.sky.oa.entity.GenericType();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 6: 0
+
+  public void setData(T);
+    descriptor: (Ljava/lang/Object;)V
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #2                  // Field data:Ljava/lang/Object;
+         5: return
+      LineNumberTable:
+        line 10: 0
+        line 11: 5
+    Signature: #15                          // (TT;)V
+
+  public T getData();
+    descriptor: ()Ljava/lang/Object;
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #2                  // Field data:Ljava/lang/Object;
+         4: areturn
+      LineNumberTable:
+        line 14: 0
+    Signature: #18                          // ()TT;
+}
+Signature: #19                          // <T:Ljava/lang/Object;>Ljava/lang/Object;
+SourceFile: "GenericType.java"

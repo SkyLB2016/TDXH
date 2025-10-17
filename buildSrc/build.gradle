@@ -1,0 +1,24 @@
+plugins {
+    id 'groovy'
+//    id 'maven-publish'
+}
+
+//dependencies {
+//    implementation gradleApi()
+//    implementation localGroovy()
+//    implementation 'org.codehaus.groovy:groovy-all:2.2.0'
+//}
+//repositories {
+////    google()
+////    jcenter()
+//    mavenCentral() //必须
+//}
+//
+////把项目入口设置为src/main/groovy
+////sourceSets {
+////    main {
+////        groovy {
+////            srcDir 'src/main/groovy'
+////        }
+////    }
+////}

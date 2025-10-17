@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_center"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="100"
+        android:title="@string/center"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_left_top"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        android:title="@string/left_top"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_left_bottom"
+        android:orderInCategory="100"
+        android:title="@string/left_bottom"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_right_top"
+        android:orderInCategory="100"
+        android:title="@string/right_top"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_right_bottom"
+        android:orderInCategory="100"
+        android:title="@string/right_bottom"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_center_top"
+        android:orderInCategory="100"
+        android:title="@string/center_top"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_center_bottom"
+        android:orderInCategory="100"
+        android:title="@string/center_bottom"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_center_left"
+        android:orderInCategory="100"
+        android:title="@string/center_left"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_center_right"
+        android:orderInCategory="100"
+        android:title="@string/center_right"
+        app:showAsAction="ifRoom" />
+</menu>

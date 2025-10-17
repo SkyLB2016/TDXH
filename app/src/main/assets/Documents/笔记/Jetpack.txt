@@ -1,0 +1,818 @@
+Jetpack
+
+第一章 Jetpack 的接口
+
+01.Architecture 结构，架构组件，可帮助开发者设计稳健，可测试且易维护的APP。
+1）Data Binding：是一种支持库，借助该库，可以以声明方式将可观察数据绑定到界面元素。
+2）Lifecycles：管理Activity 和 Fragment 的生命周期，生成更易于维护的轻量级代码。
+3）LiveData：在底层数据库更改时通知视图，是可观察的数据持有者类。可感知 Activity 等的生命周期。
+4）Navigation（新的）：处理应用内导航所需的一切。
+5）paging（new）：按需加载数据，可减少带宽和系统资源的使用。
+6）Room：流畅的访问SQLite 数据库。
+7）ViewModel：以注重生命周期的方式管理界面相关的数据。ViewModel类允许数据幸免于配置更改（如屏幕旋转）。通常和DataBinding 配合使用，实现 MVVM 架构。
+8）WorkManager（new）：管理Android 的后台业务，即使应用程序退出或设备重启动，也可以轻松地调度预期将要运行的可延迟异步任务。
+
+02.Foundation（基础组件）可提供横向功能，例如向后兼容性、测试和Kotlin 语言支持。
+1）Android KTX（new）：kotlin 扩展程序。
+2）Appcompat：帮助较低版本的Android 系统进行兼容。
+3）Auto：开发 汽车 应用的组件。
+4）Benchmark：从 Android studio 中快速检测基于Kotlin 或 Java 的代码。
+5）Multidex：为具有多个DEX问价你的应用提供支持。
+6）Security：按照安全最佳做法读写加密文件和共享偏好设置。
+7）Test：用于单元和运行时界面测试的 Android 测试框架。
+8）TV：有助于开发 TV 应用的组件
+9）Wear OS by Google：开发 手表 应用的组件。
+
+03.Behavior（行为组件）可帮助应用于标准 Android 服务（通知，权限，分享）相集成。
+1）CameraX：简化相机应用的开发工作。提供一致且易于使用的API界面，可兼容到Android5.0（21）
+2）DownLadManager：系统服务，可处理长时间运行的HTTP下载。客户端可以将URL下载到特性的目标文件。管理器将在后台进行下载，处理HTTP交互，并在出现故障、连接更改、系统重启后，重试下载。
+3）Media & Playback：用于媒体播放和路由（包括 Google Cast），可向后兼容。
+4）Notiffications：推送通知，可向后兼容。
+5）Permissions：用于检查和请求应用权限的兼容性 API。
+6）Preferences：常见交互式设置屏幕，建议使用AndroidX Preference Library 将用户可配置设置集成至应用中。
+7）Sharing：提供适合应用操作栏的共享操作。
+8）Slices（new 新的）：是UI模板，可以通过启用全屏应用程序之外的互动来帮助用户更快的执行任务，即可以创建在应用外部显示应用数据的灵活界面。
+
+04.UI（见面组件）有助于简化界面开发的Jetpack Compose
+1）Animation & Transitions：使开发者可以轻松地为两个视图层次结构之间的变化设置动画。
+2）Emoji：表情符号支持。
+3）Fragment：Activity 的模块化组成部分。
+4）Layout：定义应用中的界面结构。可在XML中声明界面元素，也可以在运行时实例化布局元素。
+5）Palette：支持库，可从图像中提取突出的颜色，帮助开发者创建视觉上引人入胜的应用程序。卡发着可以使用调色板库设计布局主题，并将自定义颜色应用于应用程序中的视觉元素。
+
+05.应用架构
+Activity/Fragment
+-> ViewModel [ liveData1,livedata2]
+-> Repository 数据仓库（两种方式：本地数据库和网络数据库）
+1）-> Model(Room -> SQLite)
+2）-> Remote Data Source(Retrofit -> HTTP)
+
+
+第二章 Navigation 导航库
+Navigation Graph 导航图，关系图
+NavHostFragment 当前Fragment 的容器
+NavController 导航控制器
+//获取navigationFragment控制器
+NavController navController = findNavController(this, R.id.navigationFragment);
+//绑定actinBar,id,fragment
+NavigationUI.setupActionBarWithNavController(this, navController, configuration);
+NavigationUI.setupWithNavController(activityMain.actionBar.toolbar,navController,configuration);//点击后才会刷新
+//关联bottombar与控制器
+NavigationUI.setupWithNavController(activityMain.navigationBottomBar, navController);
+
+01.Navigation 是Android 导航库和插件，用来管理 Fragment 的切换，实现单 Activity。
+1）处理Fragment 的切换。
+2）正确处理Fragment 的前进和后退。
+3）为过度和动画提供标准化的资源。
+4）实现和处理深层连接。
+5）可以绑定 Toolbar、BoottomNavigationView、ActionBar 等
+6）SafeArgs（gradle插件）数据传递时提供类型安全性
+7）ViewModel 支持。
+
+02.创建流程
+1）依赖插件
+androidx.navigation:navigation-fragment-ktx:2.1.0
+androidx.navigation:navigation-ui-ktx:2.1.0
+
+提供 SafeArgs 支持
+classpath 'androidx.navigation:navigation-safe-gradle-plugin:2.1.0'
+plugin: 'androidx.navigation.safeargs'
+
+2）在res 目录下，建立 navigation 目录，创建 navigation resource file
+navigation的属性：
+startDestination：起始 fragment 的id
+
+fragment 的属性：需要条状的fragment
+1、android:id：搭配 BottomNavigationView 使用需要与 menu 中 item 的 id 相对应
+2、android:name：绝对路径的包名
+3、android:lable：标签名
+4、tools:layout：辅助工具，辅助显示对应的view
+
+5、<action>：跳转操作
+
+6、<argument>：接收参数
+
+3）在 activity的 XML 文件中配置 fragment
+<fragment
+android:id
+android:name="androidx.navigation.fragment.NavHostFragment" :值必须是 NavHostFragment，
+app:defaultNavHost="true" :与系统的返回按钮关联
+app:navGraph="@navigation/navigation_main" ：自定义的 navigation 文件
+/>
+
+<com.google.android.matrerial.bottomnavigation.BottomNavigationView
+android:id
+android:menu="@menu/xxx"/>
+
+menu 文件
+<menu>
+<item
+android:id
+android:icon
+android:title
+</menu>
+
+bottomNavigationView 设置 setOnItemSelectedListener 事件后，Navigation 引导会失效。
+需要配合  NavigationUI.onNavDestinationSelected(item, controller) 重新设置引导页面
+
+
+4）页面跳转
+1、代码跳转
+val navOption=navOptions{
+anim{
+enter=R.anim.xx
+exit=R.anim.xx
+popEnter=R.anim.xx
+popExit=R.anim.xx
+}
+}
+val bundle = Bundle();
+bundle.putString("key","value)
+findNavController().navigate(跳转fragment的id,bundle,navOption)
+
+2、SafeArgs 跳转
+生成的文件在 build/generated/source/navigation-args 中
+
+action : 从哪个fragment 跳，就从哪定义。会自动生成对应的 xxxFragmentDirections
+android:id
+app:destination="@id/my" : 跳转的Fragment 的id
+app:popUpTo="id" ：回退到此id 的 fragment
+app:enterAnim="@anim/xxx"
+app:exitAnim="@anim/xxx"
+app:popEnterAnim="@anim/xxx"
+app:popExitAnim="@anim/xxx"
+
+
+arguments :跳到哪个页面就在哪个页面定义。会自动生成对应的 xxxFragmentArgs
+android:name="key"
+android:defaultValue="value"
+app:argType="string" integer 首字母小写
+
+点击事件代码
+val action = WecomeFragmentDirections
+.actionWelcomeToRegister()
+.setKEY("VALUE")
+
+Navigation.findNavController(view).navigate(R.id."action_id")
+
+
+接收数据
+val safeArgs：RegisterFragmentArgs by navArgs();
+val  key = safeArgs.key
+
+
+
+第三章 MVVM
+生成的 binding 文件在 build/genereted/data_binding_base_class_source_out 中
+依赖：
+android{
+buildFeatures{
+dataBinding = true
+viewBinding true
+}
+}
+01.MVVM：可以理解成加入 ViewBinding 或 DataBinding 的MVP
+M（Model）：数据处理（网络，DB）
+V（View）：xml、view，activity，fragment
+VM（ViewModel）：业务逻辑层，
+
+M <-> VM <-> V
+
+MVVM 是一种架构模式。
+
+Data Binding 是一个实现数据和UI绑定的框架，是构建 MVVM 模式的一个工具。
+减少了接口数量，不用再findViewById，实现了数据与视图的双向绑定，极大地简化代码。
+单向绑定（@{}）与双向绑定（@={}），可以动态更新数据。
+
+BaseObservor
+@Bindable
+notifyPropertyChanged(BR.xxx)
+
+02.ViewBinding（视图绑定） 与 DataBinding（数据视图双向绑定） 的区别
+1）ViewBinding，相当于简化版的 DataBinding
+仅支持绑定 View，不支持数据绑定
+无需在布局文件中添加 layout 标签，自动生成 binding 文件
+需要在模块级 build.grald 中添加 viewBinding = true
+效率高于 Databinding，因为避免了与数据绑定相关的开销和性能问题。
+相比于 kotlin-android-extensions 插件，避免了空异常。
+
+2）DataBinding
+包含了 ViewBinding 所有功能
+必须在根布局中添加 layout 标签，否则不会生成 xxxBinding 文件
+支持 data 和 view 双向绑定
+需要在模块级 build.gradle 中添加 dataBinding = true
+效率低于 ViewBinding ，因为注释处会影响数据绑定的构建时间。
+
+
+AS 3.6之前的配置
+viewBinding{
+enable =true
+}
+dataBinding{
+enable =true
+}
+AS 4.0之后的配置
+buildFeatures {
+    dataBinding = true
+    viewBinding true
+}
+
+3）两者都会为 xml 文件生成对应的 xxxBinding 类文件：ActivityMainBinding
+4）不想为xml 文件生成 binding 类，在布局文件根视图下添加：
+<LinearLayout tools:viewBindingIgnore = "true">
+</LinearLayout>
+
+03.observableFiled(T value) 可观察的变量
+set
+get
+
+04.xml 中设置代码
+标签
+1）layout：根节点，不能包裹 merge 标签
+2）data：绑定数据
+3）variable：data中使用，变量标签，内含：name 名字；type ：对应的类
+4）import：data中使用，需要使用静态方法和静态常量，待研究。
+5）include：需要使用bind:<参数名> 传递参数
+绑定属性
+android:text="@{model.xxx}"
+android:text="@{model.xxx.get()}"
+
+事件绑定
+方法的绑定
+android:onclick="@{activity::onTestClick}"：绑定方法，点击执行，参数需要对应上。
+android:onTextChanged="@{model::xxx}"
+
+监听绑定：lambda 表达式的规则。
+android:onclick="@{() -> activity.onBackPressed()}"：绑定方法，点击执行。
+android:onTextChanged="@{(text,start,before,count) -> model.xxx(text)}"
+
+三元表达式写法
+android:enbale=@{model.xx.isEmpty() ? true :false}
+
+
+dataBinding 还支持
+运算法
+字符串连接
+逻辑与，逻辑或
+二进制
+移位
+比较
+instanceof
+grouping()
+literals - character,String,numeric,null
+Cast
+方法调用
+域访问
+数组访问
+三元
+
+05.ViewBinding 绑定的 xml 文件 在 activity/fragment 等中的引用
+使用系统生成的 xxxBinging 类文件进行绑定：
+
+1）Activity 中绑定
+ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+setContentView(binding.getRoot());
+
+2）Fragment 中绑定
+FragmentNotesBinding binding = FragmentNotesBinding.inflate(inflater, container, false)
+return binding.getRoot();
+
+3）Adapter 中绑定
+return MvvmHolder(AdapterItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+return MvvmHolder(AdapterItemBinding.inflate(LayoutInflater.from(parent.context)))
+class MvvmHolder<V : ViewBinding>(val binding: V) : RecyclerView.ViewHolder(binding.root)
+
+4）Dialog 中使用
+val binding = DialogXXXBinding.inflate(layoutInflater)
+setContentView(binding.root)
+
+5）include 标签不带 merge 标签。需要添加 id，根据 id 引用。
+val binding = ActivityMainBinding.inflate(layoutInflater)
+binding.actionBar.toolbar
+
+6）include 带 merge 标签，DataBinding 可直接引用，viewBinding 不行，如下
+val binding = ActivityMainBinding.inflate(layoutInflater)
+val mergeBinding = LayoutmergeItemBinding.bind(binding.root)
+mergeBinding.actionBar.toolbar
+
+06.DataBinding 绑定的 xml 文件引用（Viewbinding 中的都可以在DataBinding 中使用）
+需要添加 layout 标签，使用 DataBindingUtil 绑定
+1）activity 中
+
+viewBinding 中的方法也适用
+ViewDataBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);
+
+dataBinding 自己的
+ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+setContentView(binding.getRoot());
+
+2）Fragment 中
+val binding = FragmentViewBinding.inflate(inflater,container,false)
+binding.lifecycleOwner = this
+return binding.getRoot();
+
+3）Adapter 中
+val view = LayoutInflater.from(parent.context).inflate(id,parent,false)
+return XXXHolder(DataBindingUtil.bing(view))
+
+4）Dialog 中
+val binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.dialog_xxx,null,false)
+setContentView(binding.root)
+
+5）include 不带 merge 标签，添加 id，根据 id 使用。
+val binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+binding.actionBar.toolbar
+binding.actionBar.tvCenter
+
+6）include 带 merge 标签，与不带的一样
+val binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+binding.actionBar.toolbar
+binding.actionBar.tvCenter.text = "中间标题"
+
+7）ViewStub 惰性加载，需要id（ViewBinding 目前不能用）
+binding.stubid.setOnInflateListener{ stub,inflated ->
+val viewStub:ViewStubBinding = ViewStubBinding.bind(inflated)
+val viewStub:ViewstubBinding = DataBindingUtil.bind(inflated)
+viewStub.tvTitle.txt = "惰性加载"
+}
+if(!binding.stud.isInflated){
+binding.stub.ViewStub.inflate()
+}
+
+第四章 LiveData
+Livedata 用于 ViewModel 层中
+ViewModel 不能用 new 新建，这样实例化出来的ViewModel不能在屏幕旋转后仍然保持有效，所以也不会使得 onCleared() 方法被回调；如果使用了 viewModelScope 发起了协程，协程不会被取消。
+
+01.LiveData 的作用跟RxJava类似，是观察数据的类。能够在 Activity、Fragment、Service 中正确的处理生命周期。
+1）数据变更的时候更行UI
+2）没有内存泄漏
+3）不会因为停止Activity崩溃
+4）无需手动处理生命周期
+5）共享资源。
+
+02.常用方法
+1）observe(LifecycleOwner owner,Observer<? super T> observer) :需要提供Observer 处理数据变更后的处理。LifecycleOwner 则是我们能够正确处理生命周期的关键。
+2）setValue(T value)：设置数据
+3）getValue()：获取数据
+4）postValue(T value)：在主线程中更新数据。
+
+03.LiveData 的依赖
+androidx.lifecycle:lifecycle_livedata-ktx:2.2.0
+androidx.lifecycle:lifecycle-viewmodel-ktx2.2.0
+androidx.lifecycle:lifecycle-extensions:2.2.0
+
+val allList:LiveData<List<String>>  = MutableLiveData<String>().apply{
+value=ALL
+}
+
+allList.switchMap{ }
+
+
+第五章 Room
+Room 是一个基于SQLite 的强大数据库框架。
+
+01.Room 的优点
+1）使用编译时注解，能够对@Query、@Entity 里面的SQL语句等进行验证。
+2）与SQL语句的使用更加贴近，能够降低学习成本。
+3）支持 RxJava2、LiveData。
+4）@Embedded 能够减少表的创建。
+
+02.Room 的依赖
+id 'Kotlin-kapt'
+
+androidx.room:room-runtime:2.1.0
+androidx.room:room-ktx:2.1.0
+androidx.room:room-testing:2.1.0
+kapt androidx.room:room-compiler:2.1.0
+
+03.注解说明
+@Entity：声明一个表，主要参数：tableName-表名，ForeignKeys-外键、indices-索引
+@ColumnInfo：主要用来修改在数据库中的字段名。
+@PrimaryKey：主键，可以声明是否自动创建。
+@Ignore：临时字段声明，不存储在数据库中。
+@Embedded：用于嵌套，里面的字段同样会存储在数据库中。用于嵌套类
+
+
+04.建立表
+1）创建用户表
+@Entity(tableName="user")
+data class User(
+@ColumnInfo(name = "user_account") val account:String //账号
+,@ColumnInfo(name = "user_pwd") val pwd:String //密码
+,@ColumnInfo(name = "user_name") val name:String //名字
+,@Embedded val address:Address //地址，嵌套地址类
+,@Ignore val state:Int //临时状态，不需要存储在数据库。（不加注解不就完了）
+){
+
+@PrimaryKey(autoGenerate = true)
+@ColumnInfo(name = "id"
+var id:Long=0
+
+}
+地址表，通过 @Embedded 嵌套进用户表中
+data class Address(
+val street:String,val state:string,val city:String,val postCode:String
+)
+
+
+2）创建收藏表
+@Entity(
+tableName = "fav_shoe"
+,foreignKeys = [
+ForeignKey(entity = Shoe::class,parentColumns=["id"],childColumns = ["shoe_id"])
+,ForeignKey(entity = User::class,parentColumns = ["id"],childColumns = ["user_id"])
+]
+,indices = [Index("shoe_id")]
+)
+data class FavouriteShoe(
+@ColumnInfo(name = "show_id") val shoeId:String //外键，鞋的id
+,@ColumnInfo(name = "user_id") val userId:String //外键，用户id
+,@ColumnInfo(name = "fav_data") val data:Date //日期
+){
+@PrimaryKey(autoGenerate = true)
+@ColumnInfo(name ="id")
+var id:Long = 0
+}
+
+2）创建鞋子表
+@Entity(tableName = "shoe")
+data class Shoe(
+@ColumnInfo(name = "shoe_name") val shoeName:String //鞋名
+,@ColumnInfo(name = "shoe_description") val description:String //描述
+,@ColumnInfo(name = "shoe_price") val price:Float //价格
+,@ColumnInfo(name = "shoe_brand") val brand:String //品牌
+,@ColumnInfo(name = "shoe_imgUrl") val imgUrl:String //地址
+){
+@PrimaryKey(autoGenerate = true)
+@ColumnInfo(name = "id")
+var id:Long = 0
+}
+
+05.建立 dao 接口层
+@Dao
+@Insert
+@Delete
+@update
+@Query 可以查，也可以修改，删除，但不能新增。
+
+
+@Dao
+interface shoeDao{
+@Insert(onConflict = OnConflictStrategy.REPLACE)
+fun insertShoe(shoe:Shoe)
+
+@Insert(onConflict = OnConflictStrategy.REPLACE)
+fun insertShoes(shoes:List<Shoe>)
+
+@Delete
+fun deleteShoe(shoe:Shoe)
+
+@delete
+fun deleteShoes(shoes:List<Shoe>)
+
+
+@Update
+fun updateShoe(shoe:Shoe)
+
+@Update
+fun updateShoes(shoes:List<Shoe>)
+
+@Query("SELECT * FROM shoe WHRER id=:id ")
+fun findShoeById(id:Long):Shoe?
+
+@Query("SELECT * FROM shoe WHRER shoe_brand=:brand ")
+fun findShoeById(brand:String):List<Shoe>?
+
+//排序，同名鞋名查询
+@Query("SELECT * FROM shoe WHERE shoe_name LIKE :name ORDER BY shoe_brand ASC")
+fun findShoeByName(name:String):List<Shoe>?
+
+//配合 LiveData 返回所有鞋子。
+@Query("SELECT * FROM shoe")
+fun findAllShoe():LiveData<List<Shoe>>
+
+//配合 LiveData 通过id查鞋子。
+@Query("SELECT * FROM shoe WHERE id=:id")
+fun findShoeById(id：Long):LiveData<Shoe>
+
+//配合 RxJava 通过id查鞋子。
+@Query("SELECT * FROM shoe WHERE id=:id")
+fun findShoeById(id：Long):Flowable<Shoe>
+
+
+//通过收藏结合，查询用户喜欢的鞋的集合，内联查询
+@Query("SELECT shoe.id,shoe.shoe_name,shoe.shoe_description,shoe.shoe_price,shoe.shoe_brand,shoe.shoe_imgUrl"
++"FROM shoe"
++"INNER JOIN fav_shoe ON fav_shoe.shoe_id = shoe.id"
++"WHERE fav_shoe.user_id = :userId"
+)
+fun findShoesByUserId(userId:Long):LiveData<List<Shoe>>
+
+
+}
+
+06.创建数据库
+@Database(entities = [User::class,Shoe::class,FavouriteShoe::class],version = 1,exportSchema = fasle)
+abstract class AppDataBase:RoomDataBase(){
+
+//得到Userdao
+abstract fun UserDao():UserDao
+
+//得到ShoeDao
+abstract fun shoeDao():ShoeDao
+
+//得到FavouriteShoeDao
+abstract fun favouriteShoeDao():FavouriteShoeDao
+
+conpanion object{
+@volatile
+private var instance:AppDataBase?= null
+
+fungetInstance(context:Context):AppDataBase{
+return instance ?: synchronized(this){
+instance ?: buildDataBase(context).also{
+instance = it
+}
+}
+}
+}
+
+private fun buildDataBase(context:Context):AppDataBase{
+return Room
+.databaseBuilder(context,AppDataBase::class.java,"jetPackDemo-database")
+.addCallback(object : RoomDataBase.Callback(){
+override fun onCreate(db : SupportSQLiteDatabase){
+super.onCreate(db)
+
+//读取鞋的集合
+val request = OneTimeWorkRequestBuilder<ShoeWorker>().build()
+WorkManager.getInstance(context).enqueue(request)
+}
+}).build()
+
+
+}
+}
+
+07.创建处理仓库
+class UserRepository private constructor(private val userDao:UserDao){
+
+//登录用户，查询本地数据库数据
+//配合LiveData
+fun login(account:String,pwd:String):LiveData<User?> = userDao.login(account,pwd)
+
+
+
+//注册用户，新增
+suspend fun register(email:String,account:String,pwd:String):Long{
+return withContext(IO){
+userDao.insertUser(User(account,pwd,email))
+}
+}
+companion object{
+@Volatile
+private var instance:UserRepository? =null
+fun getInstance(userDao:UserDao):UserRepository = instance ?: synchroinzed(this){
+instance ?: UserRepository(userDao)
+.also{
+instance = it
+}
+}
+}
+}
+
+08.类型转换
+1）@TypeConverter ：日历 Calendar 转换
+class Converters「
+@TypeConverter fun ccalendarToDatestamp(calendar : Calendar):Long = calendar.timeInMillis
+
+@TypeConverter fun datestampToCalendar(value : Long):Calendar = Calendar.getInstance().apply{ timeInMillis = value }
+
+2）@Typeconverters：加入数据库
+在数据库声明时加上@TypeConverters(Converters::class)
+@Database(...)
+@TypeConverters(Converters::class)
+abstract class AppDataBase : RoomDatabase(){
+}
+
+
+
+第六章 Paging 分页
+01.优点
+1）支持 RxJava2 、Jetpack（LiveData、Room）
+2）自定义分页策略
+3）异步数据处理。
+4）结合RecyclerView等
+
+02.依赖
+androidx.paging:paging-runtime:2.1.0
+
+03.关键元素
+1）PagedList：以分页形式异步加载数据的容器，可以跟RecyclerView结合使用。
+2）DataSource 或 DataSource.Factory ：数据源，DataSource 将数据转成 PagedList，DataSource.Factory 用来创建DataSource。
+3）LivePagedListBuilder ：用来生成LiveData<PagedList>，需要 DataSource.Factory 参数
+4）BoundaryCallback：数据到达边界的回调
+5）PagedListAdapter ：RecyclerView 的适配器。
+
+04.创建数据源
+1）不使用 Room 数据库，麻烦，以后再说。
+2）Room 数据库
+@Dao
+interface ShoeDao{
+@query("SELECT * FROM shoe")
+fun getAllShoeSLD() : DataSource.Factory<Int,Shoe>
+}
+
+05.构建 LiveData
+class ShoeModel constructor(shoeRepository:ShoeRepository):ViewModel(){
+//鞋子集合的观察类
+val shoes:LiveData<Pagedlist<Shoe>> = LivePagedListBuilder<Int,Shoe>(
+CustomPageDataSourceFactory(shoeRepository),
+pageDlist.Config>Builder()
+.setPageSize(10)    //每页加载的数量
+.setEnablePlaceholders(false)   //当 item 为 null ，是否使用PlaceHolder 展示
+.setInitialLoadSieHint(10)  //预加载的数量，应该大于或等于PageSize
+.build())
+}
+
+06.创建 PagedListAdapter
+PagedListAdapter 就是特殊的 RecyclerView 的 RecyclerAdapter ，跟 RecyclerAdapter 一样，需要继承实现方法。
+
+class ShoeAdapter constructor(val context:Context):PagedListAdapter<Shoe,ShoeAdapter.ViewHodler>(ShoeDiffCallback()){
+
+override fun onCreateViewHolder(parent : ViewGroup,viewType : Int) : ViewHolder{
+return ViewHolder(RecyclerItemShoeBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+}
+
+override fun onBindViewHolder(holder:ViewHolder,position:Int){
+val shoe = getItem(position)
+holder.apply{
+bind(onCeateListener(shoe!!.id),shoe)
+itemView.tag = shoe
+}
+}
+
+private  fun onCreateListener(id:Long):View.OnClickListener{
+retyrn View.OnClickListener{
+Val intent = Intent(context,DetailActivity::class.java)
+intent.putExtra(BaseConstant.DETAIL_SHOE_ID,id)
+context.startActivity(intent)
+}
+}
+
+clalss ViewHolder(private val binding:RecyclerItemShoeBinding):RecyclerView.ViewHolder(binding.root){
+fun bind(listener : View.OnClickListener,item:Shoe){
+binding.apply{
+this.Listener = listener
+this.shoe = item
+executePendingBindings()
+}
+}
+}
+}
+
+
+class ShoeDiffCall : Diffutil.ItemCallback<Shoe>(){
+override fun areitemsTheSame(oldItem : Shoe, newItem : Shoe): Boolean {
+return oldItem.id == newItem.id
+}
+
+override fun areContentsTheSame(oldItem : Shoe , newItem :Shoe):Boolean{
+return oldItem == newItem
+}
+}
+
+
+
+07.UI 内的监听数据
+class ShoeFragment :Fragment(){
+override fun onCreateView(inflater : LayoutInflater,container : ViewGroup?,savedInstanceState:Bundle?){
+val binding:FragmentShoeBinding = FragmentShoeBinding.inflate(inflater,container,false)
+context ?: return binding.root
+val adaper = ShoeAdapter(context!!)
+binding.recycler.adapter = adapter
+onSubscribeUI(adapter)
+return binding.root
+}
+
+//鞋子数据更新通知
+private fun onSubscribeUI(adapter : ShoeAdapter){
+viewModel.shoes.observe(viewLifecycleOwner,Observer{
+if(it !=null){
+adapter.submitList(it)
+}
+})
+}
+}
+
+
+
+第七章 WorkManager
+WorkManager是用来执行后台任务的。
+
+01.优点
+01）版本兼容性强，可兼容到API 14
+02）可以指定约束条件，比如可以选择必须在有网络的条件下执行。
+03）可定时执行，也可单次执行。
+04）监听和管理任务状态。
+05）多个任务可使用任务链
+06）保证任务执行，如当前执行条件不满足或者App进程呗杀死，他会等到下次条件满足或者App进程打开后执行。
+07）支持省电模式。
+
+02.依赖
+androidx.work:work-runtime-ktx:2.0.1
+
+03.用到的类
+01）Worker ：需要继承 Worker，并复写 doWork() 方法，在 doWork 方法中放入你需要在后台执行的代码
+02）WorkRequest：后台工作的请求，可以在后台工作的请求中添加约束条件。
+03）WorkManager ：真正让 Worker 在后台执行的类。
+
+
+
+第八章 Lifecycle
+01.Lifecycle的构成
+1）Lifecycle：是一个持有组件生命周期状态与事件的信息的类。
+2）LifecycleOwner：Lifecycle 的提供这，通过实现 LifecycleOwner 接口来访问 Lifecycle 声明周期对象。
+Fragment 和 FragmentActitity 类实现了 LifecycleOwner 接口，它具有访问生命周期的 getLifecycle 方法，使用时需要在自己的类中实现LifecycleOwner。
+3）LifecycleObserver：Lifecycle 观察者，可以使用LifecycleOwner 类的 addObserver() 方法进行注册，被注册后 LifecycleObserver 便可以观察到 LifecycleOwner 的生命周期事件。
+
+02.依赖
+dependencies {
+def lifecycle_version = "2.2.0"
+def arch_version = "2.1.0"
+// ViewModel
+implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+// LiveData
+implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+// Lifecycles only (without ViewModel or LiveData)
+implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+// Saved state module for ViewModel
+implementation "androidx.lifecycle:lifecycle-viewmodel- savedstate:$lifecycle_version"
+// Annotation processor annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+// alternately - if using Java8, use the following instead of lifecycle-compiler
+implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+// optional - helpers for implementing LifecycleOwner in a Service
+implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+// optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+
+// optional - ReactiveStreams support for LiveData
+implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+// optional - Test helpers for LiveData
+testImplementation "androidx.arch.core:core-testing:$arch_version"
+}
+
+官网用的是AndroidX，因为使用AndroidX可能会产生一些迁移的问题，这里的例子就不使用AndroidX，使用
+lifecycleandroid.arch.lifecycle库即可，如下所示。
+dependencies {
+implementation fileTree(dir: "libs", include: ["*.jar"])
+implementation 'androidx.appcompat:appcompat:1.2.0'
+implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+testImplementation 'junit:junit:4.12' androidTestImplementation 'androidx.test.ext:junit:1.1.2' androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+def lifecycle_version = "2.2.0"
+// 包含ViewModel和LiveData
+implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+// 仅仅包含ViewModel
+implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
+// For Kotlin use viewmodel-ktx
+// 仅仅包含LiveData
+implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+// 仅仅包含Lifecycles
+implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+//noinspection LifecycleAnnotationProcessorWithJava8 annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+// For Kotlin use kapt instead of annotationProcessor
+// 如果用Java8, 用于替代compiler
+implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+// 可选，ReactiveStreams对LiveData的支持
+implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
+// 可选，LiveData的测试
+testImplementation "android.arch.core:core-testing:$lifecycle_version"
+}
+
+03.创建 Lifecycle
+1）直接在onCreate中注册Lifecycle，
+getLifecycle().addObserver(new MyObserver())
+2）通过 LifecycleRegistry 注册。需要重写 getLifecycle() 方法
+LifecycleRegistry register= new LifecycleRegistry(this)
+register.adaObserver(new MyObserver())
+在各自的生命周期方法内
+register.setCurrentState(Lifecycle.State.RESUMED)
+
+
+第九章 Compose UI 类似于 Flutter 布局
+01.gradle 配置
+最低版本21，
+android{
+buildFeatures{
+compose true
+}
+compileOptions{
+sourceCompatibility JavaVersion.VERSION_1_8
+TARGETCompatibility JavaVersion.VERSION_1_8
+}
+kotlinOptions{
+jvmTarget = "1.8"
+}
+}
+
+

@@ -1,0 +1,614 @@
+开发艺术探索笔记
+
+第一章 Activity的生命周期和启动模式
+第三章 View的事件体系
+第四章 View的工作原理
+第五章 理解 RemoteViews
+
+
+第一章 Activity的生命周期和启动模式
+01.activity 的生命周期
+01）onCreate：表示activity正在被创建，在此可以做一些初始化工作，加载布局资源，初始化activity所需要的数据
+02）onRestart：表示activity正在重新启动，在执行了onStop，未执行onDestory前，又回到这个activity，这个方法就会执行。
+03）onStart：表示activity正在被启动，此时activity可见，但还没有出现在前台，无法与用户交互。这时候可以理解为activity已经显示出来了，但是我们还看不到。
+04）onResume：表示activity已经可见了，出现在前台开始活动。onStart和onResume都表示activity可见，但是onStart的时候页面还在后台，onResume的时候显示到前台。view的onMeasure，onLayout，onDraw在这之后执行。
+05）onPause：表示activity正在停止，正常情况下onStop会紧接着被调用。如在跳转页面时，页面启动崩溃，又返回到此页面，onStop来不及执行，会直接调用onResume。onPause可以做一些存储数据，停止动画等工作，不能太耗时，因为只有onPause先执行完，新页面的onResume才会执行。页面上的弹窗不会执行onPause。
+06）onStop：表示activity即将停止，可以做一些稍微重量级的回收工作，同样不能太耗时
+07）onDestory：表示activity即将被销毁，可以做一些回收工作和最终的资源释放。
+
+02.onStrat和onStop、onResume和onPause有什么不同？
+onStrat 和 onStop 是从 activity 是否可见这个角度来回调的；
+onResume 和 onPause 是从 activity 是否位于前台这个角度来回调的，除此之外，无其它明显区别。
+
+03.页面跳转顺序:
+1）A启动 A.onCreate->A.onStart->A.onResume->
+2）在A中启动B A.onPause->B.onCreate->B.onStart->B.onResume->A.onStop
+3）关闭B B.onPause->A.onRestart->A.onStart->A.onResume->B.onStop->B.onDestory
+
+04.横竖屏切换activity的生命周期
+1）不在 manifest 里设置 Android:configChanges ，会调用onSaveInstanceState（一般会在stop之后）和onRestoreInstanceState；执行顺序
+onpause() -> onstop() ->（onSaveInstanceState） -> ondestory() -> onCreate() -> onStart() -> onRestoreInstanceState() -> onresume()
+2）在 manifest 里设置 android:configChanges="orientation" ，不会调用生命周期，只会执行 onConfigurationChanged 方法。
+configchanges一般常用三个选项：
+1、locale：系统语言变化
+2、keyboardHidden：键盘的可访问性发生了变化
+3、orientation：屏幕方向变化
+
+第三章 View的事件体系
+3.1 View的基础知识
+view的位置参数、MotionEvent、TouchSlop、VelocityTracker、GestureDetector、Scroller
+
+3.1.1 什么是View
+View是Android中所有控件的基类，View是界面层控件的一种抽象。
+
+3.1.2 View的位置参数
+View的位置主要由四个顶点来决定，同时对应四个成员变量，分别是：
+mLeft：左上角X坐标，对应的获取方法为 getLeft()；
+mTop：左上角Y坐标，对应的获取方法为 getTop()；
+mRight：右下角X坐标，对应的获取方法为 getRight()；
+mBottom：右下角Y坐标，对应的获取方法为 getBottom()；
+
+需要注意的是这四个坐标都是相对于父容器来说的。
+同时
+width = mRight - mLeft
+height = mBottom - mTop
+这也是View的最终宽高。
+
+从3.0开始View增加了几个额外的参数：x、y、translationX、translationY；
+其中
+x = mLeft + translationX
+y = mTop + translationY
+四个顶点坐标是原始坐标，平移时也是不变的，变得是translationX和translationY，x、y随之变化。
+x，y相当于平移后的mLeft，mTop。
+
+3.1.3 MotionEvent 和 TouchSlop
+1.MotionEvent
+ACTION_DOWN 手指当接触到屏幕
+ACTION_MOVE 手指在屏幕上移动
+ACTION_UP 手指抬起的一瞬间
+
+getX与getY返回的是相对于当前view左上角的xy的坐标。
+getRawX与getRawY返回的是相对于手机屏幕左上角的xy的坐标。
+
+2.TouchSlop
+TouchSlop是系统所能识别出的被认为是滑动的最小距离；这是一个常量，和设备有关。获取方法
+ViewConfiguration.get(context).getScaledTouchSlop()。
+这个常量的意义是：当我们在处理滑动时，可以利用这个常量来做一些过滤。比如当两次滑动事件的滑动距离小于这个值，我们就可以认为未达到滑动距离的临界值，因此就可以认为它们不是滑动，这样做可以有更好地用户体验。
+也可以自定义。
+
+3.1.4 VelocityTracker、GestureDetector、Scroller
+1.VelocityTracker
+速度追踪，用于追踪手指在滑动过程中的速度，包括水平和竖直方向的速度。使用方法：
+首先在View的onTouchEvent方法中追踪当前单击事件的速度。
+VelocityTracker tracker = VelocityTracker.obtain();
+tracker.addMovement(event);
+
+通常可以在ACTION_MOVE，ACTION_UP中使用
+tracker.computerCurrentVelocity(1000)//移动速度的单位，毫秒值，所以是1000起步。
+tracker.getXVelocity()
+tracker.getYVelocity()
+往右下(也就是右滑下滑)是正数速度，左上（左滑上滑）负数的速度，也就是遵循XY轴正方向。
+
+当不需要的时候回收，在ACTION_UP中回收。
+tracker.clear();
+tracker = null;//强引用消除
+
+2.GestureDetector
+手势检测，用于辅助检测用户的单击，长按，双击，滑动
+使用方法：单个参数的构造方法已经舍弃。
+GestureDetector detector = new GestureDetector(context，OnGestureListener)；
+里面的监听一般使用SimpleOnGestureListener，方便类，用哪个方法，就重写那个方法。
+
+解决长按屏幕后无法拖动的现象
+detector.setIsLongpressEnabled(false);
+              b
+if(detector.onTouchEvent(event)){//有可能 还需要向下传递。
+return true;
+}
+
+OnGestureListener中的方法
+onDown  按下，由一个ACTION_DOWN触发
+onShowPress  手指轻按，尚未松开或拖动，由一个ACTION_DOWN触发。与onDown的区别是，此方法是在没有松开或者拖动的状态下。
+onSingleTapUp  手指轻轻触摸屏幕后松开，伴随着一个ACTION_UP触发，这是单击行为。
+onScroll  手指按下屏幕并拖动，由一个ACTION_DOWN，多个ACTION_MOVE触发，也就是拖动行为。
+onLongPress  用户长久的按着屏幕不放，即长按。
+onFling  用户按下触摸屏、快速滑动后松开，由一个ACTION_DOWN,多个ACTION_MOVE和一个ACTION_UP触发，这是快速滑动行为。
+
+OnDoubleTapListener中的方法
+onDoubleTap 双击，由两次连续的单击组成，它不可能和onSingleTapConfirmed共存
+onSingleTapConfirmed 严格的单击行为；与onDoubleTap互斥，触发了此方法，就算后边紧跟着一次单击，也不会执行双击。
+onDoubleTapEvent 表示发生了双击行为，在双击期间，ACTION_DOWN、ACTION_MOVE、ACTION_UP都会触发此回调。
+
+在日常开发中比较常用的的有：onSingleTapUp（单击）、onFling（快速滑动）、onLongPress（长按）和onDoubleTap（双击）。
+如果要实现双击这种行为的话，使用GestureDetector比较好。
+
+3.Scroller
+弹性滑动对象，用于实现View的弹性滑动。使用方法：
+val scroller = Scroller(context)
+    override fun computeScroll() {
+        super.computeScroll()
+        if (scroller.computeScrollOffset()) {
+            LogUtils.i("currX" + scroller.currX)
+            LogUtils.i("currY" + scroller.currY)
+            scrollTo(scroller.currX, scroller.currY)
+            postInvalidate()
+        }
+    }
+    //需要在ACTION_MOVE中调用
+    fun smoothScrollTo(dX: Int, dY: Int) {
+        //在1000ms内画像destX，慢慢的滑动
+        scroller.startScroll(scrollX, scrollY, dX, dY, 1000)
+        invalidate()
+    }
+
+3.2 View的滑动
+
+3.2.1使用scrollTo/scrollBy，属于内部内容的滑动。
+scrollTo(x,y)：滑动到xy指定的位置，是基于xy的绝对滑动。
+scorllBy(x,y)：内部也调用了scrollTo，加上了原来的ScrollX/Y，是基于原来的mScrollX与mScrollY的滑动X/Y距离的相对滑动；
+
+mScrollX与mScrollY可以理解为：View的边缘（四坐标）减去view内容的边缘，默认为0；
+可以理解为view顶部边缘覆盖View的内容，下滑时，向下覆盖，scrollY为正数，上滑时超出view内容后，为负数。
+所以上滑的时候view的上边缘在view内容的下边，scrollY是正数，下滑的时候，view的上边缘在view内容之上，scrollY就是负数，
+左滑的时候，view的左边缘在view内容的右边，scrollX是正数；右滑的时候，view的左边缘在view内容的左边，scrollX就是负数。
+
+3.2.2 使用动画
+补间动画，和属性动画
+
+3.2.3 改变布局参数
+也就是改变layoutparams中的配置
+单纯的LayoutParams中只有width与height，要想设置边距得用，MarginLayoutParams。
+
+3.2.4 各种滑动方式的对比
+scrollTo/scrollBy：操作简单，适合对View内容的滑动；
+动画：操作简单，主要适用于没有交互的View（主要是3.0以下不支持属性动画）和实现复杂的动画效果
+改变布局参数：操作稍微复杂，适用于有交互的View。
+
+3.3 弹性滑动
+可以通过 Scroller、Handler#postDelayed、Thread#sleep
+
+3.3.1 使用Scroller
+需要手动调用一下方法，传以下参数是移动的距离，负值是向右向下，正值是向左向上。
+scroller.startScroll(scrollX, scrollY, dX, dY, 1000)
+invalidate()
+
+3.3.2 通过动画
+ObjectAnimator继承自ValueAnimator
+
+3.3.3 使用延时策略：通过发送一系列的延时信息，从而达到渐进式的效果。
+
+handler或View的postDelayed来延时发送消息刷新。还可以用Thread的sleep来操作。
+
+因为View的postDelayed就可以实现延时消息发送，所以如无必要，无需使用handler
+
+3.4 View的事件分发机制
+
+3.4.1点击事件的传递规则
+点击事件的分发其实就是对MotionEvent的分发过程。主要由三个很重要的方法完成。
+第一个
+public boolean dispatchTouchEvent(MotionEvent event)
+用来进行事件的分发，如果事件能够传递给当前View，此方法一定会被调用。返回结果受当前View的onTouchEvent和下级View的dispatchTouchEvent方法的影响，表示是否消耗当前事件。
+
+第二个：ViewGroup独有
+public boolean onInterceptTouchEvent(MotionEvent event)
+在上述方法内部调用，用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列当中，此方法不会被再次调用，返回结果表示是否拦截当前事件。
+ACTION_DOWN正常传递，在ACTION_MOVE拦截，拦截之后，此方法就会自动跳过，不在调用，所以之后的ACTION_MOVE与ACTION_UP都不会执行。
+
+第三个
+public boolean onTouchEvent(MotionEvent event)
+在dispatchTouchEvent中调用，用来处理点击事件，返回结果表示是否消耗当前事件，如果不消耗，则在同一个事件序列中，当前View无法再次接收到事件。
+
+三者关系大概如下
+public boolean dispatchTouchEvent(MotionEvent event){
+     boolean consume = false;
+     if(onInterceptTouchEvent(event)){
+        consume = onTouchEvent(event);
+     }else{
+        consume = child.dispatchTouchEvent(event)
+     }
+     return consume;
+}
+
+View的setOnTouchListener里的OnTouchListener优先级高于View自身的onTouchEvent。实际代码如下
+            ListenerInfo li = mListenerInfo;
+            if (li != null && li.mOnTouchListener != null
+                    && (mViewFlags & ENABLED_MASK) == ENABLED
+                    && li.mOnTouchListener.onTouch(this, event)) {
+                result = true;
+            }
+
+            if (!result && onTouchEvent(event)) {
+                result = true;
+            }
+
+
+当一个点击事件产生后，它的传递顺序是：Activity -> Window -> View。
+用一句话解释就是Activity嵌套Window，Window中嵌套DecorView，DecorView继承自FrameLayout。
+
+关于时间传递机制的一些结论
+（1）同一个事件序列是指从手指接触屏幕到手指离开屏幕的结束，这个事件以down事件开始，中间含有数量不定的move事件，最终以up事件结束。
+
+（2）正常情况下，一个事件序列只能被一个View拦截且消耗。但也可以通过自己的onTouchEvent强行传递个其它View处理。
+
+（3）某个View一旦决定拦截，那么这个事件序列都只能由它来处理，并且它的onInterceptTouchEvent不会再被调用。
+
+（4）某个View一旦开始处理事件，如果它不消耗ACTION_DOWN事件（onTouchEvent返回了false），那么同一事件序列中的其它事件也不会交给它处理，会交由上级父元素的onTouchEvent处理;
+没有处理ACTION_DOWN，则mFirstTouchTarget为空，会默认调用ViewGroup父元素view的super.dispatchTouchEvent，继而调用onTouchEvent。
+
+（5）如果View不消耗ACTION_DOWN以外的其他事件，那么这个点击事件会消失，此时父元素的onTouchEvent不会被调用，最终这些消失的事件会传递给activity处理；
+
+（6）ViewGroup的onInterceptTouchEvent默认返回false；
+
+（7）onInterceptTouchEvent方法是ViewGroup独有的，其他View,Activity,Window都没有此方法。没有OnTouchListener拦截的话，onTouchEvent一定会执行。
+
+（8）View的onTouchEvent默认都会消耗事件（返回true），除非他是不可点击的(clickable和longClickable同时为false)。
+View的longClickable属性默认为false，clickable属性分情况，Button中为true，TextView中为false。可以简单地理解为：可点击的为true，不可点击的为false；不过只要设置了统一为true
+
+（9）View的enable属性不影响onTouchEvent的默认返回值。其实是enable设置不影响clickable和longClickable的值，所以也就影响不了onTouchEvent的返回值。
+
+（10）onClick会发生的前提是当前View是可点击的，并且他收到了down和up事件。点击事件是在up中调用的。
+
+（11）事件传递过程是由外向内的，即父元素分发给子View，通过requestDisallowInterceptTouchEvent方法可以在子元素中干预父元素的事件分发过程，但是ACTION_DOWN事件除外。
+
+3.4.2 事件分发的源码解析
+activity -> window -> DecroView(顶级view) -> View
+
+onInterceptTouchEvent在ACTION_DOWN时一定会调用，在MOVE或者UP时不是每次都调用，如果想要提前处理所有的点击事件，要在dispatchTouchEvent中处理。
+
+在dispatchTouchEvent中，在ACTION_DOWN或者myFirstTouchTarget不为空（即有可以向下传递的View）时，才会向下传递。代码如下：
+// Check for interception.
+            final boolean intercepted;
+            if (actionMasked == MotionEvent.ACTION_DOWN //按下
+                    || mFirstTouchTarget != null
+                    ) {
+                final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
+                if (!disallowIntercept) {
+                    intercepted = onInterceptTouchEvent(ev);
+                    ev.setAction(action); // restore action in case it was changed
+                } else {
+                    intercepted = false;
+                }
+            } else {
+                // There are no touch targets and this action is not an initial down
+                // so this view group continues to intercept touches.
+                intercepted = true;
+            }
+
+actionMasked == MotionEvent.ACTION_DOWN //按下
+按下状态时一定会执行onInterceptTouchEvent，此时有两种情况
+情况一：拦截，intercepted为true，mFirstTouchTarget不会进入赋值代码块（cancel与intercepted同时为false才会进入），mFirstTouchTarget默认为空，每次按下时也会重置为空。
+所以在MOVE与UP时，mFirstTouchTarget != null为false，onInterceptTouchEvent跳过不在执行，所以之后的MOVE与UP都不在向下传递，执行自己的onTouchEvent方法
+
+情况二：不拦截，intercepted为false，mFirstTouchTarget进入赋值代码块，如已经是最底层，依然会为空。
+mFirstTouchTarget != null
+判断是否为空，不为空，之后的MOVE或UP向下传递。
+
+requestDisallowInterceptTouchEvent方法会设置mGroupFlags，但是在dispatchTouchEvent最开始是会重置mGroupFlags的，所以此方法的设置不影响下次onInterceptTouchEvent对ACTION_DOWN的拦截，会影响对MOVE和UP的拦截。
+
+FLAG_DISALLOW_INTERCEPT标记为的作用可以考虑用这种方法去解决事件冲突。
+
+mGroupFlags &= ~FLAG_DISALLOW_INTERCEPT; 是尼玛啥个意思？
+
+3.5 View的滑动冲突
+冲突产生的原因是界面中有内外两层同时可以滑动，事件分发向两个view。
+
+3.5.1 常见的滑动冲突场景
+第一种：滑动方向不一致：上下嵌套左右，或者左右嵌套下上
+
+第二种：滑动方向一致：上下嵌套上下，或者左右嵌套左右
+
+第三种：皆有
+
+3.5.2 滑动冲突的处理规则
+依据水平方向和数值方向上的距离来判断，
+
+依据水平方向和数值方向上的速度来判断，
+
+可以依据滑动路径和水平方向所形成的夹角，绝对值小于45度就是水平方向的滑动。
+
+三种都只适用于方向不一致的滑动，也就是第一种情况；二三种需要根据业务编写需要的逻辑。
+
+3.5.3 滑动冲突的解决方式
+
+1.外部拦截
+直接在父容器的onInterceptTouchEvent中进行拦截，父容器需要此事件就拦截，不需要就放行。需要知道的是
+ACTION_DOWN：必须返回false，否则子view将接收不到事件；
+ACTION_MOVE：根据自身需要拦截事件
+ACTION_UP：只有返回false，否则子view的onclick将不会执行。如果在MOVE已拦截，则不会执行onInterceptTouchEvent的ACTION_UP事件。
+ACTION_CANCEL：事件被上层拦截时触发。
+ACTION_POINTER_DOWN:其他手指按下。
+ACTION_POINTER_UP:其他手指抬起。
+
+2.内部拦截
+父容器不拦截任何事件，所有的都传递个子元素处理，如果子元素也不消耗，就回传到上级父元素处理，（这种方法和Android中的事件分发机制不一致，？？？？哪里不一致，问号？？）。
+需要配合requestDisallowInterceptTouchEvent方法才能正常工作，使用起来稍显复杂。
+
+不一致请看：
+自身的事件处理：
+ACTION_DOWN：设置requestDisallowInterceptTouchEvent(true);变为true；
+ACTION_MOVE：根据父容器需要事件的要求，设置requestDisallowInterceptTouchEvent(false)；变为false
+ACTION_UP：不用管；
+
+代码如下
+public boolean onInterceptTouchEvent (MotionEvent event) {
+    int action = event.getAction();
+    if(action == MotionEvent.ACTION_DOWN) {
+        return false;
+    } else {
+        return true;
+    }
+}
+父容器中在onInterceptTouchEvent需要默认拦截除ACTION_DOWN以外的其他事件，这样子view调用requestDisallowInterceptTouchEvent(false)才有作用。
+
+优化滑动体验：
+mScroller.abortAnimation();
+
+第四章 View的工作原理
+
+View的工作原理
+
+自定义View的实现方式
+
+自定义View的底层工作原理，比如View的测量流程、布局流程、绘制流程。
+
+View常见的回调方法，比如构造方法,onAttach、onVisibilityChanged、onDetach等
+
+4.1 初始ViewRoot 和 DecorView
+ViewRoot的实现类是ViewRootImpl，他是链接WindowManager 和 DecorView的纽带。view的三大流程军事通过ViewRoot来完成的。
+
+View的绘制流程从ViewRoot的performTraversals方法开始的。
+measure用来测量View的宽和高
+layout用来确定View在父容器中的放置位置
+draw负责将View绘制在屏幕上
+
+performTraversals 会依次调用 performMeasure、performLayout、performDraw三个方法，分别完成顶级View的measure、layout和draw这三大流程。
+performMeasure会调用measure，在measure中调用onMeasure，在onMeasure中会对所有子元素进行measure过程，此时measure流程会从父容器传递到子元素中，这样就完成了一次measure过程。接着子元素会重复父容器的measure过程，如此反复就完成了整个View树的遍历。
+同理，performLayout和performDraw的传递流程和performMeasure是类似的，唯一不同的是，performDraw的传递过程是在draw方法中通过dispatchDraw来实现的。不过也只是名称不同而已。
+
+measure过程决定了View的宽高，完成以后可以通过getMeasureWidth和getMeasuredHeight来获取到View测量后的宽高。极个别的情况除外。
+layout过程决定了View的四个顶点的坐标和实际View的宽高，完成后可以通过getTop、getBottom、getLeft、getRight来获取顶点的坐标；并且可以通过getWidth和getHeight来拿到View的最终宽高。
+draw过程决定了view的显示，只有draw方法完成以后View的内容才能呈现在屏幕上。
+
+DecorView作为顶级View，一般情况下内含一个竖直方向的LinearLayout，分为上下两部分（具体看版本和主题），上面标题栏，下面内容栏（content），所以是setContentView();
+获取content的方法：
+ViewGroup content = findViewById(android.R.id.content);
+content.getChildAt(0);
+
+4.2 理解MeasureSpec
+MeasureSpec决定了一个View的尺寸规格，父容器会影响View的MeasureSpec的创建过程，系统会将View的 LayoutParams 根据父容器所施加的规则转换成对应的MeasureSpec，然后再根据这个MeasureSpec来测量出View的宽高。
+
+4.2.1
+MeasureSpec代表一个32位的int值，高2位代表SpecMode，低30位代表SpecSize。
+SpecMode指测量模式，SpecSize指在某种测量模式下的规格大小。
+二进制运算请看《java运算符》
+
+SpecMode有三类
+
+UNSPECIFIED：父容器不对View有任何限制，要多大给多大，一般用于系统内部，表示一种测量状态；
+
+EXACTLY：父容器已经检测出View所需要的精确大小，这个时候View的最终大小就是SpecSize所指定的值。
+对应LayoutParams中的match_parent和具体的数值，这个两种方式。
+
+AT_MOST：父容器制定了一个可用大小即SpecSize，View的大小不能大于这个值，实际大小要看View的具体实现，不重写onMeasure的话，默认使用的就是SpecSize，即父容器提供的大小，其实就相当于match_parent。
+对应于LayoutParams中的wrap_content。
+
+4.2.2 MeasureSpec 和 LayoutParams 的对应关系
+对于顶级View（DecorView）MeasureSpec有窗口尺寸和其自身的LayoutParams来共同确定；对于其他普通View，MeasureSpec由父容器的MeasureSpec和自身的LayoutParams来共同决定，MeasureSpec一旦确定后，onMeasure中就可以确定View的测量宽高。
+
+DecorView的MeasureSpec具体遵守如下规则，根据他的LayoutParams中狂傲的参数来区分：
+LayoutParams.MATCH_PARENT：精确模式，大小就是窗口的大小；
+LayoutParams.WRAP_CONTENT：最大模式，大小补丁，但不能超过窗口的大小；
+固定大小：精确模式，大小为LayoutParams中指定的大小。
+
+子元素与父容器对应的SpecMode：
+
+子元素的宽高是确定的数值，无论父容器是什么模式，子元素都是EXACTLY;
+子元素是match_parent，父容器是精确模式，那View就是精确模式，大小是父容器的剩余空间。父容器是最大模式，那View就是最大模式，大小不会超过父容器的剩余空间；
+子元素是wrap_content，无论父容器是精确模式还是最大模式，View都是最大模式，大小不会超过父容器的剩余空间；
+
+4.3 View 的工作流程
+measure、layout、draw，即测量、布局、绘制；
+measure确定View的测量宽/高。
+layout确定View的最终宽高和四个顶点的位置，
+draw则将View绘制到屏幕上。
+
+4.3.1 measure 过程
+View执行完measure方法就完成了自身测量过程。
+ViewGroup还需要去遍历调用子元素的measure方法。依次递归调用。
+wrap_content模式下，如果View没有重写onMeasure，那默认的宽高就是parentSize；相当于match_parent。
+
+View的measure过程
+measure是一个final方法，子类不能重写此方法。
+直接继承View的自定义控件需要重写onMeasure方法，并且在AT_MOST(wrap_content)模式时的需要自己测量View大小，因为最大模式默认就是父容器的剩余空间大小，不自己计算的话和 EXACTLY 模式没有差别，所以需要重新计算。
+View自带的onMeasure代码如下
+
+protected void onMeasure（int widthMeasureSpec， int heightMeasureSpec）{
+    setMeasureDimension(getDefaultSize(getSuggestedMinimumWidth(),widthMeasureSpec),
+        getDetaultSize(getSuggestedMinimumHeight(),heightMeasureSpec))；
+}
+在getDefaultSize方法中：
+在EXACTLY与AT_MOST模式下用的肯定是MeasureSpec；
+在UNSPECIFIED（系统内部测量时使用），会使用getSuggestedMinimumxxx方法
+
+ViewGroup的measure过程
+ViewGroup是一个抽象类，没有重写onMeasure方法，需要他的子类布局控件重写，去实现是竖直布局还是水平布局，亦或是相对布局。
+他提供了三个主要方法
+（1）测量所有的child，其中MeasureSpec是父容器自身的MeasureSpec传递给child
+measureChildren(int widthMeasureSpec, int heightMeasureSpec)//自身的MeasureSpec
+（2）测量单个View，其中MeasureSpec是父容器自身的MeasureSpec传递给child，会调用child的measure方法，
+measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec)
+（3）测量单个View，其中MeasureSpec是父容器自身的MeasureSpec传递给child，会调用child的measure方法，widthUsed和heightUsed是已经使用的宽高。
+measureChildWithMargins(View child, int parentWidthMeasureSpec,int widthUsed, int parentHeightMeasureSpec, int heightUsed)
+View child：子View
+parentWidthMeasureSpec：父容器的模式
+widthUsed：已使用的宽度
+parentHeightMeasureSpec：父容器的模式
+heightUsed：已使用的高度
+
+measureChild的测量流程：
+（1）取出child自身的LayoutParams
+（2）通过getChildMeasureSpec()方法来创建子元素的MeasureSpec
+（3）将MeasureSpec传递给child的measure方法，开始测量。
+
+LinearLayout的onMeasure区分竖直方向和水平方向
+（1）使用match_parent，则就是父容器的剩余size；
+（2）使用wrap_content，就是所有控件的宽/高总和，但不超过父容器的剩余size。
+（3）还需要考虑padding，div的数值。
+
+View的measure过程是三大流程中最复杂的一个，measure完成以后就可以获取测量宽/高，在某些情况下，系统可能多次measure才能确定作中的测量宽/高，这种情况下很可能不准，一个比较好的习惯是在onLayout中获取测量宽/高，或者最终宽/高。
+
+怎样在Activity启动时获取一个View的宽高？
+View的measure、layout，draw是在onResume中执行的，而且是不同步的，
+（1）onWindowFocusChanged()
+代表这个窗口的焦点，同时表示View已经初始化完毕，可以获取宽高了。
+在activity得到与失去焦点时，也就是onResume或onPause时，都会被调用。
+代码如下
+public void onWindowFocusChanged(boolean hasFocus){
+    super.onWindowFocusChanged(hasFocus);
+    if(hasFocus){
+    int width = view.getMeasuredWidth();
+    int height = view.getMeasuredHeight();
+    }
+}
+（2）view.post(runnable)
+通过post可以将一个Runnable投递到消息队列的尾部，然后等待Looper调用此Runnable的时候，View也已经初始化好了。
+代码如下
+protected void onStart(){
+    super.onStart();
+    view.post(new Runnable(){
+        @override
+        public void run(){
+            int width = view.getMeasuredWidth();
+            int height = view.getMeasuredHeight();
+        }
+    });
+}
+(3)viewTreeObserver.addOnGlobalLayoutListener()
+当View树的状态发生改变或者View树内部View的可见性发生改变是，onGlobalLayout方法将被回调，因此这是获取View宽高的一个很好的时机。需要注意的事，伴随着View树的状态改变等，onGlobalLayout会被调用多次。
+代码如下：
+protected void onStart（）{
+    super.onStart();
+    ViewTreeObserver observer = view.getViewTreeObserver;
+    observer.addOnGlobalLayoutListener(new onGlobalLayoutListener(){
+        @override
+        public void onGlobalLayout(){
+            view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            int width = view.getMeasuredWidth();
+            int height = view.getMeasuredHeight();
+        }
+    });
+}
+
+(4)view.measure(int widthMeasureSpec, int heightMeasureSpec)，不建议使用
+手动对View进行measure来得到宽高。根据View自身的LayoutParams来区分：
+match_parent：无法测量，因为它占据的是父容器的剩余空间parentSize，此时无法知道parentSize的大小。
+
+具体数值，可以直接通过LayoutParams获取到，也可以
+int widthSpec=View.MeasureSpec.makeMeasureSpec(100, View.MeasureSpec.EXACTLY);
+int heightSpec=View.MeasureSpec.makeMeasureSpec(100, View.MeasureSpec.EXACTLY);
+view.measure(widthSpec,heightSpec);
+
+wrap_content：
+int widthSpec=View.MeasureSpec.makeMeasureSpec((1 << 30)-1, View.MeasureSpec.EXACTLY);
+int heightSpec=View.MeasureSpec.makeMeasureSpec((1 << 30)-1, View.MeasureSpec.EXACTLY);
+view.measure(widthSpec,heightSpec);
+
+(1 << 30)-1 = 2的30次方减1，是宽高所能达到的最大值，后两位是宽高的模式
+
+正确的MeasureSpec才能算出正确的宽高。
+
+4.3.2 layout 的过程
+layout方法确定View自身的位置；
+onLayout方法确定子元素的位置。
+
+layout方法中先保存一下原有的上下左右（mLeft，mTop，mRight，mBottom）的位置，通过setFrame方法来View的四个顶点的值，确定后，View在父容器中的位置也就确定了。之后会调用onLayout方法，然后调用各个子元素的layout方法。onLayout方法要看各个布局控件的具体实现。
+
+在setFrame中会先判断是新旧上下左右位置是否有变化，有变化则重新计算。宽高有变化，则刷新自身，设置新的上下左右的位置，同时执行onSizeChanged。
+
+View测量宽高和最终款高有什么区别？getMeasuredWidth与getWidth、getMeasuredHeight与getHeight有什么区别？
+在View的默认实现中，测量宽高与最终宽高是相等的，但是测量宽高在measure过程中形成，最终宽高在layout中形成，所以测量宽高比最终宽高早一些。
+默认是相等的，但在layout可以手动修改上下左右的大小，所以修改了，就有可能会不等。
+
+4.3.3 draw过程
+将View绘制到屏幕上，步骤如下：
+（1）绘制背景：background.draw(canvas)
+（2）绘制自己：onDraw
+（3）绘制children：dispatchDraw
+（4）绘制装饰：onDrawScrollBars
+
+View有一个特殊的方法：setWillNotDraw(boolean willNotDraw)
+如果一个View不需要绘制任何内容，那么就把这个标记设为true。默认情况下，View没有开启，ViewGroup启用了这个标记。所以默认情况下，ViewGroup的子类是不具备绘制功能的，如果绘制，需要手动关闭这个标记。
+
+4.4 自定义View
+
+4.4.1 自定义View的分类
+一种效果可以多种方法实现，我们需要做的就是找到一种代价最小，最高效的方法来实现。
+
+（1）继承View，重写onDraw方法
+这种方法主要用于实现一些不规则的效果。不方便通过布局组合，往往需要静态或动态地显示一些不规则的图形，需要自己处理wrap_content和padding。
+
+（2）继承ViewGroup，派生特殊的ViewGroup
+自定义的布局，需要处理ViewGroup的测量和布局这两个过程，并同时处理子元素测量和布局过程。
+
+（3）继承特定的View（如TextView）
+一般用于扩展已有View的功能，如TextView，不需要自己支持wrap_content和padding.
+
+（4）继承特定的ViewGroup
+实现几种View组合在一起的效果。与方法二的差别在于方法二更接近于View底层
+
+4.4.2 自定义View需须知
+这些问题处理不好，会影响view的使用，甚至是内存泄漏。
+（1）让View支持wrap_content，以判断EXACTLY为主。
+因为wrap_content模式下，自己不计算，使用的是父容器提供的剩余大小，会充满父容器，相当于match_parent。
+ScrollView嵌套下，heightMode的模式可能为UNSPECIFIED，所以以判断EXACTLY为主。推荐使用getDefaultSize这个View自带的方法。
+（2）让View支持padding
+直接继承View控件，如不在draw中处理padding，那么padding属性无法起作用。
+直接继承ViewGroup，需要在onMeasure和onLayout中处理padding和子元素的margin，不然将导致padding和子元素的margin失效。
+
+（3）尽量不在View中使用handler，没必要。
+View自带有post系列方法，如非必要，不要使用handler
+
+（4）View中如果有线程或动画，需要及时停止，参考View#onDetachedFromWindow
+View如果包含线程和动画，那在View加载到Activity时需要处理；
+onAttachedToWindow：组件加载到Activity上，一般不用管。
+onDetachedFromWindow：组件从Activity上移除，这时候线程或动画在执行的话，需要停止。
+同时当View变得不可见也需要停止线程和动画如果不及时处理，有可能会造成内存泄漏。
+
+（5）View带有滑动嵌套时，需要处理好滑动冲突
+参考之前的滑动冲突处理方案。
+
+4.4.3 自定义View示例
+
+（1）继承View重写onDraw方法
+需要在onMeasure时自己测量wrap_content模式下的宽高，在onDraw时手动加入padding。
+获取自定义属性的方法
+TypedArray style = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SolarSystem, defStyle, 0);
+TypedArray style2 = context.obtainStyledAttributes(attrs, R.styleable.SolarSystem, defStyle, 0);
+TypedArray style3 = context.obtainStyledAttributes(attrs, R.styleable.SolarSystem);
+style.recycle();
+参考SolarSystem；
+
+（2）继承ViewGroup派生特殊的layout
+需要在onMeasure中判断是否有子View，根据模式设定相应的宽高。
+在onLayout中要根据自身的padding以及子View的margin来计算正确的位置。
+要处理margin需要重写generateLayoutParams方法，默认的是ViewGroup的LayoutParams类，要变成MarginLayoutParams才行。
+代码如下：
+这个方法应该是在代码中创建view时才会使用
+@Override
+protected LayoutParams generateLayoutParams(LayoutParams p) {
+    return new ViewGroup.MarginLayoutParams(p);
+}
+
+这个方法应该是在xml中创建view时才会使用
+@Override
+public LayoutParams generateLayoutParams(AttributeSet attrs) {
+    return new MarginLayoutParams(getContext(), attrs);
+}
+
+4.4.4 自定义View的思想
+背过这两章的基础知识就行了，背。
+
+第五章 理解 RemoteViews
+
+
+

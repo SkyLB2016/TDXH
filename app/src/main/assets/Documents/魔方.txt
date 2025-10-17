@@ -1,0 +1,15 @@
+        //    UR U'R' U'F' UF 或 UR UR' U'F' U'F
+        //    U'F' UF UR U'R' 或 U'F' U'F' UR UR'
+        //    U'L' UL UF U'F'
+
+        //    FRU R'U'F
+
+        //    LU L'U LUUL'
+        //    R'U' RU' R'U'U'R
+
+        //    RUU R'U' RUU L'UR'U'L
+        //    L'U'U' LU L'U'U' RU'LUR'
+
+        //    FFU R'L FF RL' UFF
+        //    FFU' R'L FF RL' U'FF
+        //    RU' RU RU RU' R'U' RR

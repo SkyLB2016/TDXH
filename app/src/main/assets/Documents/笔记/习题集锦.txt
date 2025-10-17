@@ -1,0 +1,155 @@
+第十二章 MVVM、MVC、MVP
+01.MVC：
+M（Model）：数据处理（网络，DB）
+V（View）：xml、view
+C（Controller）：activity，fragment
+
+VC层耦合性高，基本可以理解为一层，直接与Model层进行交互。有个优化方案是把C层中的逻辑拆分出来，不过这与MVP也就没什么差别了。
+适合于简单的以后也不会有什么变动的页面。
+
+02.MVP
+M（Model）：数据处理（网络，DB）
+V（View）：xml、view，activity，fragment
+P（Presenter）：业务逻辑层，相当于把MVC中C层的业务单独剥离出来
+
+M <-> P <-> V
+业务逻辑复杂的App，P层会过于臃肿，接口过多。
+
+03.MVVM：可以理解成加入DataBinding的MVP
+M（Model）：数据处理（网络，DB）
+V（View）：xml、view，activity，fragment
+VM（ViewModel）：业务逻辑层，
+
+M <-> VM <-> V
+
+减少了接口数量，不用再findViewById，实现了数据与视图的双向绑定，极大地简化代码。
+单向绑定（@{}）与双向绑定（@={}），可以动态更新数据。
+
+BaseObservor
+@Bindable
+notifyPropertyChanged(BR.xxx)
+
+DataBinding实现MVVM数据绑定的工具
+liveData解决MVVM的数据通信问题，可以感知组件的生命周期。
+
+04.MVC与MVP的区别
+1）功能复杂的话，MVC的activity或fragment会很庞大，view与model耦合严重
+2）功能复杂的话，MVP会产生很多接口，activity需要很多接口方法来更新UI，model与view不直接进行交互，达到解耦的效果
+
+
+第十三章 网络请求
+01.HTTP 请求种类类
+http://www.baidu.com/...
+协议  主机地址     资源
+1）GET      请求获取Request-URI所标识的资源
+2）POST     在Request-URI所标识的资源后附加新的资源
+3）HEAD     请求获取由Request-URI所标识的资源得响应消息报头
+4）PUT      请求服务器存储一个资源，并用Request-URI作为其标识
+5）DELETE   请求服务器删除Request-URI所标识的资源
+6）TRACE    请求服务器回送收到的请求信息，主要用于测试或诊断
+7）CONNECT  保留将来使用
+8）OPTIONS  请求查询服务器的性能，或者查询与资源相关的选项
+
+02.错误码含义：
+400 bad Request    客户端请求有语法错误，不能被服务器所理解
+401 unauthorized   请求未经授权，这个状态码必须和WWW-Authenticate报头域一起使用
+403 forbidden      服务器收到请求，但是拒绝提供服务
+404 not found      请求资源不存在，eg：输入了错误的URL
+500 internal server error 服务器发生不可预期的错误
+503 server unavailable 服务器当前不能处理客户端的请求，一段时间后可能恢复
+
+03.TCP的三次握手与四次挥手
+1）开始连接：客户端请求server连接，server发送响应码，客户端告诉server已匹配。
+2）开始传输数据。
+3）客户端告诉server请求断开连接，server发送两次回执，客户端与server断开
+
+04.简述TCP、UDP、Socket
+1）TCP是经过3次握手，4次挥手完成遗传数据的传递。
+2）UDP是无连接的，知道IP地址和端口号，向其发送数据即可，不管数据是否发送成功。
+3）Socket是一种不同计算机实时连接，比如说传送文件，即时通讯。
+
+
+第十四章 IPC机制，AIDL
+01.IPC机制：多进程间通信（待深入研究）
+会造成的问题：
+1）静态成员和单例模式完全失效：不同进程间的静态和单例是互相独立的。
+2）线程同步机制完全失效：不同进程间的线程也是互相独立的。
+3）SharedPreferences可靠性下降：不支持两个进程同时读写，有一定几率会丢数据。
+4）application多次创建：新进程代表新的虚拟机的启动。
+通信方式：序列化serializable与parcelable，Binder，Intent，共享文件，Messenger（待深入研究AIDL），ContentProvider，socket网络通信。
+
+02.Binder（待深入研究）
+实现IBinder接口（aidl快速实现Binder的工具），主要用在Service开发中，AIDL在PairServiceA中有应用。
+
+03.IPC的几种通信方式
+共享内存、消息传递、管道、信号量
+
+
+第十五章 NDK 编程
+01.JNI和NDK编程，JNI是java的本地交互，NDK是Android提供得工具集合，可以在android中更加方便的通过JNI来访问本地代码，如C，C++，NDK
+还提供了交叉编译器，开发人员只需要简单的修改mk文件就可以生成特定的CPU平带的动态库，使用NDK有如下好处：
+1）提高代码的安全性，so库反编译比较困难；
+2）可以使用目前已有的C/C++开源库；
+3）便于平台间的移植；
+4）提高程序在某些特定情形下的执行效率，但是并不能明显提升Android程序的性能；
+5）在cmd终端中进入到main目录下 cd (具体路径)/apiutils/src/main
+执行此语句  javah -d jni -classpath ../../build/intermediates/classes/debug com.sky.NDKString  会自动生成jni文件com_sky_NDKString.h,自定义.c的file
+
+
+第十六章 AsyncTask 已废弃
+01.AsyncTask 主要方法：
+1）onPreExecute()  准备工作，如显示进度条可以在此初始化。
+2）doInBackground(params)  异步任务，只有此方法是执行在子线程中，在onPreExecute之后立即执行。
+3）onProgressUpdate(values)  可在此设置进度条的更新，需要在doInBackground()中调用publishProgress()方法
+4）onPostExecute(result)  异步任务完成后返回的结果。
+
+02.AsyncTask的实现原理：参考版本10.0系统
+AsyncTask是创建一个FutureTask(Callable)的任务，通过execute方法把任务加入到任务池，之后再转到线程池中。
+内部的任务池和线程池可以说都是饿汉模式的单例，类加载的时候就已经确定了。
+
+10.0系统下AsyncTask的实现过程：
+第一步：创建AsyncTask，并把任务加入任务池中；
+new AsyncTask()时，新建了一个Callable，一个FutureTask，在调用execute(params)时，会把状态设为Running，执行执行onPreExecute()方法，设置Callable的参数，把FutureTask放入任务池中。
+具体代码如下：
+mStatus = Status.RUNNING;//变为运行状态，之前有状态检查，如果已经运行了，会抛出异常，所以execute只能调用一次。
+onPreExecute();//执行准备方法
+mWorker.mParams = params;//为Callable设置参数。
+exec.execute(mFuture);//把FutureTask加入任务池中，开始执行。
+
+第二步：放入任务池后，开始轮循取出任务，交给线程池，开始执行；
+private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
+此成员变量是个任务池，内部有一个双端队列ArrayQueue（最大16个元素）；
+在execute()方法中通过offer将任务加入队列尾部中，紧接着调用scheduleNext()方法，通过poll取出队首任务加入线程池执行。
+
+第三步：线程池中的线程开始调用Runnable任务，执行Callable的call方法
+然后开始执行Callable中的call方法，其中会调用doInBackground(params)方法。
+完成后返回的结果，会在在FutureTask中的done方法中调用get获取，通过postResultIfNotInvoked(result)方法传递给Handler；
+在handlermessage方法中调用AsyncTask的finish()方法返回result，其中会调用onPostExecute(result)方法。会在这个方法中检查是否已取消。
+
+public static final Executor THREAD_POOL_EXECUTOR;
+此成员变量就是线程池，10.0系统下，此线程池内的队列使用的是SynchronousQueue，一个只有一个元素的阻塞队列，
+一个核心线程，20的最大线程数，一个元素的阻塞队列，加一个初始容量为16的ArrayQueue（任务池），没有上限；没有上限，那要饱和策略啥用，还真能突破int的最大值？，之后再添加会执行饱和策略。
+
+10.0系统下的饱和策略是再创建一个线程池，来容纳多出来的任务，此线程池采用了链表LinkedBlockingQueue，默认上限，默认开启5个核心线程，最大也只开5个，因为开启了超时机制，所以这五个核心线程之后是会被回收的。
+
+03.AsyncTask的优缺点
+优点：AsyncTask是一个轻量级的异步任务处理类，使用方便，代码简洁，整个异步任务可以通过cancel()进行控制。
+缺点：不适用于处理长时间的异步任务，一般这个任务过程最好控制在几秒以内，如果长时间的异步任务就需要考虑多线程的控制问题，当处理多个异步任务时，UI更新变得复杂。
+
+04.Handler的优缺点
+优点：代码结构清晰，容易处理多个异步任务。
+缺点：消息的优先级当有多个异步任务时，由于要配合 Thread 或 Runnable，代码可能会稍显冗余。
+
+总结：AsyncTask不失为一个非常好用的异步任务处理类，只要不是频繁大量对UI进行更新，可以考虑使用。
+而Handler在处理大量UI更新时可以考虑使用。
+
+第十七章 Calendar
+01.calendar.get(Calendar.Month)，是直接从 fields 数组中取出数据，
+fields是一个17个位置的数组
+需要注意的点：
+01）MONTH：月份，数值是从0到11，设置的时候，也需要这么设置。也就是0是一月份。
+02）WEEK_OF_YEAR：年中周，年尾跨年周，只算是下年的第一周，不算本年的最后一周。
+03）WEEK_OF_MONTH：月中周，跨越的周，既是这个月的最后一周，也是下月的第一周。
+04）DAY_OF_WEEK：本周周几，统计是从周日到周六，数值是从1到7。周日是1，周六是7。
+05）HOUR：是12小时制
+06）HOUR_OF_DAY：是24小时制

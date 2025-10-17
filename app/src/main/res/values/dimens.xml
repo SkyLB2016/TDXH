@@ -1,0 +1,60 @@
+<resources>
+
+    <dimen name="wh_1">1dp</dimen>
+    <dimen name="wh_2">2dp</dimen>
+    <dimen name="wh_2half">2.5dp</dimen>
+    <dimen name="wh_3">3dp</dimen>
+    <dimen name="wh_4">4dp</dimen>
+    <dimen name="wh_5">5dp</dimen>
+    <dimen name="wh_5half">5.5dp</dimen>
+    <dimen name="wh_6">6dp</dimen>
+    <dimen name="wh_8">8dp</dimen>
+    <dimen name="wh_10">10dp</dimen>
+    <dimen name="wh_12">12dp</dimen>
+    <dimen name="wh_14">14dp</dimen>
+    <dimen name="wh_15">15dp</dimen>
+    <dimen name="wh_16">16dp</dimen>
+    <dimen name="wh_18">18dp</dimen>
+    <dimen name="wh_19">19dp</dimen>
+    <dimen name="wh_20">20dp</dimen>
+    <dimen name="wh_22">22dp</dimen>
+    <dimen name="wh_24">24dp</dimen>
+    <dimen name="wh_25">25dp</dimen>
+    <dimen name="wh_26">26dp</dimen>
+    <dimen name="wh_30">30dp</dimen>
+    <dimen name="wh_32">32dp</dimen>
+    <dimen name="wh_36">36dp</dimen>
+    <dimen name="wh_40">40dp</dimen>
+    <dimen name="wh_48">48dp</dimen>
+    <dimen name="wh_56">56dp</dimen>
+    <dimen name="wh_64">64dp</dimen>
+    <dimen name="wh_72">72dp</dimen>
+    <dimen name="wh_80">80dp</dimen>
+    <dimen name="wh_96">96dp</dimen>
+    <dimen name="wh_120">120dp</dimen>
+    <dimen name="wh_144">144dp</dimen>
+    <dimen name="wh_192">192dp</dimen>
+
+    <dimen name="text_2">2sp</dimen>
+    <dimen name="text_8">8sp</dimen>
+    <!--字体-->
+    <dimen name="text_10">10sp</dimen>
+    <!--补充性内容micro-->
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_13">13sp</dimen>
+    <!--次级正文small-->
+    <dimen name="text_14">14sp</dimen>
+    <dimen name="text_15">15sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <!--正文medium-->
+    <dimen name="text_18">18sp</dimen>
+    <dimen name="text_20">20sp</dimen>
+    <!--导航栏-->
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="text_26">26sp</dimen>
+    <dimen name="text_32">32sp</dimen>
+    <dimen name="text_36">36sp</dimen>
+    <dimen name="text_50">50sp</dimen>
+    <dimen name="text_100">100sp</dimen>
+
+</resources>

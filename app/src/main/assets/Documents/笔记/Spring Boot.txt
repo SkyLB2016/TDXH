@@ -1,0 +1,284 @@
+Spring Boot笔记
+https://spring.io
+https://spring.io/projects/spring-boot#learn
+https://docs.spring.io/spring-boot/docs/current/reference/html/documentation.html#documentation.web
+包含的默认配置
+https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.build-systems.starters
+yml里默认的配置
+https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties
+
+01.Spring Boot 版本的标签
+1）CURRENT 当前  (CURRENT GA 当前稳定版）
+2)SNAPSHOT 迭代备份，快照版本
+3)GA 稳定版
+4)PRE 预发布版本
+
+02.Application
+@SpringBootApplication
+存放于根目录下，会默认扫描 controller 和 service，以及 mapper 相关注解组件。
+扫描完成后，会放入到spring/springboot 的容器中。
+
+后台的一个简单构成就是： 一个 Application 主程序入口，加若干个 controller 、service、mapper 组件，以及配合组件的若干文件类
+配置文件：application.yml  或者 application.properties(不常用)
+
+03.注解分类，按程序结构分
+第一种：启动类注解
+1）@SpringBootApplication ：Application启动注解
+
+第二种：组件类注解，标记为配置类，会被容器扫描
+1）@Service
+
+2）@Controller：定义接口的注解
+1、@ResponseBody
+2、@RestController：相当于 @Controller 和 @ResponseBody结合，因为现在的规范都是一样的。
+3、@RequestMapping("hello")：主要使用以下四种
+@GetMapping：查询
+@PostMapping：查询，修改，保存，form提交，所以可以通用。
+@PutMapping：保存
+@DeleteMapping：删除
+4、@Autowired 依赖注入，@Configuration 关联定义的 bean 配置类 ；或者 @component 关联的bean 类
+
+3）@Configuration
+4）@Bean
+5）@repository
+6）@Component
+这些组件注解也都能使用，根据场景以及累的业务去使用和定义
+相关配置工具
+<artifactId>spring-boot-configuration-processor</artifactId>
+
+7）@ControllerAdvice 统一异常封装处理，容器会自动识别
+@ExceptionHandler(xxxException.class) //需要监听的异常
+@ResponseBody //返回json格式
+public JSONResult returnMaxFileSizeLimit(FileSizeLimitExceededException e) {
+   return JSONResult.errorMsg("文件大小不能超过500KB");
+}
+
+04.properties 文件关联
+1）@Component //被容器扫描，并放入容器中
+2）@ConfigurationProperties(prefix = "config")//配置的前缀
+3）@PropertySource(value= "classpath:MyConfig.properties",encoding = "utf-8")//关联配置文件
+resource 下的 Person.properties 文件编译后的路径是在 classpath 下。
+
+05.bootstrap.yml 与 application.yml
+bootstrap.yml 加载优先于 application.yml
+aoolication.yml 比 bootstrap.yml 常用
+application.yml 主要用于 springboot 项目的配置,服务于 Application
+bootstrap 中的属性不会被覆盖。
+bootstrap.yml：主要用于 springCloud 加密解密 固定参数
+
+06.application.yml 配置
+resource 文件编译后的路径是 classpath ，之后的相同
+1）可以配置自定义属性。
+2）static 静态资源默认文件目录，在resource下创建 static 目录，可默认引用，也可自定义引用的路径。但文件名不会变。
+spring:
+  mvc:
+    static-path-pattern: /custompath/** # 修改静态文件static默认引用的路径，默认是不加 static 的。
+3）修改启动logo：文件在 resource 下的 banner 目录下
+第一种
+spring:
+  banner:
+    location: classpath:banner/banner.txt
+第二种
+  banner:
+    image:
+      location: classpath:banner/banner06.png
+      pixelmode: text
+      pixelmode: block
+4）static 中定义的 index.html
+
+07.lombok：bean（pojo） 文件类的注解,一旦使用，开发团队需要统一使用。不然会有编译不通过的问题。
+1）@Data 生成参数的get与set
+2）@ToString  生成tostring方法
+3）@NoArgsConstructor  生成默认构造函数
+4）@AllArgsConstructor 生成全参构造函数
+5）@Slf4j 日志输出
+
+08.RestFul 接口请求风格
+1）@GetMapping：查询
+2）@PostMapping：查询，修改，保存，form提交，所以可以通用。
+3）@PutMapping：保存
+4）@DeleteMapping：删除
+
+全都使用的话为强制规范，只使用get与post是弱规范
+
+09.接收参数的常用用注解
+1）@RequestParam  用于获得url中?后的参数，如果参数变量名保持一致，该注解可以省略
+2）@PathVariable  路径的参数，?之前配置的动态参数，如id之类的。
+3）@RequestBody   请求体的对象 json请求体
+4）@RequestHeader 请求头的参数，token
+5）@CookieValue   cookie
+
+10.异常拦截 @ControllerAdvice 统一异常封装处理，容器会自动识别
+参考 GraceExceptionHandler 类
+
+@ExceptionHandler(xxxException.class) //需要监听的异常
+@ResponseBody //返回json格式
+public JSONResult returnMaxFileSizeLimit(FileSizeLimitExceededException e) {
+   return JSONResult.errorMsg("文件大小不能超过500KB");
+}
+
+11.信息校验拦截器：继承接口 HandlerInterceptor，并重写三个方法：
+1）拦截请求，访问controller之前，基本上就是使用这个方法
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
+2）请求controller之后，渲染视图之前
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
+3）请求controller之后，渲染视图之后
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception
+
+创建 xxxConfig 类，通过注解 @Configuration 注册并加载到容器中，继承 WebMvcConfigurer （重写 addInterceptors 方法），定义需要拦截的方法。
+
+12.定时任务 参见 MyTask 类
+@Configuration          //1.标记配置类，让springboot容器可以扫描到
+@EnableScheduling       //2.开启定时任务
+@Scheduled(cron = "0 */1 * * * ?")//添加任务，并注明任务运行的表达式
+public void publicMsg(){}
+Cron表达式范例：
+*/5 * * * * ?：每隔5秒执行一次
+0 */1 * * * ?：每隔1分钟执行一次
+0 0 23 * * ?：每天23点执行一次
+0 0 1 * * ?：每天凌晨1点执行一次：
+0 0 1 1 * ?：每月1号凌晨1点执行一次
+0 0 23 L * ?： 每月最后一天23点执行一次
+0 0 1 ? * L：每周星期天凌晨1点实行一次
+0 26,29,33 * * * ?： 在26分、29分、33分执行一次
+0 0 0,13,18,21 * * ?： 每天的0点、13点、18点、21点都执行一次
+
+13.异步任务
+@Component          //1.标记配置类，让springboot容器可以扫描到
+@EnableAsync       //2.开启延时任务
+@Slf4j
+public class MyAsyncTask {
+    @Async//标记为异步任务
+    public void publicMsg(){
+        try {
+            Thread.sleep(5000);
+            log.warn("异步任务执行完成："+ LocalDateTime.now());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+14.数据操作层 与 数据源
+1、持久层框架
+1）Hibernate
+2）JPA
+3）MyBatis：主要的。比如mapper的引入。
+
+2、数据源
+是用来设置基础配置，比如：数据库的基础配置，网络请求的配置。
+1）C3P0：老项目有些会用
+2）DBCP：阿帕奇的
+3）druid：阿里的，springboot2.0以前用
+4）BoneCP：不更新了
+
+5）HicariCp 数据源
+springBoot 官方默认的数据源：
+性能高效，速度快
+代码精简化
+
+mysql/mariadb
+https://www.mariadb.org
+<!-- springboot 默认的数据源 HicariCP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+<!-- 引入数据库MySql/MariaDB的驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.32</version>
+        </dependency>
+
+数据源与数据库配置参见 application.yml
+
+15.数据库的表与Java类对照，参见项目 CreateDBBean
+在 generatorConfig.xml 文件中定义各自的路径：
+1）通用 mapper 所在的目录：自定义的mapper类，继承  Mapper<T> 和 MySqlMapper<T> 接口的文件类
+2）生成的对象类的对照文件路径
+3）生成的后缀 mapper 的 xml 文件类的对照路径
+4）配置 mapper Java文件类的对应java映射路径。
+
+把映射好的文件复制到项目中对应的目录下，同时还要在application中注册
+@MapperScan(basePackages = "com.sky.mapper")//映射迁移进来的 mapper 文件，需要在application中引入
+
+16.Hibernate 常用校验注解
+1）@NotNull      不能为空
+2）@NotEmpty     不为空，空字符也不行
+3）@NotBlank     字符串不能为空
+4）@Min(Value)
+5）@Max(Value)
+6）@Size(max,min)        指定集合长度范围
+7）@Length(min=,max=)    字符串的长度
+8）@Email
+9）@Range        区间大小
+10）@Valid       启动注解校验
+
+17.数据操作 参考 StudentService 与 StudentServiceImpl
+1）添加数据 insert
+studentMapper.insert(stu);
+studentMapper.insertList(stu);
+
+2）查询数据 select
+studentMapper.select(object);           根据对象的参数条件来查询，返回list列表
+studentMapper.selectByPrimaryKey(id);   根据主键来查询，单个
+studentMapper.selectByExample(example); 根据自定义的条件来查询
+studentMapper.selectAll();              查询全部
+
+3）更新数据 update
+updateByPrimaryKey(stu);                  以主键为条件更新其他数据，更新全部，即使为 null，也会覆盖更新；因为主键唯一，所以只会更新相同主键这一条数据
+updateByPrimaryKeySelective(stu);         以主键为条件更新其他数据，有选择的更新，即为null的数据不更新；因为主键唯一，所以只会更新相同主键这一条数据
+updateByExample(stu, example);            自定义条件更新，更新全部，为 null 也会覆盖更新；匹配条件的所有数据都会更新，所以使用要谨慎，以免覆盖其他不需要更改的数据
+updateByExampleSelective(stu, example);   自定义条件更新，有选择的更新，即为 null 的数据不更新；匹配条件的所有数据都会更新，所以使用要谨慎，以免覆盖其他不需要更改的数据
+
+4）.删除数据 delete
+studentMapper.deleteByPrimaryKey(id);    通过主键来删除，因为主键唯一，所以只会删除一个
+studentMapper.deleteByExample(stu, example);          自定义删除条件，会删除所有匹配的数据
+studentMapper.delete(stu);                            根据对象中属性值匹配做条件删除，会删除所有匹配的数据
+
+18.事务：把一段代码同合成一个整体，中途发生错误，这段代码已经执行过的操作，会被回滚。
+@Transactional(propagation = Propagation.REQUIRED)
+0）REQUIRED(0)：默认的
+1）SUPPORTS(1)：有事务则加入，没有则新建，通常用于查询。
+2）MANDATORY(2)：存在事务则加入，没有就抛出异常。必须要以一个事物去执行。
+3）REQUIRES_NEW(3)：会创建一个新的事务，当前存在的事务会被挂起。
+4）NOT_SUPPORTED(4)：非事务的方式，当前存在的事物会被挂起。
+5）NEVER(5)：不使用事务
+6）NESTED(6)：当前存在事务，会新建一个子事务，嵌套使用。当前不存在，则新建一个事务，相当于 REQUIRED
+程序错误数据自动回滚操作
+1.新增数据或修改数据或删除
+2.发生异常
+3.因为数据已经更改，后续操作因为异常已经中断，所以要回滚数据，如果没有只是查询，则不需要回滚。
+4.处理事物，实现事物回滚，不让先前的数据入库。
+
+19.自定义sql 语句：添加，查询，更新，删除
+1）id：匹配的方法名；
+2）parameterType：匹配的参数类型
+3）resultType：对应的实体类
+
+20.阿里的数据源 Druid
+mvnrepository.com
+
+21.mybatis 配置
+#MyBatis 的相关配置
+mybatis:
+  type-aliases-package: com.sky.bean #所有数据库表逆向后，所一一映射的实体类 (Entity/Bean/Pojo)
+  mapper-locations: classpath:mapper/*.xml #对应的 mapper 映射的xml文件。
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启 mybatis 的日志，可以在控制台打印出使用的 SQL 语句
+
+22.AOP 监听类中方法的运行
+AOP的通知类型：
+1.前置通知
+2.后置通知
+3.环绕通知
+4.异常通知
+5.最终通知
+前两个点代表：当前包和他的子包；
+后边括号里的两个点，代表每个方法接收的参数
+第一个 星号 * 代表 监听方法的返回，这里 * 代表不限制。
+第二个 星号 * 代表类名，
+第三个 星号 * 代表方法名
+
+23.thymeleaf 配置

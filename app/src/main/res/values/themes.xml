@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--    <style name="AppTheme.SKY" parent="android:Theme.Material.Light.NoActionBar" />-->
+    <!--    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!-- 自定义主题属性 -->
+    <!--    </style>-->
+    <!-- Base application theme. -->
+<!--    <style name="AppTheme.SKY" parent="Theme.MaterialComponents.DayNight.DarkActionBar">-->
+
+    <style name="AppTheme.SKY" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <!--        android:windowLightStatusBar：控制浅色模式下状态栏文字颜色。-->
+        <!--        colorPrimary、colorSecondary：定义主色与辅助色。-->
+        <!--标题背景色，toolbar（actionbar）颜色 -->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->)-->
+    </style>
+
+    <style name="AppTheme.SKY.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.SKY.TabsTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_16</item>
+    </style>
+    <!--1、属性解析-->
+    <!--<item name="android:windowFrame">@null</item> ：Dialog的windowFrame框为无-->
+    <!--<item name="android:windowIsFloating">true</item>：是否浮现在activity之上-->
+    <!--<item name="android:windowIsTranslucent">false</item>:是否半透明-->
+    <!--<item name="android:windowNoTitle">true</item>:是否显示title-->
+    <!--<item name="android:windowBackground">@drawable/dia_bg</item>:设置dialog的背景-->
+    <!--<item name="android:backgroundDimEnabled">false</item>: 背景是否模糊显示-->
+    <!--2、解析二-->
+    <!--<item name="windowBackground"> 窗体的背景 </item>-->
+    <!--<item name="windowFrame">Dialog 是否有边框 </item>-->
+    <!--<item name="windowNoTitle">窗体是否有标题</item>-->
+    <!--<item name="windowFullscreen">false</item> 是否为全屏-->
+    <!--<item name="windowOverscan">false</item> 是否要求窗体铺满整屏幕-->
+    <!--<item name="windowIsFloating">false</item> 窗体是否浮在下层之上-->
+    <!--<item name="windowContentOverlay">@null</item> 设置窗体内容背景-->
+    <!--<item name="windowShowWallpaper">false</item> 是否显示壁纸-->
+    <!--<item name="windowTitleStyle">@android :style/WindowTitle</item> 窗体的标题栏Style-->
+    <!--<item name="windowTitleSize">25dip</item> 窗体文字大小-->
+
+</resources>

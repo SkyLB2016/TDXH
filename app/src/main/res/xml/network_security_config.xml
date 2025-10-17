@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+<!--    支持http协议，需要加入这句话，在application 中引用
+-->
+    <base-config cleartextTrafficPermitted="true" />
+<!--<domain-config cleartextTrafficPermitted="true">-->
+<!--    <domain includeSubdomains="true">img1.sycdn.imooc.com</domain>-->
+<!--    <domain includeSubdomains="true">www.imooc.com</domain>-->
+<!--</domain-config>-->
+</network-security-config>

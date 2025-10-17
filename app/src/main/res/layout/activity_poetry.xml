@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ArticleActivity">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_toolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_CB03810F"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <LinearLayout
+        android:id="@+id/llBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/tvPrevious"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_ffc107"
+            android:gravity="center"
+            android:text="上一章"
+            android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::upToChapter}"-->
+
+        <Button
+            android:id="@+id/tvCatalog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/wh_1"
+            android:layout_marginRight="@dimen/wh_1"
+            android:layout_weight="1"
+            android:background="@drawable/shape_ffc107"
+            android:gravity="center"
+            android:text="目录"
+            android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::showCatalogPop}"-->
+
+        <Button
+            android:id="@+id/tvNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_ffc107"
+            android:gravity="center"
+            android:text="下一章"
+            android:textSize="@dimen/text_18" />
+        <!--databinding下使用的数据绑定-->
+        <!--android:onClick="@{poetry::nextChapter}"-->
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

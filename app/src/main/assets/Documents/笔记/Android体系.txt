@@ -1,0 +1,307 @@
+Android开发
+
+第一章 基础知识
+01.语言类：JAVA；Kotlin；Flutter；Gradle；NDK（ JNI，C，C++）
+
+02.设计模式：
+创建型五种；
+行为型十一种；
+结构型七种；
+
+03.四大组件：
+1）Activity：生命周期
+    Fragment：生命周期
+2）Service：生命周期
+3）BroadCastReceiver： 静态注册 和 动态注册
+4）ContentProvider
+
+04.标题类
+AppBarLayout与ToolBar： 替代ActionBar
+ActionBar 弃用
+
+第一节 ToolBar
+
+00.style 设置
+<!--标题背景色，toolbar（actionbar）颜色 -->
+<item name="colorPrimary">@color/colorPrimary</item>
+<!--状态栏背景色，以前是colorPrimaryDark-->
+<item name="colorPrimaryVariant">@color/teal_200</item>
+<!-- 溢出菜单图标颜色，左侧图标和右侧 menu 三个点图标的颜色-->
+<item name="colorControlNormal">@android:color/white</item>
+
+
+01.xml中常用属性
+app:title="标题"
+app:titleTextColor="颜色"
+app:subtitle="子标题"
+app:subtitleTextColor="颜色"
+app:navigationIcon="@mipmap/icon" :左侧图标设置
+
+app:subtitleTextAppearance="@style/xxx"
+app:titleTextAppearance="@style/xxx"
+
+?attr/actionBarSize 标题栏高度
+
+手机状态栏为透明时，此属性才有作用。
+android:fitsSystemWindows="true"
+
+透明状态栏代码设置
+//布局设置
+<item name="android:windowTranslucentStatus">true</item>
+//或者代码设置
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+}
+
+透明底部导航栏设置
+//布局设置
+<item name="android:windowTranslucentNavigation">true</item>
+//或者代码设置
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+}
+
+
+02.Java 代码
+显示返回键：
+getSupportActionBar().setDisplayHomeAsUpEnabled(true);//就这一个也起作用
+getSupportActionBar().setHomeButtonEnabled(true);//必须与搭配第一个使用，不用这个也行，暂未发现他有什么用。
+
+
+getSupportActionBar().setDisplayShowHomeEnabled(true);//没啥用
+
+03.ToolBar 的配置
+toolbar.setNavigationIcon(R.mipmap.icon)：左侧图标
+toolbar.setNavigationIcon(null)：取消左侧图标
+
+menu，可以用 activity 默认的 menu。Toolbar也支持，需要注册监听事件
+toolbar.setOnMenuItemClickListener((new OnMenuItemClickListener());
+ToolBar的 menu 设置后，会顶替原有的。
+
+//返回图标的点击事件，默认就是返回，可自定义。
+toolbar.setNavigationOnClickListener()
+
+04.Menu 的xml 文件配置
+android:id
+android:icon
+android:title
+app:showAsAction="ifRoom/never/always"
+
+1.always：总是显示在界面上
+2.never：不显示在Toolbar上，只出现menu溢出菜单中
+3.ifRoom：有位置就在Toolbar上，否则就在溢出菜单中
+
+
+
+
+
+
+第二章 UI
+01.Layout：都继承自 ViewGroup
+1）LinearLayout <- RadioGroup
+  LinearLayout <- TableLayout <- RableRow
+2）RelativeLayout
+3）ConstraintLayout：约束布局
+4）CoordinatorLayout
+5）FrameLayout<- TabHost
+6）DrawerLayout
+7）SlidingPaneLayout
+8）GridLayout
+
+02.View：视图
+1）Widgets
+1、TextView <- EditText
+2、TextView <- Button <-（ RadioButton CheckBox ToggleButton Switch）
+3、ImageView <- ImageButton
+4、ProgressBar <-（ RatingBar SeekBar）
+5、WebView（ 继承自绝对布局）
+
+02）Containers：容器
+01、GridView
+02、RadioGroup
+03、ListView（已经弃用） <- ExpandableListView(基本没用过)
+04、RecyclerView：替代ListView
+05、ScrollView
+06、TabHost（继承自FrameLayout）
+07、SlidingDrawer
+08、Gallery
+09、DialerFilter
+10、CardView
+
+03）Date&Time
+1、AnalogClock
+2、TextClock
+3、Chronometer
+4、DatePicker
+5、TimePicker
+6、CalendarView
+
+04）Expert
+01、Space
+02、CheckedTextView
+03、QuickContactBadge
+04、ExtractEditText
+05、AutoCompleteTextView
+06、MultiAutoCompleteText
+07、NumberPicker
+08、ZoomButton
+09、ZoomController
+10、SurfaceView
+11、TexttureView
+12、stackView
+13、ViewStub（惰性加载）
+14、ViewAnimator
+15、ViewFlipper
+16、ImageSwitcher
+17、TextSwitcher
+18、AdapterViewFlipper
+19、ViewPager
+
+05）Custom
+include（ 包含布局）
+fragment
+requestFocus
+
+03.消息提示和菜单
+01）DialogFragment
+02）Dialog
+03）Menu
+04）Notification
+05）PopupWindow
+06）Toast
+
+04.CustomView
+01）FlowLayout：流式布局
+02）SolarSystem：卫星菜单
+03）SlidingMenu：侧滑栏
+04）CircleImageview 圆形图片
+05）EditTextDel：待删除按钮
+06）TabTextView：待进一步修改
+
+05.anim：动画,interpolators差值器通用
+1）ViewAnimation：视图动画
+TweenAnimation（ alpha scale translate rotate set）
+FrameAnimation（ animation-list）
+
+2）PropertyAnimation：属性动画
+				ValueAnimator
+				ObjectAnimator
+				AnimatorSet
+06.Resource
+01）assets（ AssetManager）
+02）res
+01、anim
+02、animator
+03、color
+04、drawable
+05、interpolator： 没用过
+06、layout
+07、raw：源文件
+08、values
+	arrays
+	attrs：attribute 自定义属性
+	bools
+	colors
+	string
+	styles
+09、xml
+
+
+07.OpenGL与3D
+
+第三章 通信
+
+01.http：
+1）OKHttp
+2）HttpConnection
+3）HttpClient： 弃用
+
+02.Handler机制
+03.Thread与Threadpool
+04.Socket
+05.Bluetooth
+06.NFC
+07.Headset
+08.USB
+
+第四章 多媒体
+01.VideoView
+02.MediaView
+03.流媒体
+
+第五章 数据持久化
+01.Shardedpreferences
+02.File
+03.cloud: 云
+04.Sqlite
+05.ContentProvider
+
+第六章 性能
+01.U优化
+01）布局层次结构
+02）抽象布局使用
+03）HierarchyViewer
+04）Lint工具
+
+02.内存优化
+01）OOM
+02）ANR
+03）分析
+01、Heap
+02、adb shell（ dumpsys meminfo, showmap)
+03、TraceView
+04、logcat
+05、MAT
+
+04）电量优化
+05、流量优化
+
+第七章 调试
+01、Logcat
+02、adb
+03、HierarchyViewer
+04、TraceView
+05、Heap
+06、Lint
+
+第八章 测试
+01、Monkey
+02、MonkeyRunner
+03、JUnit
+04、Robotium
+05、Athrun(TMTS)
+06、UIAutomator
+
+第九章 安全
+01.服务器安全
+02.通信安全（ 与服务端通信 组件间通信）
+03.数据加密
+04.数据验签
+05.代码混淆
+06.WebView/JS安全调用
+07.MD5、DES、RSA、https、证书、权限
+
+第十章 手机功能
+01）电话( 联系人 通话记录)
+02）短/彩信
+03）Camera
+04）Audio
+05）SD卡
+06）感应器
+01、加速
+02、方向
+03、重力
+04、光线
+05、陀螺仪
+06、磁场
+07、GPS
+08、温度
+09、压力
+10、线性加速度
+11、旋转
+
+第十一章 其他
+01.Intent
+02.AndroidManifest
+03.AIDL
+04.WiFi

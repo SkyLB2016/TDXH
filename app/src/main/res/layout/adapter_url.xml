@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/wh_8"
+    android:elevation="@dimen/wh_48"
+    app:cardBackgroundColor="@android:color/background_light"
+    app:cardCornerRadius="@dimen/wh_8">
+    <!--android:stateListAnimator="@state_list_animator/state_list_animator"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/wh_8">
+
+        <com.sky.base.widget.CircleImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/wh_72"
+            android:layout_height="@dimen/wh_72"
+            android:background="#f0f0f0"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/image"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:background="#f0f0f0" />-->
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/wh_16"
+            android:layout_toRightOf="@id/image"
+            android:text="calssname"
+            android:textSize="@dimen/text_18"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tvDescribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:layout_marginLeft="@dimen/wh_16"
+            android:layout_marginTop="@dimen/wh_4"
+            android:layout_toRightOf="@id/image"
+            android:fontFamily="sans-serif-condensed"
+            android:text="描述"
+            android:textSize="@dimen/text_12" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

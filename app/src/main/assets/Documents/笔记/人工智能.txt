@@ -1,0 +1,4 @@
+人工智能学习笔记
+
+conda create -n sklearn 创建新的开发环境
+conda activate sklearn 运行此开发环境

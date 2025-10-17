@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/wh_8"
+    android:elevation="@dimen/wh_48"
+    app:cardBackgroundColor="@android:color/background_light"
+    app:cardCornerRadius="@dimen/wh_8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/wh_4"
+        android:background="@drawable/sel_r10_s1_gyellow"
+        android:gravity="center"
+        android:padding="@dimen/wh_4">
+
+        <TextView
+            android:id="@+id/tvImage"
+            android:layout_width="@dimen/wh_72"
+            android:layout_height="@dimen/wh_96"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/wh_32"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="calssname"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
