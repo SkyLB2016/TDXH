@@ -101,11 +101,7 @@ class MainActivity : BaseMActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         binding.fab.setOnClickListener {
-<<<<<<< HEAD
-//            viewModel.TestMethod(this)
-=======
             viewModel.TestMethod(this)
->>>>>>> origin/main
         }
 //        权限请求
         AppUtils.isPermissions(
@@ -127,52 +123,6 @@ class MainActivity : BaseMActivity<ActivityMainBinding, MainViewModel>() {
             ),
             1119
         )
-    }
-
-    /**
-     * 统计目录下，每个文本数据的字数
-     */
-    fun calculationTextLength() {
-        val poetries = ArrayList<PoetryEntity>()
-        var dir = "Documents"//assets初始路径
-        var array: Array<String>? = null//assets取出的目录名称
-        val link = LinkedList<String>()
-        link.add(dir)
-//            val stack = Stack<String>();
-//            stack.add(dir)
-        var item = PoetryEntity()
-        //取出Documents下的所有文本文件
-        while (link.isNotEmpty()) {
-            dir = link.removeFirst()
-            array = assets?.list(dir)
-            for (i in array!!) {
-                if (i.endsWith(".txt")) {
-                    item = item.copy()
-//                    item = PoetryEntity()
-                    item.name = i.substring(0, i.length - 4)
-                    item.filePath = "$dir/$i"
-                    poetries.add(item)
-                } else {
-                    link.add("$dir/$i")
-                }
-            }
-        }
-        val collator = Collator.getInstance(Locale.CHINA)
-        poetries.sortWith(Comparator { o1, o2 -> collator.compare(o1.filePath, o2.filePath) })
-
-        var text = ""
-        for (poetry in poetries) {
-//            text = FileUtils.readAssestToByte(context, poetry.path)//字节流也可以但是不建议。
-            text = FileUtils.readAssestToChar(this, poetry.filePath)
-                .replace("　".toRegex(), "")
-                .replace("\n".toRegex(), "")
-            LogUtils.i("${poetry.name}==${text.length}")
-        }
-        //        String poetry = FileUtils.readAssestToChar(this, "Documents/文学/道家/道德经.txt")
-    }
-
-    fun testMethod(str1: String, str2: String, operation: (String) -> String) {
-        println("$str1,附加操作：{${operation(str2)}}")
     }
 
     /**

@@ -75,6 +75,9 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
         binding.sliding.menuState = { state ->
             LogUtils.i("state==$state")
         }
+
+
+
     }
 
     private fun addAni() {
@@ -86,6 +89,10 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
 
 
     override fun loadDatas() {
+        val filePath= "Documents/文学/道家/道德经.txt"
+        val text = getDocument(filePath)
+        binding.appBar.tvCenter.text = text.lines()[0]
+        viewModel.loadChapter(filePath)
         viewModel.getaArticles()
     }
 
@@ -130,16 +137,10 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
             binding.flow.addView(tv)
             tv.setOnClickListener(selectArticle)
         }
-        val text = getDocument("Documents/文学/道家/道德经.txt")
-        binding.appBar.tvCenter.text = text.lines()[0]
-
-        viewModel?.loadChapter("Documents/文学/道家/道德经.txt")
-
     }
 
     fun collectUiState() {
 //        等待数据加载完成
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
@@ -172,8 +173,7 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
 
     private val selectArticle = View.OnClickListener { v ->
         val filePath = v.tag as String
-        val name=filePath.substringAfterLast("/")
-
+        val name=filePath.substringAfterLast("/").substringBefore(".")
         binding.appBar.tvCenter.text =name
         viewModel.loadChapter(filePath)
 //        viewModel.loadChapter(poetries[v.id].filePath)

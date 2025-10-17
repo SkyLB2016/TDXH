@@ -108,25 +108,17 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
             when (state) {
                 is UiState.Loading -> {
                     LogUtils.i("数据加载中")
-                    showToast("数据加载中")
-
                 }
 
                 is UiState.Success -> {
                     LogUtils.i("数据加载中")
-                    showToast("数据加载中")
                     adapter.datas = state.datas as MutableList<ChapterEntity>
-                    adapter.notifyDataSetChanged()
-//                            LogUtils.i(it.toString())
                 }
-
                 is UiState.Error -> {
                     showToast("数据加载失败")
-
                 }
             }
         }
-
     }
 
     private fun setLastRecord() {

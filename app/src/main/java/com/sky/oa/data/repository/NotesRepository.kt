@@ -144,25 +144,14 @@ class NotesRepository {
     }
     suspend fun getChapter(fileName: String):MutableList<ChapterEntity> {
         return withContext(Dispatchers.IO) {
-<<<<<<< HEAD
             getChapterList(FileUtils.readAssestToChar(BaseApplication.app, fileName))
-        }
-    }
-    fun getChapterList(vararg params: String): MutableList<ChapterEntity> {
-        //文章分成多少行
-        val list = params[0]!!.lines()
-        //目录
-        val catalogList: MutableList<ChapterEntity> = arrayListOf()
-=======
-            getChapterList()
         }
     }
     fun getChapterList(vararg params: String?): MutableList<ChapterEntity> {
         //文章分成多少行
         val list = params[0]!!.lines()
         //目录
-        val catalog: MutableList<ChapterEntity> = arrayListOf()
->>>>>>> origin/main
+        val catalogList: MutableList<ChapterEntity> = arrayListOf()
         //单一章节
         var chapter = ChapterEntity()
         chapter.chapter = list[0]//最开始的是文件名
@@ -181,11 +170,7 @@ class NotesRepository {
                 //进入此处代表又是一个新的章节开始，所以需要先保存上一章节的内容，同时也需要移除最后一个换行符
 //                    if (chapter.content != null && chapter.content.isNotEmpty())
                 chapter.content.setLength(chapter.content.length - 1)
-<<<<<<< HEAD
                 catalogList.add(chapter)
-=======
-                catalog.add(chapter)
->>>>>>> origin/main
 
                 //创建新的章节
                 chapter = ChapterEntity()
@@ -196,11 +181,7 @@ class NotesRepository {
         }
         //如章节还是没有拆分且文章大于30行，则按10行一组拆分
 //            var sign = -1
-<<<<<<< HEAD
 //            if (catalogList.isEmpty() && list.size > 30) {
-=======
-//            if (catalog.isEmpty() && list.size > 30) {
->>>>>>> origin/main
 //                chapter.content = StringBuilder()
 //                for ((i,text) in list.withIndex()) {
 ////                    val text = if (list[i].startsWith(" ")) list[i].substring(1) else list[i]
@@ -210,11 +191,7 @@ class NotesRepository {
 //                    if (i % 10 === sign) {
 //                        //保存上一章节的内容
 //                        chapter.content.setLength(chapter.content.length - 1)
-<<<<<<< HEAD
 //                        catalogList.add(chapter)
-=======
-//                        catalog.add(chapter)
->>>>>>> origin/main
 //                        //创建新的章节
 //                        chapter = ChapterEntity()
 //                        chapter.chapter = text
@@ -225,13 +202,8 @@ class NotesRepository {
 //            }
         //保存最后一章的内容
         chapter.content.setLength(chapter.content.length - 1)
-<<<<<<< HEAD
         catalogList.add(chapter)
         return catalogList
-=======
-        catalog.add(chapter)
-        return catalog
->>>>>>> origin/main
     }
 
 
