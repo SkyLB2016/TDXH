@@ -1,19 +1,35 @@
 package com.sky.oa.vm
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.sky.base.ui.BaseViewModel
 import com.sky.oa.data.model.Photo
+import com.sky.oa.data.paging.PhotoPagingSource
 import com.sky.oa.data.repository.PhotoRepository
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 // ViewModel: PhotoViewModel.kt
-class PhotoViewModel(private val context: Context) : BaseViewModel() {
+class PhotoViewModel(private val application: Application) : BaseViewModel() {
+    val photoList: Flow<PagingData<Photo>> = Pager(
+        config = PagingConfig(
+            pageSize = 50,
+            enablePlaceholders = true,
+            initialLoadSize = 50
+        ),
+        pagingSourceFactory = {
+            PhotoPagingSource(application)
+        }
+    ).flow
+        .cachedIn(viewModelScope)
 
-    private val repository = PhotoRepository(context)
+    private val repository = PhotoRepository(application)
 
     // 使用 LiveData 暴露照片列表
     private val _photos = MutableLiveData<List<Photo>>()
@@ -39,4 +55,6 @@ class PhotoViewModel(private val context: Context) : BaseViewModel() {
             _isLoading.value = false
         }
     }
+
+
 }

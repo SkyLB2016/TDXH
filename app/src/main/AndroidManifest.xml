@@ -13,7 +13,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <!-- Android 12 及以下 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <application
         android:name=".App"
@@ -29,7 +30,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +44,9 @@
             android:description="@string/act_method_d"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_method">
+            android:label="@string/act_method"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -52,7 +56,8 @@
             android:description="@string/act_solar_d"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_solar">
+            android:label="@string/act_solar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -62,7 +67,8 @@
             android:description="@string/act_poetry_d"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_poetry">
+            android:label="@string/act_poetry"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -72,7 +78,8 @@
             android:description="@string/act_bit_d"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_bitmapurl">
+            android:label="@string/act_bitmapurl"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -82,7 +89,8 @@
             android:description="@string/act_uri_d"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_bit_uri">
+            android:label="@string/act_bit_uri"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -93,7 +101,8 @@
             android:exported="true"
             android:hardwareAccelerated="false"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_canvas">
+            android:label="@string/act_canvas"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -103,7 +112,8 @@
             android:description="@string/act_ninth"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_ninth">
+            android:label="@string/act_ninth"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
                 <category android:name="android.intent.category.CAR_MODE" />
@@ -114,7 +124,8 @@
             android:description="@string/act_fragment"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_fragment">
+            android:label="@string/act_fragment"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
                 <category android:name="android.intent.category.CAR_MODE" />
@@ -125,7 +136,8 @@
             android:description="@string/act_web"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_web">
+            android:label="@string/act_web"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>
@@ -135,7 +147,8 @@
             android:description="@string/act_drawable"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/act_drawable">
+            android:label="@string/act_drawable"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.sky.oa" />
             </intent-filter>

@@ -4,22 +4,16 @@ import android.Manifest
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sky.base.ui.BaseMActivity
-import com.sky.base.ui.BaseViewModel
 import com.sky.oa.App
-import com.sky.oa.R
 import com.sky.oa.adapter.PhotoAdapter
-import com.sky.oa.databinding.ActivityMainBinding
 import com.sky.oa.databinding.ActivityPhotoBinding
 import com.sky.oa.vm.PhotoViewModel
 
@@ -46,7 +40,7 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     override val viewModel: PhotoViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return PhotoViewModel(App.context) as T
+                return PhotoViewModel(App.app) as T
             }
         }
     }
@@ -58,8 +52,9 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
 
     override fun initViews() {
         super.initViews()
+        setToolbar(binding!!.appBar.toolbar, "照片")
+
         // 🔒 固定为竖屏
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // 或者固定为横屏
         // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -74,15 +69,32 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
 
     private fun setupRecyclerView() {
         photoAdapter = PhotoAdapter()
-        val layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
-        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.apply {
 
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = photoAdapter
+            layoutManager=StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
+//            layoutManager = LinearLayoutManager(this)
+//            layoutManager = GridLayoutManager(this@MainActivity, 3)
+            adapter = photoAdapter
+        }
     }
 
     private fun setupViewModel() {
+//        lifecycleScope.launch {
+////            repeatOnLifecycle(State)
+//            viewModel.photoList.collect {pagingDate->
+//                showToast("文件数量==${pagingDate}")
+//                photoAdapter.submitData(pagingDate)
+//                showPhotos()
+//
+//            }
+//        }
+        // 观察数据变化
+//        viewModel.photoList.observe(this) { photoList ->
+//            showToast("文件数量==${photoList}")
+//            photoAdapter.submitData(lifecycle,photoList)
+//            showPhotos()
+//        }
+
         // 观察数据变化
         viewModel.photos.observe(this) { photoList ->
             showToast("文件数量==${photoList.size}")

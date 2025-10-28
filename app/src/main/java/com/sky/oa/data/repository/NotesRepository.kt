@@ -1,7 +1,6 @@
 package com.sky.oa.repository
 
 import android.content.res.AssetManager
-import androidx.lifecycle.MutableLiveData
 import com.sky.base.BaseApplication
 import com.sky.base.utils.FileUtils
 import com.sky.base.utils.LogUtils
@@ -9,8 +8,6 @@ import com.sky.oa.App
 import com.sky.oa.entity.ChapterEntity
 import com.sky.oa.entity.PoetryEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.Collator
 import java.util.*
@@ -118,7 +115,7 @@ class NotesRepository {
             //取出Documents下的所有文本文件
             while (link.isNotEmpty()) {
                 dir = link.removeFirst()
-                fileNames = App.context.assets.list(dir)
+                fileNames = App.app.assets.list(dir)
                 fileNames?.forEach { it->
                     if (it.endsWith(".txt")) {
                         item = item.copy()

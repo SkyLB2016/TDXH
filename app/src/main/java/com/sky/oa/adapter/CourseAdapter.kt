@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sky.base.utils.LogUtils
-import com.sky.oa.App
-import com.sky.oa.R
 import com.sky.oa.databinding.AdapterUrlBinding
 import com.sky.oa.entity.CourseEntity
 
@@ -35,7 +33,7 @@ class CourseAdapter : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCa
         RecyclerView.ViewHolder(binding.root) {
         fun bind(course: CourseEntity) {
             val face =
-                Typeface.createFromAsset(binding.tvName.context.assets, "font/Lobster-Regular.ttf")
+                Typeface.createFromAsset(binding.tvName.context.assets, "font/lobster_regular.ttf")
             binding.tvName.typeface = face
             binding.tvDescribe.typeface = face
             binding.tvName.text = "${position + 1}.${course.name}"

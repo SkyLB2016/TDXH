@@ -47,7 +47,7 @@ class PhotoRepository(private val context: Context) {
                 val contentUri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
-                println("属性" + id + displayName + contentUri + dateAdded + size)
+                println("获取的图片的属性" + id + displayName + contentUri + dateAdded + size)
                 photos.add(Photo(id, displayName, contentUri,"", dateAdded, size))
             }
         }

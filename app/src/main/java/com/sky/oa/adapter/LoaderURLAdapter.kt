@@ -27,7 +27,7 @@ class LoaderURLAdapter : RecyclerAdapter<AdapterUrlBinding, CourseEntity>() {
 //    }
     override fun getBinding(context: Context?, parent: ViewGroup) = AdapterUrlBinding.inflate(LayoutInflater.from(context), parent, false)
     override fun onAchieveHolder(holder: MvvmHolder<AdapterUrlBinding>, binding: AdapterUrlBinding, position: Int) {
-        val face = Typeface.createFromAsset(context.assets, "font/Lobster-Regular.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/lobster_regular.ttf")
         binding.tvName.typeface = face
         binding.tvDescribe.typeface = face
         val viewType = getItemViewType(position)

@@ -1,5 +1,6 @@
 package com.sky.oa.adapter
 
+
 import android.animation.AnimatorInflater
 import android.graphics.Outline
 import android.os.Build
@@ -8,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import androidx.annotation.RequiresApi
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sky.base.utils.LogUtils
@@ -17,8 +18,7 @@ import com.sky.oa.R
 import com.sky.oa.data.model.Photo
 import com.sky.oa.databinding.AdapterUriBinding
 
-// Adapter: PhotoAdapter.kt
-class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(PhotoDiffCallback1()) {
+class PhotoUriAdapter : PagingDataAdapter<Photo, PhotoUriAdapter.PhotoViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = AdapterUriBinding.inflate(
@@ -30,7 +30,10 @@ class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(PhotoDiffC
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val photo = getItem(position)
+        if (photo != null) {
+            holder.bind(photo)
+        }
     }
 
     class PhotoViewHolder(private val binding: AdapterUriBinding) :
@@ -58,15 +61,21 @@ class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(PhotoDiffC
             // 使用 Glide 或 Coil 加载图片
             Glide.with(binding.image.context)
                 .load(photo.contentUri)
+//                .placeholder(R.drawable.ic_image_placeholder)
                 .centerCrop()
                 .into(binding.image)
             binding.tvText.text = photo.displayName
             LogUtils.i("photo.displayName", photo.displayName)
         }
     }
-}
 
-class PhotoDiffCallback1 : DiffUtil.ItemCallback<Photo>() {
-    override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean = oldItem.id == newItem.id
-    override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean = oldItem == newItem
+    companion object DiffCallback : DiffUtil.ItemCallback<Photo>() {
+        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

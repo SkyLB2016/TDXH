@@ -14,11 +14,11 @@ import com.sky.base.BaseApplication
  */
 class App : BaseApplication() {
     companion object {
-        lateinit var context: Context
+        lateinit var app: App
     }
     override fun onCreate() {
         super.onCreate()
-        context = this
+        app = this
         setDebug(BuildConfig.DEBUG)
         LogUtils.isDebug = BuildConfig.DEBUG
         SPUtils.init(this)

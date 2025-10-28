@@ -37,9 +37,10 @@ class MainActivity : BaseMActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_SKY_NoActionBar)
         super.onCreate(savedInstanceState)
         // 在 Activity 中启用动态颜色
-        DynamicColors.applyToActivitiesIfAvailable(application)
+//        DynamicColors.applyToActivitiesIfAvailable(application)
         setSupportActionBar(binding.appBar.toolbar)
         title = ""//    绑定toolBar后，把左侧的标题置为空
 

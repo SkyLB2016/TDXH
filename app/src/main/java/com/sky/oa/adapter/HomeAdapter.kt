@@ -46,7 +46,7 @@ class HomeAdapter : RecyclerAdapter<AdapterHomeBinding, ActivityEntity>(), ItemT
             val controller = LayoutAnimationController(scale, 0.5f)
             controller.order = LayoutAnimationController.ORDER_RANDOM
             (holder?.itemView as ViewGroup).layoutAnimation = controller
-//            face = Typeface.createFromAsset(context.assets, "font/Lobster-Regular.ttf")//不对应fonticon
+//            face = Typeface.createFromAsset(context.assets, "font/lobster_regular.ttf")//不对应fonticon
         } else holder?.itemView?.startAnimation(scale)
         binding.tvName.text =
             "${datas?.get(position)?.activityName}" + context?.resources?.getString(fontIcon[position % 9])
