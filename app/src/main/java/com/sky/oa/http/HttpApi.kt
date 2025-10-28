@@ -11,6 +11,7 @@ import retrofit2.http.Query
  * @Description:
  */
 interface HttpApi {
+//    http://www.imooc.com/api/teacher?type=4&num=30
     @GET("api/teacher")
     suspend fun getTeacher(
         @Query("type") type: Int,

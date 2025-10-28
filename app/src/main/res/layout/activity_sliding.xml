@@ -11,18 +11,23 @@
         android:background="@color/color_CB03810F"
         android:orientation="horizontal">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-            <com.sky.base.widget.FlowLayout
-                android:id="@+id/flow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="@dimen/wh_8"
-                android:padding="@dimen/wh_8"
-                app:lineSpace="@dimen/wh_16" />
-        </ScrollView>
+<!--            <com.sky.base.widget.FlowLayout-->
+<!--                android:id="@+id/flow"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:elevation="@dimen/wh_8"-->
+<!--                android:padding="@dimen/wh_8"-->
+<!--                app:lineSpace="@dimen/wh_16" />-->
+<!--        </ScrollView>-->
+
+        <com.sky.base.widget.MyRecyclerView
+            android:id="@+id/reCatalog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"

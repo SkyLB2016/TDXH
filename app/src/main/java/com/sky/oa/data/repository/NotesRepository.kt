@@ -107,11 +107,12 @@ class NotesRepository {
     suspend fun getArticles():List<PoetryEntity>{
         return withContext(Dispatchers.IO){
             val articles = mutableListOf<PoetryEntity>()
-            var dir = "Documents"//assets初始路径
             var fileNames: Array<String>? = null//assets取出的目录名称
             val link = LinkedList<String>()
-            link.add(dir)
+            link.add("Documents/文学")
+            link.add("Documents/笔记")
             var item = PoetryEntity()
+            var dir: String
             //取出Documents下的所有文本文件
             while (link.isNotEmpty()) {
                 dir = link.removeFirst()
@@ -136,6 +137,7 @@ class NotesRepository {
                     o2.filePath
                 )
             })
+            println(articles.size)
             articles
         }
     }

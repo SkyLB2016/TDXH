@@ -56,6 +56,7 @@ class FlowLayout @JvmOverloads constructor(
         //刨除左右间距的实际宽高
         val realWidth = widthSize - paddingLeft - paddingRight
         for (i in 0 until childCount) {
+            println(i)
             child = getChildAt(i)
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
             lp = child.layoutParams as MarginLayoutParams

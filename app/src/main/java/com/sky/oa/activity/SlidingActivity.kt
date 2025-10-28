@@ -17,12 +17,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sky.base.ui.BaseMActivity
 import com.sky.base.utils.FileUtils
 import com.sky.base.utils.LogUtils
 import com.sky.base.utils.ScreenUtils
 import com.sky.oa.R
 import com.sky.oa.adapter.ArticleAdapter
+import com.sky.oa.adapter.CatalogueAdapter
 import com.sky.oa.databinding.ActivitySlidingBinding
 import com.sky.oa.data.model.ChapterEntity
 import com.sky.oa.data.model.PoetryEntity
@@ -36,6 +38,7 @@ import kotlinx.coroutines.launch
  * Created by SKY on 2018/3/16.
  */
 class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>() {
+    private lateinit var cataAdapter: CatalogueAdapter
     private var gravity = Gravity.LEFT
 
     lateinit var adapter: ArticleAdapter
@@ -74,7 +77,6 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
         }
 
 
-
     }
 
     private fun addAni() {
@@ -86,7 +88,7 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
 
 
     override fun loadDatas() {
-        val filePath= "Documents/文学/道家/道德经.txt"
+        val filePath = "Documents/文学/道家/道德经.txt"
         val text = getDocument(filePath)
         binding.appBar.tvCenter.text = text.lines()[0]
         viewModel.loadChapter(filePath)
@@ -104,36 +106,51 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
                 is UiState.Loading -> {
 
                 }
-                is UiState.Success ->{
+
+                is UiState.Success -> {
                     var articles = state.datas
                     flowAddView(articles)
                 }
-                is UiState.Error ->{
+
+                is UiState.Error -> {
                     showToast("数据加载失败")
 
                 }
             }
         }
     }
-    fun flowAddView(articles: List<PoetryEntity>){
-//        private lateinit var poetries: ArrayList<PoetryEntity>
 
-        var tv: TextView
-        for ((index, poetry) in articles.withIndex()) {
-            tv =
-                LayoutInflater.from(this).inflate(R.layout.item_tv, binding.flow, false) as TextView
-//            tv.width = resources.getDimensionPixelSize(R.dimen.wh_96)
-            tv.minWidth = resources.getDimensionPixelSize(R.dimen.wh_48)
-            tv.textSize = 18f
-            tv.maxLines = 1
-//            tv.text = text.substringAfterLast("/", ".").substringBefore(".", "")
-            tv.text = poetry.name
-            tv.setPadding(20, 6, 20, 6)
-            tv.id = index
-            tv.tag = poetry.filePath
-            binding.flow.addView(tv)
-            tv.setOnClickListener(selectArticle)
+    fun flowAddView(articles: List<PoetryEntity>) {
+//        private lateinit var poetries: ArrayList<PoetryEntity>
+        cataAdapter = CatalogueAdapter() { poetry ->
+            binding.appBar.tvCenter.text = poetry.name
+            viewModel.loadChapter(poetry.filePath)
+//            println("$index,${poetry.name}")
+
         }
+        binding.reCatalog.apply {
+            layoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
+            adapter = cataAdapter
+        }
+        cataAdapter.submitList(articles)
+//        var tv: TextView
+//        for ((index, poetry) in articles.withIndex()) {
+//            tv =
+//                LayoutInflater.from(this).inflate(R.layout.item_tv, binding.flow, false) as TextView
+////            tv.width = resources.getDimensionPixelSize(R.dimen.wh_96)
+//            tv.minWidth = resources.getDimensionPixelSize(R.dimen.wh_48)
+//            tv.textSize = 18f
+//            tv.maxLines = 1
+////            tv.text = text.substringAfterLast("/", ".").substringBefore(".", "")
+//            tv.text = poetry.name
+//            tv.setPadding(20, 6, 20, 6)
+//            tv.id = index
+//            tv.tag = poetry.filePath
+//            binding.flow.addView(tv)
+//            tv.setOnClickListener(selectArticle)
+//            println("$index,${poetry.name}")
+//        }
     }
 
     fun collectUiState() {
@@ -170,8 +187,8 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
 
     private val selectArticle = View.OnClickListener { v ->
         val filePath = v.tag as String
-        val name=filePath.substringAfterLast("/").substringBefore(".")
-        binding.appBar.tvCenter.text =name
+        val name = filePath.substringAfterLast("/").substringBefore(".")
+        binding.appBar.tvCenter.text = name
         viewModel.loadChapter(filePath)
 //        viewModel.loadChapter(poetries[v.id].filePath)
     }
@@ -231,7 +248,7 @@ class SlidingActivity : BaseMActivity<ActivitySlidingBinding, SlidingViewModel>(
     }
 
     @SuppressLint("GestureBackNavigation")
-    override fun  onBackPressed() {
+    override fun onBackPressed() {
         when {
             binding.sliding.isOpen -> binding.sliding.toggleMenu()
             binding.llBottomBar.visibility == View.VISIBLE -> binding.llBottomBar.visibility =

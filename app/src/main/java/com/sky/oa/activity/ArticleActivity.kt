@@ -106,7 +106,7 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
                 }
 
                 is UiState.Success -> {
-                    LogUtils.i("数据加载中")
+                    LogUtils.i("数据加载成功")
                     adapter.datas = state.datas as MutableList<ChapterEntity>
                 }
                 is UiState.Error -> {
