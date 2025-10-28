@@ -2,7 +2,7 @@ package com.sky.oa.vm
 
 import androidx.lifecycle.viewModelScope
 import com.sky.base.ui.BaseViewModel
-import com.sky.oa.entity.ChapterEntity
+import com.sky.oa.data.model.ChapterEntity
 import com.sky.oa.repository.NotesRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers

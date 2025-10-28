@@ -3,14 +3,10 @@ package com.sky.oa.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.RectF
-import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sky.base.ui.BaseMActivity
@@ -20,14 +16,12 @@ import com.sky.base.utils.ScreenUtils
 import com.sky.oa.pop.CatalogPop
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityPoetryBinding
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.vm.ArticleViewModel
 import com.sky.oa.adapter.ArticleAdapter
-import com.sky.oa.entity.ChapterEntity
+import com.sky.oa.data.model.ChapterEntity
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.UiState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 /**
@@ -45,8 +39,9 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
         const val LASTOFFSET = "lastOffset"
 
         fun newInstance(context: Context, poetry: PoetryEntity) {
-            val intent = Intent(context, ArticleActivity::class.java)
-            intent.putExtra(KEY, poetry)
+            val intent = Intent(context, ArticleActivity::class.java).apply {
+                putExtra(KEY, poetry)
+            }
             context.startActivity(intent)
         }
     }

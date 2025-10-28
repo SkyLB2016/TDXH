@@ -3,7 +3,7 @@ package com.sky.oa.data.repository
 import com.google.gson.reflect.TypeToken
 import com.sky.base.ApiResponse
 import com.sky.base.utils.LogUtils
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 import com.sky.oa.gson.GsonUtils
 import com.sky.oa.http.RetrofitClient
 import okhttp3.Call

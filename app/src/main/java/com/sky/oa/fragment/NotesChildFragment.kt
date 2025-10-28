@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.reflect.TypeToken
 import com.sky.base.ui.BaseViewModel
 import com.sky.oa.adapter.ChildAdapter
 import com.sky.oa.databinding.FragmentChildBinding
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.gson.GsonUtils
 import com.sky.base.ui.BaseMFragment
 

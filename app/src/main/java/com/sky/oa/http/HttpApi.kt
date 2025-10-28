@@ -1,7 +1,7 @@
 package com.sky.oa.http
 
 import com.sky.base.ApiResponse
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

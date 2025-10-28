@@ -1,21 +1,15 @@
 package com.sky.oa.vm
 
-import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.sky.base.ui.BaseViewModel
-import com.sky.oa.entity.ChapterEntity
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.ChapterEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.repository.NotesRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.Collator
-import java.util.LinkedList
-import java.util.Locale
 
 
 /**

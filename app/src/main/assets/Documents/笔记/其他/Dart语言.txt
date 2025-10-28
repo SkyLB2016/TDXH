@@ -149,8 +149,8 @@ object..name=""
 
 
 Compiled from "GenericType.java"
-public class com.sky.oa.entity.GenericType<T> {
-  public com.sky.oa.entity.GenericType();
+public class com.sky.oa.data.model.GenericType<T> {
+  public com.sky.oa.data.model.GenericType();
     Code:
        0: aload_0
        1: invokespecial #1                  // Method java/lang/Object."<init>":()V
@@ -174,7 +174,7 @@ Classfile /Users/sky/Documents/WorkSpace/Chowder/app/src/main/java/com/sky/oa/mo
   Last modified 2021-7-23; size 527 bytes
   MD5 checksum 539263212aafbd0c509887c4fe8b631e
   Compiled from "GenericType.java"
-public class com.sky.oa.entity.GenericType<T extends java.lang.Object> extends java.lang.Object
+public class com.sky.oa.data.model.GenericType<T extends java.lang.Object> extends java.lang.Object
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
@@ -205,7 +205,7 @@ Constant pool:
   #24 = Utf8               com/sky/oa/model/GenericType
   #25 = Utf8               java/lang/Object
 {
-  public com.sky.oa.entity.GenericType();
+  public com.sky.oa.data.model.GenericType();
     descriptor: ()V
     flags: ACC_PUBLIC
     Code:

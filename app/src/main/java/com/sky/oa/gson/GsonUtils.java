@@ -14,8 +14,8 @@ import com.google.gson.internal.bind.TypeAdapters;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.sky.base.utils.LogUtils;
-import com.sky.oa.entity.ActivityEntity;
-import com.sky.oa.entity.ActivityModel;
+import com.sky.oa.data.model.ActivityEntity;
+import com.sky.oa.data.model.ActivityModel;
 
 import java.io.Reader;
 import java.lang.reflect.Field;

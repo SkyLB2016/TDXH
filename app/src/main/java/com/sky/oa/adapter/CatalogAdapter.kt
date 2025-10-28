@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.sky.oa.R
 import com.sky.oa.databinding.ItemTvBinding
-import com.sky.oa.entity.ChapterEntity
+import com.sky.oa.data.model.ChapterEntity
 import com.sky.base.ui.MvvmHolder
 import com.sky.base.ui.RecyclerAdapter
 

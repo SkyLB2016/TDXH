@@ -5,8 +5,8 @@ import com.sky.base.BaseApplication
 import com.sky.base.utils.FileUtils
 import com.sky.base.utils.LogUtils
 import com.sky.oa.App
-import com.sky.oa.entity.ChapterEntity
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.ChapterEntity
+import com.sky.oa.data.model.PoetryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.Collator

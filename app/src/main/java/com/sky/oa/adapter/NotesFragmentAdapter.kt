@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.fragment.NotesChildFragment
 import com.sky.oa.gson.GsonUtils
 

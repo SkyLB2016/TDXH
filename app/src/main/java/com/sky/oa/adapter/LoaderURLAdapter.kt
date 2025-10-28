@@ -14,7 +14,7 @@ import com.sky.base.ui.MvvmHolder
 import com.sky.base.ui.RecyclerAdapter
 import com.sky.oa.R
 import com.sky.oa.databinding.AdapterUrlBinding
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 
 /**
  * Created by SKY on 2015/12/9 20:52.

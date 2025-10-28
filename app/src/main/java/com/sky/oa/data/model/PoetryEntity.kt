@@ -1,5 +1,6 @@
-package com.sky.oa.entity
+package com.sky.oa.data.model
 
+import android.os.Parcelable
 import java.io.Serializable
 
 /**

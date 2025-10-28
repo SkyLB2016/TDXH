@@ -3,8 +3,8 @@ package com.sky.oa.vm
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.sky.base.ui.BaseViewModel
-import com.sky.oa.entity.CourseEntity
-import com.sky.oa.entity.ImageFloder
+import com.sky.oa.data.model.CourseEntity
+import com.sky.oa.data.model.ImageFloder
 import com.sky.oa.repository.ImageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

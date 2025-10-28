@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.sky.base.ui.BaseFragment
 import com.sky.base.utils.LogUtils
-import com.sky.oa.databinding.FragmentHomeBinding
 import com.sky.oa.databinding.FragmentMyBinding
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 
 /**
  *

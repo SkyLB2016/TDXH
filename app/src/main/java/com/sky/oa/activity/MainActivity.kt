@@ -9,20 +9,18 @@ import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.color.DynamicColors
 import com.sky.base.ui.BaseMActivity
 import com.sky.base.utils.AppUtils
 import com.sky.base.utils.FileUtils
 import com.sky.base.utils.LogUtils
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMainBinding
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.vm.MainViewModel
 import java.io.File
 import java.text.Collator
 import java.util.LinkedList
 import java.util.Locale
-import kotlin.reflect.typeOf
 
 /**
  * @Author: 李彬

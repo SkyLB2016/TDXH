@@ -1,14 +1,12 @@
 package com.sky.oa.vm
 
 import android.content.res.AssetManager
-import androidx.lifecycle.viewModelScope
 import com.sky.base.ui.BaseViewModel
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.repository.NotesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 class NotesViewModel(private val repository: NotesRepository) : BaseViewModel() {
 

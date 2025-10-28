@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sky.oa.R
-import com.sky.oa.entity.ChapterEntity
+import com.sky.oa.data.model.ChapterEntity
 import com.sky.base.widget.BasePop
 import com.sky.oa.adapter.CatalogAdapter
 

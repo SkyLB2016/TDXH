@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sky.base.utils.BitmapUtils
 import com.sky.oa.R
 import com.sky.oa.databinding.PopUriItemBinding
-import com.sky.oa.entity.ImageFloder
+import com.sky.oa.data.model.ImageFloder
 import com.sky.base.ui.MvvmHolder
 import com.sky.base.ui.RecyclerAdapter
 import com.sky.base.widget.BasePop

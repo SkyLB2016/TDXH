@@ -9,7 +9,7 @@ import android.view.animation.ScaleAnimation
 import com.sky.oa.R
 import com.sky.oa.adapter.itemtouch.ItemTouchHelperListener
 import com.sky.oa.databinding.AdapterHomeBinding
-import com.sky.oa.entity.ActivityEntity
+import com.sky.oa.data.model.ActivityEntity
 import com.sky.base.ui.MvvmHolder
 import com.sky.base.ui.RecyclerAdapter
 import java.util.*

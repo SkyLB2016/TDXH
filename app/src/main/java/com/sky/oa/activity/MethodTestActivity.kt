@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
@@ -30,15 +29,13 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.sky.base.utils.AppUtils
 import com.sky.base.utils.LogUtils
 import com.sky.base.utils.MD5Utils
 import com.sky.oa.HttpUrl
 import com.sky.oa.R
 import com.sky.oa.databinding.ActivityMethodBinding
-import com.sky.oa.entity.ActivityEntity
+import com.sky.oa.data.model.ActivityEntity
 import com.sky.oa.gson.GsonUtils
 import com.sky.oa.proxy.Cuthair
 import com.sky.oa.proxy.DynamicProxy
@@ -49,7 +46,6 @@ import com.sky.oa.proxy.abstractfactory.MCFctory
 import com.sky.oa.proxy.factory.HairFactory
 import com.sky.oa.proxy.factory.hair.LeftHair
 import com.sky.base.ui.BaseActivity
-import java.io.File
 import java.net.URL
 import java.text.Collator
 import java.text.DecimalFormat

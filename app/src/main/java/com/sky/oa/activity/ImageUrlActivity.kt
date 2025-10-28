@@ -23,7 +23,7 @@ import com.sky.oa.R
 import com.sky.oa.adapter.CourseAdapter
 import com.sky.oa.adapter.LoaderURLAdapter
 import com.sky.oa.databinding.ActivityUrlBinding
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 import com.sky.oa.repository.ImageRepository
 import com.sky.oa.utils.imageloader.ImageLoaderAsync
 import com.sky.oa.vm.ImageUrlViewModel

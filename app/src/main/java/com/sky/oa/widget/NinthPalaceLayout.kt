@@ -11,7 +11,7 @@ import android.view.View
 import com.sky.base.utils.LogUtils
 import com.sky.base.utils.ScreenUtils
 import com.sky.oa.R
-import com.sky.oa.entity.PointEntity
+import com.sky.oa.data.model.PointEntity
 
 /**
  * Created by SKY on 2015/12/24 10:58.

@@ -3,7 +3,6 @@ package com.sky.oa.activity
 import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.graphics.RectF
-import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -25,15 +24,13 @@ import com.sky.base.utils.ScreenUtils
 import com.sky.oa.R
 import com.sky.oa.adapter.ArticleAdapter
 import com.sky.oa.databinding.ActivitySlidingBinding
-import com.sky.oa.entity.ChapterEntity
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.ChapterEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.oa.pop.CatalogPop
 import com.sky.oa.repository.NotesRepository
 import com.sky.oa.vm.SlidingViewModel
 import com.sky.oa.vm.UiState
 import kotlinx.coroutines.launch
-import java.text.Collator
-import java.util.*
 
 /**
  * Created by SKY on 2018/3/16.

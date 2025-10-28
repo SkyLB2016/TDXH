@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sky.base.utils.LogUtils
 import com.sky.oa.databinding.AdapterUrlBinding
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 
 class CourseAdapter : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCallback()) {
     lateinit var context: Context

@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.reflect.TypeToken
 import com.sky.base.ApiResponse
 import com.sky.base.utils.LogUtils
-import com.sky.oa.entity.CourseEntity
-import com.sky.oa.entity.ImageFloder
+import com.sky.oa.data.model.CourseEntity
+import com.sky.oa.data.model.ImageFloder
 import com.sky.oa.gson.GsonUtils
 import okhttp3.*
 import java.io.File

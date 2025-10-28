@@ -1,4 +1,4 @@
-package com.sky.oa.entity
+package com.sky.oa.data.model
 
 import android.os.Parcel
 import android.os.Parcelable

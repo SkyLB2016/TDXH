@@ -5,7 +5,7 @@ import com.sky.base.ui.BaseViewModel
 import com.sky.base.utils.LogUtils
 import com.sky.oa.data.model.ImageResource
 import com.sky.oa.data.repository.HttpRepository
-import com.sky.oa.entity.CourseEntity
+import com.sky.oa.data.model.CourseEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sky.oa.R
 import com.sky.oa.activity.ArticleActivity
 import com.sky.oa.databinding.AdapterNoteitemBinding
-import com.sky.oa.entity.PoetryEntity
+import com.sky.oa.data.model.PoetryEntity
 import com.sky.base.ui.MvvmHolder
 
 /**
@@ -56,5 +56,5 @@ class ChildAdapter : RecyclerView.Adapter<MvvmHolder<AdapterNoteitemBinding>>() 
         }
     }
 
-    override fun getItemCount() = poetries?.size ?: 0
+    override fun getItemCount() = poetries.size ?: 0
 }

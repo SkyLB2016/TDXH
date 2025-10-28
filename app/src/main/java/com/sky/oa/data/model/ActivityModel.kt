@@ -1,4 +1,4 @@
-package com.sky.oa.entity
+package com.sky.oa.data.model
 
 import com.sky.oa.gson.GsonUtils
 import java.io.Serializable

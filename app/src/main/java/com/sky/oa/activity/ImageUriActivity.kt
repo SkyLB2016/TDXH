@@ -18,7 +18,7 @@ import com.sky.base.widget.BasePop
 import com.sky.oa.R
 import com.sky.oa.adapter.LoaderUriAdapter
 import com.sky.oa.databinding.ActivityUriBinding
-import com.sky.oa.entity.ImageFloder
+import com.sky.oa.data.model.ImageFloder
 import com.sky.oa.pop.FloderPop
 import com.sky.oa.pop.URIPop
 import com.sky.oa.repository.ImageRepository

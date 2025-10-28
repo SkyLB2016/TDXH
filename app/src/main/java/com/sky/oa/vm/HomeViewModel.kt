@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.sky.base.ui.BaseViewModel
 import com.sky.base.utils.LogUtils
 import com.sky.oa.R
-import com.sky.oa.entity.ActivityEntity
+import com.sky.oa.data.model.ActivityEntity
 import java.text.Collator
 import java.util.*
 import kotlin.Comparator

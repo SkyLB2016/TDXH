@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.sky.oa.entity.ActivityModel;
+import com.sky.oa.data.model.ActivityModel;
 
 import java.lang.reflect.Type;
 import java.util.List;
