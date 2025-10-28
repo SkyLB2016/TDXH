@@ -11,6 +11,7 @@ class NinthPalaceActivity : BaseActivity<ActivityNinthpalaceBinding>() {
     override fun inflateBinding() = ActivityNinthpalaceBinding.inflate(layoutInflater)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.appBar.tvCenter.text = "九宫图"
         binding.appBar.tvRight.text = "随机图案"
         binding.appBar.tvRight.setOnClickListener { binding.nine.shuffle() }
         binding.nine.onSuccess = { s ->

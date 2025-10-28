@@ -46,6 +46,7 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
     override fun inflateBinding() = ActivityUrlBinding.inflate(layoutInflater)
     override fun initViews() {
         setToolbar(binding!!.appBar.toolbar, "网络图片加载")
+        showNavigationIcon()
         first = true
         //设置swipe的开始位置与结束位置
         binding.swipe!!.setProgressViewOffset(

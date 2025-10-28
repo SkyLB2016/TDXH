@@ -29,6 +29,9 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.sky.base.ApiResponse
 import com.sky.base.utils.AppUtils
 import com.sky.base.utils.LogUtils
 import com.sky.base.utils.MD5Utils
@@ -46,6 +49,7 @@ import com.sky.oa.proxy.abstractfactory.MCFctory
 import com.sky.oa.proxy.factory.HairFactory
 import com.sky.oa.proxy.factory.hair.LeftHair
 import com.sky.base.ui.BaseActivity
+import com.sky.oa.data.model.ActivityModel
 import java.net.URL
 import java.text.Collator
 import java.text.DecimalFormat
@@ -66,29 +70,17 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         showNavigationIcon()
 
         val method = arrayListOf(
-            "字符替换与数组化",
             "hash相同",
             "字体颜色背景变换",
-            "系统信息",
-            "获取app信息",
             "电池电量",
             "数组排序",
             "json转换",
-            "list迭代器",
-            "list筛选lambda",
-            "Intent测试",
-            "时间选择",
-            "地址选择",
             "工厂模式",
             "SVG与Value",
             "渐变的文字",
-            "音频处理",
-            "字符串转id",
             "排序算法",
-            "LinkedList使用",
             "MD5加密",
             "科学计数法",
-            "虚拟机鉴定",
             "获取当前方法的名称",
             "输出View的位置信息",
             "URL的结构",
@@ -105,7 +97,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
             tvText.setOnClickListener(this)
         }
         binding.tvDisplay.movementMethod = LinkMovementMethod.getInstance()
-        binding.tvDisplay.text = replaceStr()
+        binding.tvDisplay.text = ""
         val controller = AnimationUtils.loadLayoutAnimation(this, R.anim.anim_layout)
 
 //        val controller = LayoutAnimationController(animation)
@@ -121,19 +113,12 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
             }
         }
         binding.tvDisplay.text = when (v?.tag) {
-            "字符替换与数组化" -> replaceStr() + "\n" + toArray()
             "hash相同" -> equalHashCode()
             "字体颜色背景变换" -> changeText()
-            "系统信息" -> getSystemMessage() + "\n" + getSystemProperty()
-            "获取app信息" -> getAppInfo()
             "电池电量" -> "电池电量==$battery"
             "数组排序" -> sortList()
             "json转换" -> changeJson()
-            "list迭代器" -> iterator()
-            "list筛选lambda" -> lambda()
-            "字符串转id" -> changeStrToId()
             "排序算法" -> sort()
-            "LinkedList使用" -> getNum()
             "MD5加密" -> MD5Utils.encryption("http://img.mukewang.com/55237dcc0001128c06000338.jpg")
             "科学计数法" -> format("0")
             "输出View的位置信息" -> outPutViewParameter(v)
@@ -145,14 +130,9 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         binding.image.visibility = View.GONE
         binding.shader.visibility = View.GONE
         when (v?.tag) {
-            "Intent测试" -> intentTest()
-            "时间选择" -> selectTime()
-            "地址选择" -> selectAddress()
             "工厂模式" -> factoryModel()
             "SVG与Value" -> setSvg()
             "渐变的文字" -> shaderText()
-//            "音频处理" -> makePlayer()
-            "虚拟机鉴定" -> detectEmulatorSimple()
             "获取当前方法的名称" -> getMethodName()
         }
     }
@@ -269,26 +249,6 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     }
 
 
-    private fun detectEmulatorSimple() {
-//        EmulatorDetector.with(this)
-//            .detectSimple { isEmulator ->
-//                runOnUiThread {
-//                    binding.tvDisplay.text = "This is not a emulator !"
-//                    if (isEmulator) {
-//                        binding.tvDisplay.text = "This is a emulator !"
-//                        AlertDialog.Builder(this)
-//                            .setTitle("虚拟机不能执行此功能")
-//                            .setCancelable(false)
-//                            .setPositiveButton("确定") { dialog, which ->
-//                                dialog.dismiss()
-//                            }
-//                            .create()
-//                            .show()
-//                    }
-//                }
-//            }
-    }
-
     /**
      * @param num 科学技术： #,###.00"
      * 0 表示如果位数不足则以 0 填充，# 表示只要有可能就把数字拉上这个位置
@@ -326,26 +286,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         observable.send("观察者模式")
     }
 
-    //一组数据从1开始数，到13时移除此数，之后继续从1开始数
-    private fun getNum(): String {
-        val nums = (1..14).mapTo(LinkedList<String>()) { it.toString() + "" }
-        val builder = StringBuilder()
-        var a = 1
-        while (!nums.isEmpty()) {
-            val temp = nums.first
-            nums.removeFirst()
-            if (a != 13) {
-                nums.addLast(temp)
-                a++
-            } else {
-                builder.append("$temp,")
-                a = 1
-            }
-        }
-        return builder.toString()
-    }
-
-    private fun sort(): CharSequence? {
+     private fun sort(): CharSequence? {
         val array = intArrayOf(99, 12, 35, 44, 5, 9, 54, 44, 10, 66)
 //        val array = getArray()
         return "原始数据：共一千条随机数据；\n" +
@@ -856,32 +797,11 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         return text
     }
 
-    private fun makePlayer() {
-//        val mMediaPlayer = MediaPlayer.create(this, R.raw.sudi)
-//        mMediaPlayer.start()
-//        mMediaPlayer.setOnCompletionListener { showToast("播放完成") }
-        val soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            SoundPool.Builder()
-                .setMaxStreams(100)   //设置允许同时播放的流的最大值
-                .setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
-                )   //完全可以设置为null
-                .build()
-        else SoundPool(100, AudioManager.STREAM_MUSIC, 0)
-//        构建对象
-//        val soundId = soundPool.load(this, R.raw.bgyxc, 1)//加载资源，得到soundId
-        soundPool.setOnLoadCompleteListener { soundPool, sampleId, status ->
-//            val streamId = soundPool.play(soundId, 1f, 1f, 1, 0, 1f)//播放，得到StreamId
-        }
-    }
-
     private fun shaderText() {
         binding.shader.visibility = View.VISIBLE
 //        shader.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        binding.shader.text = "天地玄黄，宇宙洪荒，日月盈仄，辰宿列张。寒来暑往，秋收冬藏。闰余成岁，律吕调阳。云腾致雨，露结为霜。金生丽水，玉出昆冈。"
+        binding.shader.text =
+            "天地玄黄，宇宙洪荒，日月盈仄，辰宿列张。寒来暑往，秋收冬藏。闰余成岁，律吕调阳。云腾致雨，露结为霜。金生丽水，玉出昆冈。"
     }
 
     private fun setSvg() {
@@ -929,32 +849,6 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         val boyfacoty = HNFactory()
         val boy = boyfacoty.boy
         boy.drawMan()
-    }
-
-    private fun getAppInfo() = "当前版本:${AppUtils.getVersionCode(this)};\n" +
-            "当前版本号:${AppUtils.getVersionName(this)};\n"
-//    + "当前通道号:${AppUtils.getChannel(this)}"
-
-
-    private fun selectAddress() {
-//        val address = AddressFragment()
-//        address.show(supportFragmentManager, "address")
-//        address.onClick = object : AddressFragment.OnClickListener {
-//            override fun onClick(address: String) {
-//                binding.tvDisplay.text = address
-//            }
-//        }
-    }
-
-    private fun selectTime() {
-//        val time = TimeFragment()
-//        time.show(supportFragmentManager, "time")
-//        binding.time.time = DateUtil.dateToTimeStamp(tvDisplay.text.toString().trim())
-//        time.onClick = object : TimeFragment.OnClickListener {
-//            override fun onClick(time: String) {
-//                binding.tvDisplay.text = time
-//            }
-//        }
     }
 
     private fun changeText(): SpannableStringBuilder {
@@ -1047,80 +941,45 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
         return span
     }
 
-    private fun lambda(): String {
-        val text = StringBuilder()
-        val seq = sequence {
-            // 产生一个 i 的平方
-            for (i in 1..5) yield(i * i)
-            // 产生一个区间
-            yieldAll(26..28)
-        }
-        text.append(seq.toList().toString() + "\n")
-        var fruits = listOf("banana", "avocado", "apple", "kiwi")
-        fruits.filter { it.startsWith("a") }
-            .sortedBy { it }
-            .map { it.uppercase() }
-            .forEach { text.append(it + "\n") }
-        val array =
-            GsonUtils.fromJson(getString(R.string.jsonarray), Array<ActivityEntity>::class.java)
-//        array.sortedByDescending { it }
-        array
-            .forEach { text.append(it.activityName + "\n") }
-        return text.toString()
-    }
-
-    private fun iterator(): String {
-        val list =
-            GsonUtils.fromJson(getString(R.string.jsonarray), Array<ActivityEntity>::class.java)
-        val iter = list.iterator()
-        val text = StringBuilder()
-        for (i in iter) text.append(i.toString())
-//        while (iter.hasNext()) {
-//            val obj = iter.next()
-//            text.append(obj.toString())
-//        }
-        return text.toString()
-    }
-
     private fun changeJson(): String {
-//        val model = GsonUtils.fromJson(getString(R.string.jsonobj), ActivityModel::class.java)
-//        val entity = GsonUtils.fromJson<ApiResponse<List<ActivityModel>>>(
-//            getString(R.string.jsonlist),
-//            object : TypeToken<ApiResponse<List<ActivityModel>>>() {}.type
-//        )
-//        val list = GsonUtils.fromJson<List<ActivityModel>>(
-//            getString(R.string.jsonarray),
-//            object : TypeToken<ArrayList<ActivityModel>>() {}.type
-//        )
-//
-//        val array = Gson().fromJson(getString(R.string.jsonarray), Array<ActivityModel>::class.java)
-//
+        val model = GsonUtils.fromJson(getString(R.string.jsonobj), ActivityModel::class.java)
+        val entity = GsonUtils.fromJson<ApiResponse<List<ActivityModel>>>(
+            getString(R.string.jsonlist),
+            object : TypeToken<ApiResponse<List<ActivityModel>>>() {}.type
+        )
+        val list = GsonUtils.fromJson<List<ActivityModel>>(
+            getString(R.string.jsonarray),
+            object : TypeToken<ArrayList<ActivityModel>>() {}.type
+        )
+
+        val array = Gson().fromJson(getString(R.string.jsonarray), Array<ActivityModel>::class.java)
+
         val builder = StringBuilder()
 //
-//        builder.append("单个类：")
-//        builder.append("\n")
-//        builder.append(model.toString())
-//        builder.append("\n")
-//        builder.append("\n")
-//
-//        builder.append("类中套列表：")
-//        builder.append("\n")
-//        builder.append(entity.objList.toString())
-//        builder.append("\n")
-//        builder.append("\n")
-//
-//        builder.append("列表：")
-//        builder.append("\n")
-//        builder.append(list.toString())
-//        builder.append("\n")
-//        builder.append("\n")
-//
-//        builder.append("数组：")
-//        builder.append("\n")
-//        builder.append("[")
-//        for (i in array) builder.append(i.toString())
-//        builder.append("]")
-//        builder.append("\n")
+        builder.append("单个类：")
+        builder.append("\n")
+        builder.append(model.toString())
+        builder.append("\n")
+        builder.append("\n")
+
+        builder.append("类中套列表：")
+        builder.append("\n")
+        builder.append(entity.objList.toString())
+        builder.append("\n")
+        builder.append("\n")
+
+        builder.append("列表：")
+        builder.append("\n")
+        builder.append(list.toString())
+        builder.append("\n")
+        builder.append("\n")
+
+        builder.append("数组：")
+        builder.append("\n")
+        builder.append("[")
+        for (i in array) builder.append(i.toString())
+        builder.append("]")
+        builder.append("\n")
         return builder.toString()
     }
 
@@ -1182,29 +1041,6 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
             return currLevel * 100 / total
         }
 
-    /**
-     * intent测试
-     */
-    private fun intentTest() {
-        //        IntentTest.startIntent(this, Extra<String>(),"com.sky.action")
-//        val intent = Intent(AlarmClock.ACTION_SET_ALARM)
-//        intent.putExtra(AlarmClock.EXTRA_HOUR, 15)
-//        intent.putExtra(AlarmClock.EXTRA_MINUTES, 24)
-//        intent.putExtra(AlarmClock.EXTRA_MESSAGE, "测试")
-        //        val intent = Intent(AlarmClock.ACTION_SET_TIMER)
-        //                .putExtra(AlarmClock.EXTRA_MESSAGE, "测试")
-        //                .p`utExtra(AlarmClock.EXTRA_LENGTH, 10)
-        //                .putExtra(AlarmClock.EXTRA_SKIP_UI, true)
-        //        val intent = Intent(MediaStore.INTENT_ACTION_VIDEO_CAMERA)
-        //
-        //        if (intent.resolveActivity(packageManager) != null) {
-        //            startActivity(intent);
-        //        }
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
-        startActivityForResult(intent, 101)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
@@ -1230,96 +1066,16 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
 
     private fun equalHashCode(): String =
         "Aa的hashCode:${"Aa".hashCode()}==BB的hashCode:${"BB".hashCode()};\n" +
-                "内存地址==${System.identityHashCode("Aa")}" +//内存地址
-                "内存地址==${System.identityHashCode("BB")}" +//内存地址
+                "Aa的内存地址==${System.identityHashCode("Aa")}\n" +//内存地址
+                "BB的内存地址==${System.identityHashCode("BB")}\n" +//内存地址
                 "Bb的hashCode:${"Bb".hashCode()}==CC的hashCode:${"CC".hashCode()};\n" +
-                "内存地址==${System.identityHashCode("Bb")}" +//内存地址
-                "内存地址==${System.identityHashCode("CC")}" +//内存地址
+                "Bb的内存地址==${System.identityHashCode("Bb")}\n" +//内存地址
+                "CC的内存地址==${System.identityHashCode("CC")}\n" +//内存地址
                 "Cc的hashCode:${"Cc".hashCode()}==DD的hashCode:${"DD".hashCode()};\n" +
-                "内存地址==${System.identityHashCode("Cc")}" +//内存地址
-                "内存地址==${System.identityHashCode("DD")}" +//内存地址
+                "Cc的内存地址==${System.identityHashCode("Cc")}\n" +//内存地址
+                "DD的内存地址==${System.identityHashCode("DD")}\n" +//内存地址
                 "字符串的hashcode是重写过的"
 
-
-    private fun toArray(): String {
-        val chars = "字符串数组化".toCharArray()
-        val text = StringBuilder()
-        for (i in 0 until chars.size - 1) text.append("${chars[i]},")
-        text.append("${chars.last()}")
-        return text.toString()
-    }
-
-    private fun replaceStr() =
-        String.format(getString(R.string.format01), 88) +
-                String.format(getString(R.string.format02), "天地玄黄，宇宙洪荒") +
-                String.format(getString(R.string.format03), 88.8) +
-                String.format(getString(R.string.format03), 88.12345678) +
-                String.format(getString(R.string.format04), 88.129345678) +
-                String.format(getString(R.string.format05), "日月盈昃", 44) +
-                String.format(getString(R.string.format06), "日月", 44, 9.9) +
-                String.format(getString(R.string.format07), 29) +
-                String.format(getString(R.string.format08), 29) +
-                String.format(getString(R.string.format09), 9982999, 9998.876) +
-                getString(R.string.format016)
-
-    //获取系统信息
-    private fun getSystemMessage(): String {
-        val text = StringBuilder()
-        val cpus = Build.SUPPORTED_ABIS
-        for (i in cpus)
-            text.append("CPU指令集==$i\n")
-        val abis32 = Build.SUPPORTED_32_BIT_ABIS
-        for (i in abis32)
-            text.append("CPU32指令集==$i\n")
-        val abis64 = Build.SUPPORTED_64_BIT_ABIS
-        for (i in abis64)
-            text.append("CPU64指令集==$i\n")
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//            text.append("CPU指令集==${Build.CPU_ABI}\n")
-//            text.append("CPU指令集==${Build.CPU_ABI2}\n")
-//            text.append("硬件序列号==${Build.SERIAL}\n")
-//        }
-        text.append("主板型号==${Build.BOARD}\n")
-        text.append("系统定制商==${Build.BRAND}\n")
-        text.append("设备参数==${Build.DEVICE}\n")
-        text.append("显示屏参数==${Build.DISPLAY}\n")
-        text.append("唯一编号==${Build.FINGERPRINT}\n")
-        text.append("修订版本列表==${Build.ID}\n")
-        text.append("硬件制造商==${Build.MANUFACTURER}\n")
-        text.append("版本==${Build.MODEL}\n")
-        text.append("硬件名==${Build.HARDWARE}\n")
-        text.append("手机产品名==${Build.PRODUCT}\n")
-        text.append("描述Build的标签==${Build.TAGS}\n")
-        text.append("Builder的类型==${Build.TYPE}\n")
-        text.append("当前开发代号==${Build.VERSION.CODENAME}\n")
-        text.append("源码控制版本号==${Build.VERSION.INCREMENTAL}\n")
-        text.append("系统版本==${Build.VERSION.RELEASE}\n")
-        text.append("系统版本号==${Build.VERSION.SDK_INT}\n")
-        text.append("Host值==${Build.HOST}\n")
-        text.append("User名==${Build.USER}\n")
-        text.append("编译时间==${Build.TIME}\n")
-        return text.toString()
-    }
-
-    //获取系统信息
-    private fun getSystemProperty(): String {
-        return "OS版本==${System.getProperty("os.version")}\n" +
-                "OS名称==${System.getProperty("os.name")}\n" +
-                "OS架构==${System.getProperty("os.arch")}\n" +
-                "Home属性==${System.getProperty("user.home")}\n" +
-                "Name属性==${System.getProperty("user.name")}\n" +
-                "Dir属性==${System.getProperty("user.dir")}\n" +
-                "时区==${System.getProperty("user.timezone")}\n" +
-                "路径分隔符==${System.getProperty("path.separator")}\n" +
-                "行分隔符==${System.getProperty("line.separator")}\n" +
-                "文件分隔符==${System.getProperty("file.separator")}\n" +
-                "Java vendor URL 属性==${System.getProperty("java.vendor.url")}\n" +
-                "Java class 路径==${System.getProperty("java.class.path")}\n" +
-                "Java class 版本==${System.getProperty("java.class.version")}\n" +
-                "Java Vendor 属性==${System.getProperty("java.vendor")}\n" +
-                "Java 版本==${System.getProperty("java.version")}\n" +
-                "Java Home 属性==${System.getProperty("java.home")}\n"
-    }
 
     /**
      * URL的结构
@@ -1327,12 +1083,12 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
     private fun getURL(): String {
         val builder = StringBuilder()
         val url = URL(HttpUrl.URL_MUKE + HttpUrl.URL_MUKE1)
-        builder.append("资源名 == ${url.file}\n")
-        builder.append("主机名 == ${url.host}\n")
-        builder.append("路径 == ${url.path}\n")
-        builder.append("端口 == ${url.port}\n")
-        builder.append("协议名称 == ${url.protocol}\n")
-        builder.append("查询字符串 == ${url.query}\n")
+        builder.append("资源名 ： ${url.file}\n")
+        builder.append("主机名 ： ${url.host}\n")
+        builder.append("路径 ： ${url.path}\n")
+        builder.append("端口 ： ${url.port}\n")
+        builder.append("协议名称 ： ${url.protocol}\n")
+        builder.append("查询字符串 ： ${url.query}\n")
         return builder.toString()
     }
 
@@ -1353,7 +1109,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
      * 文件属性
      */
     private fun fileTest() {
-        
+
     }
 
     override fun onDestroy() {
