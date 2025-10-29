@@ -12,7 +12,9 @@ import com.sky.base.utils.LogUtils
 import com.sky.oa.databinding.AdapterUrlBinding
 import com.sky.oa.data.model.CourseEntity
 
-class CourseAdapter : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCallback()) {
+
+class CourseAdapter(private val onTeacherClick: (CourseEntity) -> Unit)
+    : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCallback) {
     lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +31,7 @@ class CourseAdapter : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCa
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: AdapterUrlBinding) :
+    inner class ViewHolder(private val binding: AdapterUrlBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(course: CourseEntity) {
             val face =
@@ -50,11 +52,24 @@ class CourseAdapter : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCa
 //
             // 简单处理：直接设置背景色或占位图
 //            binding.image.setImageResource(R.d)
+
+            // 设置点击事件
+            binding.root.setOnClickListener {
+                onTeacherClick(course)
+            }
         }
     }
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<CourseEntity>() {
+            override fun areItemsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean =
+                oldItem.id == newItem.id
 
-    private class DiffCallback : DiffUtil.ItemCallback<CourseEntity>() {
-        override fun areItemsTheSame(old: CourseEntity, new: CourseEntity) = old.id == new.id
-        override fun areContentsTheSame(old: CourseEntity, new: CourseEntity) = old == new
+            override fun areContentsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean =
+                oldItem == newItem
+        }
     }
+//    private class DiffCallback : DiffUtil.ItemCallback<CourseEntity>() {
+//        override fun areItemsTheSame(old: CourseEntity, new: CourseEntity) = old.id == new.id
+//        override fun areContentsTheSame(old: CourseEntity, new: CourseEntity) = old == new
+//    }
 }

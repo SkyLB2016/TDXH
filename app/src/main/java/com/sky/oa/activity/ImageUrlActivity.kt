@@ -40,7 +40,7 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
     private var firstVisibleItem: Int = 0
     private var lastVisibleItem: Int = 0
     private var firstTail = false //第一次到达底部
-    lateinit var adapter: CourseAdapter
+    lateinit var courseAdapter: CourseAdapter
     override val viewModel: ImageUrlViewModel by viewModels()
 
     override fun inflateBinding() = ActivityUrlBinding.inflate(layoutInflater)
@@ -48,50 +48,73 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
         setToolbar(binding!!.appBar.toolbar, "网络图片加载")
         showNavigationIcon()
         first = true
-        //设置swipe的开始位置与结束位置
-        binding.swipe!!.setProgressViewOffset(
-            false,
-            0,
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics)
-                .toInt()
-        )
-        //为进度圈设置颜色
-        binding.swipe!!.setColorSchemeResources(
-            R.color.black,
-            android.R.color.holo_green_dark,
-            R.color.white
-        )
-        //下拉刷新监听
-        binding.swipe!!.setOnRefreshListener {
-
+        binding.swipe.apply {
+            //设置swipe的开始位置与结束位置
+            setProgressViewOffset(
+                false,
+                0,
+                TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    80f,
+                    resources.displayMetrics
+                ).toInt()
+            )
+            //为进度圈设置颜色
+            setColorSchemeResources(
+                R.color.black,
+                android.R.color.holo_green_dark,
+                R.color.white
+            )
+            //下拉刷新监听
+            setOnRefreshListener {
+                viewModel.loadMore()
+            }
         }
 
-        binding.recycler!!.setHasFixedSize(true)
-//        val layoutIds = ArrayList<Int>()//主体布局
-//        layoutIds.add(R.layout.adapter_main_01)
-//        layoutIds.add(R.layout.adapter_main_02)
-//        layoutIds.add(R.layout.adapter_main_02)
-//        layoutIds.add(R.layout.adapter_main_01)
-        adapter = CourseAdapter()
-        binding.recycler.adapter = adapter
+        courseAdapter = CourseAdapter { teacher ->
+            // 这里可以跳转到详情页
+            // val intent = Intent(context, TeacherDetailActivity::class.java)
+            // intent.putExtra("teacher", teacher)
+            // startActivity(intent)
+        }
 
-        binding.recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                onRecyclerScrollStateChanged(recyclerView, newState)
-                //SCROLL_STATE_SETTLING惯性，SCROLL_STATE_DRAGGING拖拽，SCROLL_STATE_IDLE停止、
-                if (recyclerView.canScrollVertically(1)) firstTail = false
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && firstTail) loadMore()
-                if (!recyclerView.canScrollVertically(1)) firstTail = true
-            }
+        binding.recycler.apply {
+            setHasFixedSize(true)
+//            layoutManager = LinearLayoutManager(context)
+            adapter = courseAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (recyclerView.canScrollVertically(1)){
+                        firstTail = false
+                    }
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                onRecyclerScrolled(recyclerView, dx, dy)
-                //  dx：大于0，向右滚动    小于0，向左滚动
-                //  dy：小于0，向上滚动    大于0，向下滚动
-                if (dy < -1) firstTail = false
-                //                if (recycler.getLayoutManager() instanceof LinearLayoutManager) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && firstTail) {
+                        viewModel.loadMore(true)
+                    }
+                    if (!recyclerView.canScrollVertically(1)) firstTail = true
+//                    if (!recyclerView.canScrollVertically(1)) {
+//                        // 滚动到底部，加载更多
+//                        viewModel.loadMore()
+//                    }
+
+//                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+//                    val totalItemCount = layoutManager.itemCount
+//                    val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+//
+//                    // 当滚动到倒数第 2 个 item 时，加载更多
+//                    if (totalItemCount <= lastVisibleItem + 2) {
+//                        viewModel.loadMore(true)
+//                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+//                    onRecyclerScrolled(recyclerView, dx, dy)
+                    //  dx：大于0，向右滚动    小于0，向左滚动
+                    //  dy：小于0，向上滚动    大于0，向下滚动
+//                    if (dy < -1) firstTail = false
+                    //                if (recycler.getLayoutManager() instanceof LinearLayoutManager) {
 //                    LinearLayoutManager layoutManager = (LinearLayoutManager) recycler.getLayoutManager();
 ////                    firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 ////                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
@@ -100,8 +123,10 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
 //                    int[] positions = layoutManager.findLastVisibleItemPositions(new int[layoutManager.getSpanCount()]);
 //                    lastVisibleItem = findMax(positions);
 //                }
-            }
-        })
+                }
+            })
+            showLoading()
+        }
 
         binding.fab.setOnClickListener { v ->
             Snackbar.make(v, "正在加载，请稍后", Snackbar.LENGTH_LONG)
@@ -113,45 +138,36 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
         collectUiState()
     }
 
-    override fun onResume() {
-        super.onResume()
-        showLoading()
-
-    }
     private fun collectUiState() {
-//        collectFlow(viewModel.uiState) { state ->
-//            when (state) {
-//                UiState.Loading -> {
-//
-//                }
-//
-//                is UiState.Success<*> -> {
-//                    adapter.submitList(state.datas as List<CourseEntity>)
-//                }
-//
-//                is UiState.Error -> {
-//
-//                }
-//            }
-//        }
-        collectFlow(viewModel.teachers) { datas ->
-            adapter.submitList(datas)
-            disLoading()
+        collectFlow(viewModel.uiState) { state ->
+            when (state) {
+                UiState.Loading -> {
+
+                }
+
+                is UiState.Success<*> -> {
+                    val datas = state.datas as List<CourseEntity>
+                    courseAdapter.submitList(datas.toList())
+                    disLoading()
+                    binding.swipe.isRefreshing = false
+                }
+
+                is UiState.Error -> {
+                    showToast(state.message)
+                    binding.swipe.isRefreshing = false
+                }
+            }
         }
+//        collectFlow(viewModel.teachers) { datas ->
+//            courseAdapter.submitList(datas)
+//            disLoading()
+//            binding.swipe.isRefreshing = false
+//        }
 
     }
 
     private fun loadMore() {
 
-    }
-
-    fun onRecyclerScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-//        if (newState == RecyclerView.SCROLL_STATE_IDLE) setImageLoader(
-//            firstVisibleItem,
-//            lastVisibleItem,
-//            binding.recycler
-//        )
-//        else cancelAlltasks()
     }
 
     fun onRecyclerScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -160,62 +176,10 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
         lastVisibleItem = layoutManager.findLastVisibleItemPosition()
         if (lastVisibleItem > 0 && first) {
             first = false
-            setImageLoader(firstVisibleItem, lastVisibleItem, binding.recycler)
         }
-    }
-
-    private fun setImageLoader(start: Int, last: Int, recycle: RecyclerView) {
-        for (i in start..last) {
-//            ImageLoaderAsync.showAsyncImage(
-//                recycle.findViewWithTag<View>(adapter.datas[i].picBig) as ImageView,
-//                adapter.datas[i].picBig!!
-//            )
-////            imageLoader.showAsyncImage(image, adapter.datas[i].picBig);
-        }
-    }
-
-    private fun cancelAlltasks() {
-        ImageLoaderAsync.cancelAlltasks()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelAlltasks()
-    }
-
-    private lateinit var photoUtils: PhotoUtils
-
-    private fun getPhoto(view: View, position: Int) {
-//        val photoPath =
-//            getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath + File.separator + System.currentTimeMillis() + ".jpg"
-//        photoUtils = PhotoUtils(this, photoPath)
-//        photoUtils?.setUploadPicture { photoName, bitmap ->
-//            val image = view.findViewById<ImageView>(R.id.image)
-//            image.setImageBitmap(bitmap)
-//            adapter.datas[position].picBig = photoName
-//            LogUtils.i("photo==$photoName")
-//            LogUtils.i("压缩后所占内存大小==${bitmap.allocationByteCount / 1024}KB")
-//            LogUtils.i("原图所占内存大小==${BitmapUtils.getBitmapFromPath(photoName).allocationByteCount / 1024 / 1024}MB")
-//
-//            val pathname =
-//                getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath + File.separator + System.currentTimeMillis() % 1000 + ".jpg"
-//            BitmapUtils.saveBitmapToFile(bitmap, pathname)//保存照片到应用缓存文件目录下
-//            LogUtils.i("原图文件大小==${File(photoName).length() / 1024 / 1024}MB")
-//            LogUtils.i("压缩后文件大小==${File(pathname).length() / 1024}KB")
-//        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        photoUtils?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        photoUtils?.onActivityResult(requestCode, resultCode, data)
     }
 }

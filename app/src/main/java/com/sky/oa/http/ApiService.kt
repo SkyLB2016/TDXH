@@ -10,7 +10,7 @@ import retrofit2.http.Query
  * @TIME: 2025/10/12 0:21
  * @Description:
  */
-interface HttpApi {
+interface ApiService {
 //    http://www.imooc.com/api/teacher?type=4&num=30
     @GET("api/teacher")
     suspend fun getTeacher(
