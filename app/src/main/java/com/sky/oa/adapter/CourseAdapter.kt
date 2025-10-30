@@ -51,7 +51,7 @@ class CourseAdapter(private val onItemClick: (CourseEntity) -> Unit) :
             // 使用 Glide 加载头像（可选）
             Glide.with(binding.image.context)
                 .load("${course.picBig}".replace("http://", "https://"))
-                .circleCrop()
+//                .circleCrop()
                 .into(binding.image)
 //
             // 简单处理：直接设置背景色或占位图

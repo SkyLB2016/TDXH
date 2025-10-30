@@ -1,41 +1,22 @@
 package com.sky.oa.activity
 
 import android.app.Dialog
-import android.content.Intent
-import android.os.Bundle
-import android.os.Environment
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sky.base.ui.BaseMActivity
-import com.sky.base.utils.BitmapUtils
-import com.sky.base.utils.LogUtils
-import com.sky.base.utils.PhotoUtils
 import com.sky.oa.R
 import com.sky.oa.adapter.CourseAdapter
-import com.sky.oa.adapter.LoaderURLAdapter
 import com.sky.oa.databinding.ActivityUrlBinding
 import com.sky.oa.data.model.CourseEntity
-import com.sky.oa.pop.URIPop
-import com.sky.oa.repository.ImageRepository
-import com.sky.oa.utils.imageloader.ImageLoaderAsync
 import com.sky.oa.vm.ImageUrlViewModel
 import com.sky.oa.vm.UiState
-import kotlinx.coroutines.launch
-import java.io.File
 
 /**
  * Created by SKY on 2015/11/28.
@@ -83,10 +64,12 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
             // intent.putExtra("teacher", teacher)
             // startActivity(intent)
         }
-        courseAdapter.setOnImageClickListener { course->
-            course.picBig.let {
-                println(it)
-                showImageDialog(it)
+        courseAdapter.setOnImageClickListener { course ->
+            course.picBig?.let {
+                val url = it.replace("http://", "https://")
+                println("it=$it")
+                println("url=$url")
+                showImageDialog(url)
             }
         }
 
@@ -97,7 +80,7 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    if (recyclerView.canScrollVertically(1)){
+                    if (recyclerView.canScrollVertically(1)) {
                         firstTail = false
                     }
 
@@ -157,8 +140,11 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
         // 使用 Glide 加载大图
         Glide.with(this)
             .load(imageUrl)
-            .placeholder(R.mipmap.ic_panda)
+//            .placeholder(R.mipmap.ic_panda)
 //            .error(R.drawable.ic_error)
+//            .override(300,300)
+//            .override(Target.SIZE_ORIGINAL) // 加载原始分辨率
+            // .circleCrop()
             .into(imageView)
 
         // 点击弹窗区域关闭
@@ -166,11 +152,9 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
             dialog.dismiss()
         }
 
-        // 可选：支持缩放
-        // 可以使用 PhotoView 库：https://github.com/Baseflow/PhotoView
-
         dialog.show()
     }
+
     override fun setObservers() {
         collectUiState()
     }
