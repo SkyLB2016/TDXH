@@ -40,7 +40,7 @@ class CatalogueAdapter(private val onTeacherClick: (PoetryEntity) -> Unit) :
                 setPadding(20, 6, 20, 6)
 //            id = index
 //            tag = poetry.filePath
-                setOnClickListener{
+                setOnClickListener {
                     onTeacherClick(poetry)
                 }
 
@@ -48,12 +48,12 @@ class CatalogueAdapter(private val onTeacherClick: (PoetryEntity) -> Unit) :
 
         }
     }
-}
 
-class DiffCallback : DiffUtil.ItemCallback<PoetryEntity>() {
-    override fun areItemsTheSame(oldItem: PoetryEntity, newItem: PoetryEntity): Boolean =
-        oldItem.name == newItem.name
+    class DiffCallback : DiffUtil.ItemCallback<PoetryEntity>() {
+        override fun areItemsTheSame(oldItem: PoetryEntity, newItem: PoetryEntity): Boolean =
+            oldItem.name == newItem.name
 
-    override fun areContentsTheSame(oldItem: PoetryEntity, newItem: PoetryEntity): Boolean =
-        oldItem == newItem
+        override fun areContentsTheSame(oldItem: PoetryEntity, newItem: PoetryEntity): Boolean =
+            oldItem == newItem
+    }
 }

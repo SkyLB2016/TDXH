@@ -90,7 +90,7 @@ class PhotoPagingSource(private val context: Context) : PagingSource<Int, Photo>
                 val contentUri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
                 println("=="+id+ displayName+ contentUri+ folderName+ dateAdded)
-                photos.add(Photo(id, displayName, contentUri, folderName, dateAdded, 0))
+                photos.add(Photo(id, displayName, contentUri,"", folderName, dateAdded, 0))
             }
         }
 

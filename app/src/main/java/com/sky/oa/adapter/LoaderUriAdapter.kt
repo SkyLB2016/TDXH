@@ -29,7 +29,7 @@ class LoaderUriAdapter : RecyclerAdapter<AdapterUriBinding, String>() {
         binding.image.setBackgroundResource(R.mipmap.ic_launcher)
         binding.image.maxWidth = 300
         binding.image.minimumWidth = 300
-//            imageLoader.loadImage(binding.image, "$parentPath/${datas[position]}")
+            imageLoader.loadImage(binding.image, "$parentPath/${datas[position]}")
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
             //使用ripple
             binding.cardView.background = context.getDrawable(R.drawable.ripple)

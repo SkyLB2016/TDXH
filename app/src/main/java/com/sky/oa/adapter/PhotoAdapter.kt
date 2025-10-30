@@ -18,8 +18,12 @@ import com.sky.oa.data.model.Photo
 import com.sky.oa.databinding.AdapterUriBinding
 
 // Adapter: PhotoAdapter.kt
-class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(PhotoDiffCallback1()) {
+class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(DiffCallback()) {
 
+    private var onImageClick:(List<Photo>)->Unit={}
+    fun setOnImageClickListener(listener:(List<Photo>)->Unit){
+        onImageClick=listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = AdapterUriBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -33,40 +37,44 @@ class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(PhotoDiffC
         holder.bind(getItem(position))
     }
 
-    class PhotoViewHolder(private val binding: AdapterUriBinding) :
+    inner class PhotoViewHolder(private val binding: AdapterUriBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(photo: Photo) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-                //使用ripple
-                binding.cardView.background =
-                    binding.cardView.context.getDrawable(R.drawable.ripple)
-                //点击效果，阴影效果
-                binding.cardView.stateListAnimator = AnimatorInflater.loadStateListAnimator(
-                    binding.cardView.context,
-                    R.drawable.state_list_animator
-                )
+            // 1. 卡片样式设置（Ripple + 阴影动画）
+            with(binding.cardView) {
+                background = context.getDrawable(R.drawable.ripple)
+                stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.drawable.state_list_animator)
+                setOnClickListener {
+                    onImageClick(currentList)
+                }
+            }
+            // 2. 图片视图裁剪设置（圆角）
+            binding.image.apply {
                 //视图裁剪
-                binding.image.clipToOutline = true
-                binding.image.outlineProvider = object : ViewOutlineProvider() {
-                    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+                clipToOutline = true
+                outlineProvider = object : ViewOutlineProvider() {
                     override fun getOutline(view: View, outline: Outline) {
                         outline.setRoundRect(view.left, view.top, view.right, view.bottom, 30f)
                     }
                 }
+            }.also {
+                // 3. 加载图片
+                // 使用 Glide 或 Coil 加载图片
+                Glide.with(binding.image.context)
+                    .load(photo.contentUri)
+                    .centerCrop()
+                    .into(binding.image)
             }
-            // 使用 Glide 或 Coil 加载图片
-            Glide.with(binding.image.context)
-                .load(photo.contentUri)
-                .centerCrop()
-                .into(binding.image)
-            binding.tvText.text = photo.displayName
+
+
+            // 4. 绑定文本（可选）
+            // binding.tvText.text = photo.displayName
             LogUtils.i("photo.displayName", photo.displayName)
         }
     }
 }
 
-class PhotoDiffCallback1 : DiffUtil.ItemCallback<Photo>() {
+class DiffCallback : DiffUtil.ItemCallback<Photo>() {
     override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean = oldItem.id == newItem.id
     override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean = oldItem == newItem
 }

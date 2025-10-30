@@ -1,10 +1,10 @@
 package com.sky.oa.activity
 
 import android.Manifest
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import android.view.View
+import android.view.Gravity
+import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -12,9 +12,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sky.base.ui.BaseMActivity
+import com.sky.base.utils.ScreenUtils
+import com.sky.base.widget.BasePop
 import com.sky.oa.App
+import com.sky.oa.R
 import com.sky.oa.adapter.PhotoAdapter
+import com.sky.oa.data.model.Folder
 import com.sky.oa.databinding.ActivityPhotoBinding
+import com.sky.oa.pop.FolderPopupwindow
 import com.sky.oa.vm.PhotoViewModel
 
 /**
@@ -24,6 +29,7 @@ import com.sky.oa.vm.PhotoViewModel
  */
 class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     private lateinit var photoAdapter: PhotoAdapter
+    private lateinit var folderPop: BasePop<Folder>
 
     // 使用 Activity Result API 请求权限
     private val requestPermissionLauncher = registerForActivityResult(
@@ -33,7 +39,7 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
             showToast("开始请求数据")
             loadPhotos()
         } else {
-            showErrorMessage("需要权限才能访问照片")
+            showToast("需要权限才能访问照片")
         }
     }
 
@@ -69,9 +75,9 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
 
     private fun setupRecyclerView() {
         photoAdapter = PhotoAdapter()
-        binding.recyclerView.apply {
-
-            layoutManager=StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
+        binding.recycler.apply {
+            layoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
 //            layoutManager = LinearLayoutManager(this)
 //            layoutManager = GridLayoutManager(this@MainActivity, 3)
             adapter = photoAdapter
@@ -79,35 +85,40 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     }
 
     private fun setupViewModel() {
-//        lifecycleScope.launch {
-////            repeatOnLifecycle(State)
-//            viewModel.photoList.collect {pagingDate->
-//                showToast("文件数量==${pagingDate}")
-//                photoAdapter.submitData(pagingDate)
-//                showPhotos()
-//
-//            }
-//        }
         // 观察数据变化
-//        viewModel.photoList.observe(this) { photoList ->
-//            showToast("文件数量==${photoList}")
-//            photoAdapter.submitData(lifecycle,photoList)
-//            showPhotos()
-//        }
+        viewModel.photos.observe(this) { folderList ->
+//            showToast("文件数量==${folderList.size}")
+            setAdapter(folderList[0])
+//            构建文件夹的痰喘
+            showFolderPop(folderList)
 
-        // 观察数据变化
-        viewModel.photos.observe(this) { photoList ->
-            showToast("文件数量==${photoList.size}")
-            photoAdapter.submitList(photoList)
-            showPhotos()
+            binding.linear.setOnClickListener {
+                if (!folderPop!!.isShowing)
+                    folderPop!!.showAtLocation(window.decorView, Gravity.BOTTOM, 0, 0)
+            }
         }
+    }
 
-        viewModel.prhotoError.observe(this) { errorMsg ->
-            showErrorMessage(errorMsg)
+    private fun setAdapter(folder: Folder) {
+        val photos = folder.photoList
+        photoAdapter.submitList(photos)
+        photos.forEach { photo ->
+            println(photo.toString())
         }
+        binding.tvName.text = folder.folderName
+        "${photos.size}张".also { binding.tvNumber.text = it }
+    }
 
-        viewModel.isLoading.observe(this) { loading ->
-            binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+    private fun showFolderPop(folders: List<Folder>) {
+        folderPop = FolderPopupwindow(
+            LayoutInflater.from(this).inflate(R.layout.include_recycler, null),
+            ScreenUtils.getWidthPX(this), (ScreenUtils.getHeightPX(this) * 0.7).toInt()
+        )
+        folderPop.datas = folders
+        folderPop.setOnItemClickListener { _, position ->
+            val folder = folders[position]
+            setAdapter(folder)
+            folderPop.dismiss()
         }
     }
 
@@ -125,28 +136,13 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
         ) {
             loadPhotos()
         } else {
-            binding.btnRequestPermission.setOnClickListener {
-                requestPermissionLauncher.launch(permission)
-            }
-            binding.btnRequestPermission.visibility = View.VISIBLE
+            requestPermissionLauncher.launch(permission)
         }
     }
 
     private fun loadPhotos() {
         showToast("开始请求数据")
-
-        binding.btnRequestPermission.visibility = View.GONE
         viewModel.loadPhotos()
     }
 
-    private fun showPhotos() {
-        binding.recyclerView.visibility = View.VISIBLE
-        binding.tvError.visibility = View.GONE
-    }
-
-    private fun showErrorMessage(message: String) {
-        binding.tvError.text = message
-        binding.tvError.visibility = View.VISIBLE
-        binding.recyclerView.visibility = View.GONE
-    }
 }

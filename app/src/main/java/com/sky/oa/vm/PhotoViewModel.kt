@@ -10,6 +10,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sky.base.ui.BaseViewModel
+import com.sky.oa.data.model.Folder
 import com.sky.oa.data.model.Photo
 import com.sky.oa.data.paging.PhotoPagingSource
 import com.sky.oa.data.repository.PhotoRepository
@@ -17,23 +18,11 @@ import kotlinx.coroutines.flow.Flow
 
 // ViewModel: PhotoViewModel.kt
 class PhotoViewModel(private val application: Application) : BaseViewModel() {
-    val photoList: Flow<PagingData<Photo>> = Pager(
-        config = PagingConfig(
-            pageSize = 50,
-            enablePlaceholders = true,
-            initialLoadSize = 50
-        ),
-        pagingSourceFactory = {
-            PhotoPagingSource(application)
-        }
-    ).flow
-        .cachedIn(viewModelScope)
-
     private val repository = PhotoRepository(application)
 
     // 使用 LiveData 暴露照片列表
-    private val _photos = MutableLiveData<List<Photo>>()
-    val photos: LiveData<List<Photo>> = _photos
+    private val _photos = MutableLiveData<List<Folder>>()
+    val photos: LiveData<List<Folder>> = _photos
 
     // 是否正在加载
     private val _isLoading = MutableLiveData<Boolean>()
