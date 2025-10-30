@@ -1,10 +1,14 @@
 package com.sky.oa.activity
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.sky.base.ui.BaseMActivity
 import com.sky.base.utils.BitmapUtils
@@ -24,6 +29,7 @@ import com.sky.oa.adapter.CourseAdapter
 import com.sky.oa.adapter.LoaderURLAdapter
 import com.sky.oa.databinding.ActivityUrlBinding
 import com.sky.oa.data.model.CourseEntity
+import com.sky.oa.pop.URIPop
 import com.sky.oa.repository.ImageRepository
 import com.sky.oa.utils.imageloader.ImageLoaderAsync
 import com.sky.oa.vm.ImageUrlViewModel
@@ -76,6 +82,12 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
             // val intent = Intent(context, TeacherDetailActivity::class.java)
             // intent.putExtra("teacher", teacher)
             // startActivity(intent)
+        }
+        courseAdapter.setOnImageClickListener { course->
+            course.picBig.let {
+                println(it)
+                showImageDialog(it)
+            }
         }
 
         binding.recycler.apply {
@@ -134,6 +146,31 @@ class ImageUrlActivity : BaseMActivity<ActivityUrlBinding, ImageUrlViewModel>() 
         }
     }
 
+    // ✅ 显示大图弹窗
+    private fun showImageDialog(imageUrl: String) {
+        val dialog = Dialog(this, R.style.FullScreenDialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_image_viewer)
+
+        val imageView = dialog.findViewById<ImageView>(R.id.image)
+
+        // 使用 Glide 加载大图
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.mipmap.ic_panda)
+//            .error(R.drawable.ic_error)
+            .into(imageView)
+
+        // 点击弹窗区域关闭
+        dialog.findViewById<View>(R.id.rootLayout).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // 可选：支持缩放
+        // 可以使用 PhotoView 库：https://github.com/Baseflow/PhotoView
+
+        dialog.show()
+    }
     override fun setObservers() {
         collectUiState()
     }

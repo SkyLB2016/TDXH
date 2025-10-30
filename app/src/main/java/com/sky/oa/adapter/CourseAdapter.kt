@@ -13,9 +13,13 @@ import com.sky.oa.databinding.AdapterUrlBinding
 import com.sky.oa.data.model.CourseEntity
 
 
-class CourseAdapter(private val onTeacherClick: (CourseEntity) -> Unit)
-    : ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCallback) {
+class CourseAdapter(private val onItemClick: (CourseEntity) -> Unit) :
+    ListAdapter<CourseEntity, CourseAdapter.ViewHolder>(DiffCallback) {
     lateinit var context: Context
+    var onImageClick: (CourseEntity) -> Unit = {}
+    fun setOnImageClickListener(listener: (CourseEntity) -> Unit) {
+        onImageClick = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -52,13 +56,17 @@ class CourseAdapter(private val onTeacherClick: (CourseEntity) -> Unit)
 //
             // 简单处理：直接设置背景色或占位图
 //            binding.image.setImageResource(R.d)
+            binding.image.setOnClickListener {
+                onImageClick(course)
+            }
 
             // 设置点击事件
             binding.root.setOnClickListener {
-                onTeacherClick(course)
+                onItemClick(course)
             }
         }
     }
+
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<CourseEntity>() {
             override fun areItemsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean =
