@@ -20,10 +20,11 @@ import com.sky.oa.databinding.AdapterUriBinding
 // Adapter: PhotoAdapter.kt
 class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(DiffCallback()) {
 
-    private var onImageClick:(List<Photo>)->Unit={}
-    fun setOnImageClickListener(listener:(List<Photo>)->Unit){
-        onImageClick=listener
+    private var onImageClick: (List<Photo>, Int) -> Unit = { _, _ -> }
+    fun setOnImageClickListener(listener: (List<Photo>, Int) -> Unit) {
+        onImageClick = listener
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = AdapterUriBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -43,9 +44,12 @@ class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(DiffCallba
             // 1. 卡片样式设置（Ripple + 阴影动画）
             with(binding.cardView) {
                 background = context.getDrawable(R.drawable.ripple)
-                stateListAnimator = AnimatorInflater.loadStateListAnimator(context, R.drawable.state_list_animator)
+                stateListAnimator =
+                    AnimatorInflater.loadStateListAnimator(context, R.drawable.state_list_animator)
                 setOnClickListener {
-                    onImageClick(currentList)
+                    val position = currentList.indexOf(photo)
+                    println("size==${currentList.size}")
+                    onImageClick(currentList, position)
                 }
             }
             // 2. 图片视图裁剪设置（圆角）

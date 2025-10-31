@@ -18,8 +18,11 @@ import com.sky.oa.App
 import com.sky.oa.R
 import com.sky.oa.adapter.PhotoAdapter
 import com.sky.oa.data.model.Folder
+import com.sky.oa.data.model.Photo
 import com.sky.oa.databinding.ActivityPhotoBinding
 import com.sky.oa.pop.FolderPopupwindow
+import com.sky.oa.pop.PhotoPopupWindow
+import com.sky.oa.pop.URIPop
 import com.sky.oa.vm.PhotoViewModel
 
 /**
@@ -75,6 +78,9 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
 
     private fun setupRecyclerView() {
         photoAdapter = PhotoAdapter()
+        photoAdapter.setOnImageClickListener {list,position->
+            showImagePop(list,position)
+        }
         binding.recycler.apply {
             layoutManager =
                 StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)//瀑布流布局
@@ -102,9 +108,9 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     private fun setAdapter(folder: Folder) {
         val photos = folder.photoList
         photoAdapter.submitList(photos)
-        photos.forEach { photo ->
-            println(photo.toString())
-        }
+//        photos.forEach { photo ->
+//            println(photo.toString())
+//        }
         binding.tvName.text = folder.folderName
         "${photos.size}张".also { binding.tvNumber.text = it }
     }
@@ -122,6 +128,19 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
         }
     }
 
+
+    private fun showImagePop(list: List<Photo>, position: Int) {
+        val imagePop = PhotoPopupWindow(LayoutInflater.from(this).inflate(R.layout.viewpager, null))
+//        imagePop.datas = photoAdapter.currentList
+        imagePop.datas = list
+        imagePop.setCurrentItem(position)
+        if (!imagePop.isShowing) imagePop.showAtLocation(
+            binding.recycler,
+            Gravity.CENTER,
+            0,
+            0
+        )
+    }
     private fun requestStoragePermission() {
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_IMAGES
