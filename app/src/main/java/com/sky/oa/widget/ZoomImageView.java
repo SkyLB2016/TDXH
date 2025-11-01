@@ -13,35 +13,59 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
+import android.widget.OverScroller;
 
 /**
  * Created by SKY on 2015/8/17 15:30.
  * 图片缩放
  */
 public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView implements
-        ViewTreeObserver.OnGlobalLayoutListener, View.OnTouchListener, ScaleGestureDetector.OnScaleGestureListener {
+        ViewTreeObserver.OnGlobalLayoutListener,
+        View.OnTouchListener,
+        ScaleGestureDetector.OnScaleGestureListener {
 
-    private boolean once = true;//只执行一次
-    private float minScale;
-    private float midScale;
-    private float maxScale;
+    // 缩放级别
+    private float minScale = 1.0f;
+    private float midScale = 2.0f;
+    private float maxScale = 4.0f;
+
+    private final Matrix matrix;
+    private final float[] matrixValues = new float[9];
+
+
+    // 缩放检查
+    private final ScaleGestureDetector scaleDetector;
+    // 手势识别
+    private final GestureDetector gestureDetector;
+    private final float mTouchSlop;
+
+
+    // 拖动状态
+    private float lastX, lastY;
+    private float firstX;
 
     /**
      * 记录上次多点触控的数量
      */
-    private int mLastPointerCount;
-    private int mTouchSlop;
+    private int mLastPointerCount = 0;
+    // 是否推动中
+    private Boolean isDragging;
 
-    private Boolean isCanDrag;
+    // 左右边界检查
     private Boolean isCheckLeftAndRight;
+    // 上下边界检查
     private Boolean isCheckTopAndBottom;
+
+    //是否缩放
     private Boolean isAutoScale;
+    private Boolean isScaling = false;
 
+    // 惯性滚动
+    private OverScroller scroller;
 
-    private GestureDetector gestureDetector;
-    private ScaleGestureDetector scaleGestureDetector;
-
-    private Matrix matrix;
+    // 视图是否已初始化
+    private boolean isInitialized = false;
+//    private boolean once = true;//只执行一次
 
     public ZoomImageView(Context context) {
         this(context, null);
@@ -53,38 +77,50 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
 
     public ZoomImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        //初始化 matrix 矩阵
         matrix = new Matrix();
-        super.setScaleType(ScaleType.CENTER.MATRIX);
-        scaleGestureDetector = new ScaleGestureDetector(context, this);
-        setOnTouchListener(this);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        isAutoScale = false;
+        setScaleType(ScaleType.MATRIX);
+//        super.setScaleType(ScaleType.CENTER);
+        // 缩放检查
+        scaleDetector = new ScaleGestureDetector(context, this);
+        // 手势检查
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                if (isAutoScale)
+                if (isScaling)
                     return true;
-                float x = e.getX();
-                float y = e.getY();
-
-                if (getScale() < midScale) {
-//                    matrix.postScale(midScale/getScale(),midScale/getScale(),`x,y);
-//                    setImageMatrix(matrix);
-                    postDelayed(new AutoScaleRunnable(midScale, x, y), 18);
-                    isAutoScale = true;
-                } else {
-
-//                    matrix.postScale(minScale/getScale(),minScale/getScale(),x,y);
-//                    setImageMatrix(matrix);
-                    postDelayed(new AutoScaleRunnable(minScale, x, y), 18);
-                    isAutoScale = true;
-                }
+                onDoubleTab(e);
                 return true;
             }
         });
         gestureDetector.setIsLongpressEnabled(false);
+
+        // 获取系统认为“最小有效滑动距离”——即用户手指滑动超过这个距离，才被认为是“滑动手势”，而不是“点击”或“误触”。
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        scroller = new OverScroller(context);
+
+        setOnTouchListener(this);
     }
 
+    private void onDoubleTab(MotionEvent e) {
+
+        System.out.println("双击事件");
+        float x = e.getX();
+        float y = e.getY();
+
+        if (getScale() < midScale) {
+//            matrix.postScale(midScale / getScale(), midScale / getScale(),x, y);
+//            setImageMatrix(matrix);
+            postDelayed(new AutoScaleRunnable(midScale, x, y), 18);
+            isScaling = true;
+        } else {
+
+//            matrix.postScale(minScale / getScale(), minScale / getScale(), x, y);
+//            setImageMatrix(matrix);
+            postDelayed(new AutoScaleRunnable(minScale, x, y), 18);
+            isScaling = true;
+        }
+    }
 
     private class AutoScaleRunnable implements Runnable {
 
@@ -117,7 +153,7 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
             if (tempScale > 1.0f && currentScale < mTageTScale || tempScale < 1.0f && currentScale > mTageTScale) {
                 postDelayed(this, 18);
             } else {
-                isAutoScale = false;
+                isScaling = false;
                 float scale = mTageTScale / getScale();
                 matrix.postScale(scale, scale, x, y);
                 checkimage();
@@ -132,7 +168,6 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
         getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -141,48 +176,72 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
 
     @Override
     public void onGlobalLayout() {
-        if (once) {
-            int width = getWidth();
-            int height = getHeight();
-            Drawable image = getDrawable();
-            if (image == null) {
-                return;
-            }
-            int dw = image.getIntrinsicWidth();
-            int dh = image.getIntrinsicHeight();
+        if (isInitialized) return;
+        Drawable drawable = getDrawable();
+        if (drawable == null) return;
 
-            float scale = 1.0f;
-            if (dw > width && dh < height) {
-                scale = width * 1.0f / dw;
-            }
-            if (dh > height && dw < width) {
-                scale = height * 1.0f / dh;
-            }
-            if ((dw > width && dh > height) || (dw < width && dh < height)) {
-                scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
-            }
-            minScale = scale;
-            midScale = 2 * minScale;
-            maxScale = 4 * minScale;
+        int dWidth = drawable.getIntrinsicWidth();
+        int dHeight = drawable.getIntrinsicHeight();
+        int vWidth = getWidth();
+        int vHeight = getHeight();
 
-            int cx = width / 2 - dw / 2;
-            int cy = height / 2 - dh / 2;
+//        System.out.println("控件宽=="+vWidth+",控件高"+vHeight);
+//        System.out.println("图宽=="+dWidth+",图高"+dHeight);
 
-
-            matrix.postTranslate(cx, cy);
-            matrix.postScale(minScale, minScale, width / 2, height / 2);
-            setImageMatrix(matrix);
-            once = false;
+        float scale = 1.0f;
+        // 图宽 > 控件宽，按宽度缩放
+        if (dWidth > vWidth && dHeight <= vHeight) {
+            scale = vWidth * 1.0f / dWidth;
+            System.out.println("图宽");
         }
+        // 图高 > 控件高，按高度缩放
+        else if (dHeight > vHeight && dWidth <= vWidth) {
+            scale = vHeight * 1.0f / dHeight;
+            System.out.println("图高");
+        }
+        // 宽高都大于控件，按最小比例缩放
+        // 图片宽高都小于控件，也是按最小的缩放比例缩放。
+        else {
+            System.out.println("图宽高");
+            scale = Math.min(vWidth * 1.0f / dWidth, vHeight * 1.0f / dHeight);
+        }
+        System.out.println("scale=="+scale);
 
+        minScale = scale;
+        midScale = 2 * minScale;
+        maxScale = 4 * minScale;
+
+        // 缩放前移动，按原来的图高计算
+        float dx = (vWidth - dWidth) / 2f;
+        float dy = (vHeight - dHeight) / 2f;
+        System.out.println(dx + "," + dy);
+        //将图片在 X 轴方向移动 dx 像素，在 Y 轴方向移动 dy 像素。
+        matrix.postTranslate(dx, dy);
+        //将图片先缩放到“适应屏幕”的大小，并以屏幕中心为锚点进行缩放。
+        matrix.postScale(minScale, minScale, vWidth / 2f, vHeight / 2f);
+
+
+
+//        //将图片先缩放到“适应屏幕”的大小，并以默认锚点（0,0）进行缩放。
+//        matrix.postScale(scale, scale);
+//
+//        // 缩放后移动，按缩放后的图高计算
+//        float dx = (vWidth - dWidth * scale) / 2f;
+//        float dy = (vHeight - dHeight * scale) / 2f;
+//        System.out.println(dx + "," + dy);
+//        matrix.postTranslate(dx, dy);
+
+        //将你自定义的 Matrix（3x3 变换矩阵）注入到 ImageView 的绘制流程中，在 onDraw() 时使用它来变换图片的坐标。
+        setImageMatrix(matrix);
+
+        isInitialized = true;
     }
 
-    public float getScale() {
-        float[] values = new float[9];
-        matrix.getValues(values);
-        return values[Matrix.MSCALE_X];
-
+    private float getScale() {
+        matrix.getValues(matrixValues);
+        return matrixValues[Matrix.MSCALE_X];
     }
+
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
@@ -262,29 +321,27 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
 
     }
 
-    private float mLastX, mLastY;
-    private float firstX;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (gestureDetector.onTouchEvent(event)) {
             return true;
         }
-        scaleGestureDetector.onTouchEvent(event);
+        scaleDetector.onTouchEvent(event);
         float x = 0;
         float y = 0;
 
         int pointerCount = event.getPointerCount();
         for (int i = 0; i < pointerCount; i++) {
-            isCanDrag = false;
+            isDragging = false;
             x += event.getX(i);
             y += event.getY(i);
         }
         x /= pointerCount;
         y /= pointerCount;
         if (mLastPointerCount != pointerCount) {
-            mLastX = x;
-            mLastY = y;
+            lastX = x;
+            lastY = y;
         }
         mLastPointerCount = pointerCount;
         RectF rectF = getRectF();
@@ -304,12 +361,12 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
                     }
                 }
 
-                float dx = x - mLastX;
-                float dy = y - mLastY;
-                if (!isCanDrag) {
-                    isCanDrag = isMoveAction(dx, dy);
+                float dx = x - lastX;
+                float dy = y - lastY;
+                if (!isDragging) {
+                    isDragging = isMoveAction(dx, dy);
                 }
-                if (isCanDrag) {
+                if (isDragging) {
                     if (getDrawable() != null) {
                         isCheckLeftAndRight = isCheckTopAndBottom = true;
                         if (rectF.width() < getWidth()) {
@@ -325,8 +382,8 @@ public class ZoomImageView extends androidx.appcompat.widget.AppCompatImageView 
                         setImageMatrix(matrix);
                     }
                 }
-                mLastX = x;
-                mLastY = y;
+                lastX = x;
+                lastY = y;
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:

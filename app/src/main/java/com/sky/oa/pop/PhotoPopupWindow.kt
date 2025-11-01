@@ -27,7 +27,7 @@ class PhotoPopupWindow(contentView: View) : BasePop<Photo>(contentView) {
     }
 
     fun setCurrentItem(position: Int) {
-        println("position == $position")
+//        println("position == $position")
         viewPager?.setCurrentItem(position, false)
     }
 }

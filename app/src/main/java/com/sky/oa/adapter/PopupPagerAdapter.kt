@@ -25,11 +25,11 @@ class PopupPagerAdapter(val context: Context) : PagerAdapter() {
             // 创建新视图
             if (value != null) {
                 repeat(value.size) {
-//                    val imageView = ZoomImageView(context)
-                    val imageView = ImageView(context)
+                    val imageView = ZoomImageView(context)
+//                    val imageView = ImageView(context)
 //                    imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
 //                    imageView.scaleType= ImageView.ScaleType.MATRIX
-                    imageView.adjustViewBounds = true
+//                    imageView.adjustViewBounds = true
                     imageView.setBackgroundResource(R.color.white)
                     imageViewList.add(imageView)
                 }
@@ -48,8 +48,8 @@ class PopupPagerAdapter(val context: Context) : PagerAdapter() {
             .timeout(10_000)                            // 超时 10s
             .into(imageView)
         container.addView(imageView)
-        println("totalMemory==${Runtime.getRuntime().totalMemory()}")
-        println("maxMemory==${Runtime.getRuntime().maxMemory()}")
+//        println("totalMemory==${Runtime.getRuntime().totalMemory()}")
+//        println("maxMemory==${Runtime.getRuntime().maxMemory()}")
         return imageView
     }
 

@@ -48,7 +48,7 @@ class PhotoAdapter : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(DiffCallba
                     AnimatorInflater.loadStateListAnimator(context, R.drawable.state_list_animator)
                 setOnClickListener {
                     val position = currentList.indexOf(photo)
-                    println("size==${currentList.size}")
+//                    println("size==${currentList.size}")
                     onImageClick(currentList, position)
                 }
             }
