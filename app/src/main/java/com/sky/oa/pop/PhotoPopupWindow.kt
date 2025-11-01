@@ -17,7 +17,7 @@ class PhotoPopupWindow(contentView: View) : BasePop<Photo>(contentView) {
 
     override fun initEvent() {
         viewPager = view.findViewById(R.id.id_viewpager)
-        adapter = PopupPagerAdapter()
+        adapter = PopupPagerAdapter(context)
         viewPager?.adapter = adapter
     }
 

@@ -119,7 +119,7 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
     private fun setLastRecord() {
         lastPosition = SPUtils.getInstance().getObject("${poetry.name}的$LASTPOSITION", 0)
         lastOffset = SPUtils.getInstance().getObject("${poetry.name}的$LASTOFFSET", 0)
-        if (lastOffset === 0 && lastPosition == 0) return
+        if (lastOffset == 0 && lastPosition == 0) return
         LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
         binding.recycler.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -147,7 +147,7 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
         super.onWindowFocusChanged(hasFocus)
         val lastPosition = SPUtils.getInstance().getObject("${poetry.name}的$LASTPOSITION", 0)
         val lastOffset = SPUtils.getInstance().getObject("${poetry.name}的$LASTOFFSET", 0)
-        if (lastOffset === 0 && lastPosition == 0) return
+        if (lastOffset == 0 && lastPosition == 0) return
         LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")
         binding.recycler.post {
             (binding.recycler.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
@@ -159,7 +159,7 @@ class ArticleActivity : BaseMActivity<ActivityPoetryBinding, ArticleViewModel>()
 
     override fun onStop() {
         super.onStop()
-        if (lastOffset === -1 && lastPosition == -1) return
+        if (lastOffset == -1 && lastPosition == -1) return
         SPUtils.getInstance().put("${poetry.name}的$LASTPOSITION", lastPosition)
         SPUtils.getInstance().put("${poetry.name}的$LASTOFFSET", lastOffset)
 //        LogUtils.i("${poetry.name}的$LASTPOSITION==$lastPosition")

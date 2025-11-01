@@ -859,14 +859,14 @@ dual-pivot 快排：双基准快速排序，其实就是用两个基准数，把
 //        for (i in bucket.indices)
 //            LogUtils.i("第" + i + "个桶==" + bucket[i])
         for (item in bucket) {
-            if (bucketSize === 1) {
+            if (bucketSize == 1) {
                 for (i in item) {
                     result.add(i)
                     sortCount++
                 }
             } else {
                 //如果bucketCount等于1，表明bucketSize分配过大，减一
-                if (bucketCount === 1) {
+                if (bucketCount == 1) {
                     bucketSize--
                 }
                 //如果bucketSize 大于当前桶的长度，那取一半作为size，

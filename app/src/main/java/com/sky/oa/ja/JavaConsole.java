@@ -67,7 +67,7 @@ public class JavaConsole {
             System.out.println(f.getName());
             if (f.getName().startsWith("emotion")) {
                 i++;
-                System.out.println(f.getName() + "===" + i);
+                System.out.println(f.getName() + "==" + i);
                 DecimalFormat format = new DecimalFormat("#00");
                 f.renameTo(new File(dir + "/banner" + format.format(i) + ".png"));
             }

@@ -39,10 +39,10 @@ class SlidingMenu @JvmOverloads constructor(
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
 
     val isClose: Boolean
-        get() = state === State.CLOSE
+        get() = state == State.CLOSE
 
     val isOpen: Boolean
-        get() = state === State.OPEN
+        get() = state == State.OPEN
 
     var onMenuScroll: (Int, Int, Int, Int) -> Unit = { _, _, _, _ -> }
     //menu打开与关闭时的监听,

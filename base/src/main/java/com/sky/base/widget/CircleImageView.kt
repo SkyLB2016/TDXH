@@ -21,13 +21,13 @@ class CircleImageView @JvmOverloads constructor(
 
     var borderColor = BORDER_COLOR //边颜色
         set(value) {
-            if (value === field) return
+            if (value == field) return
             field = value
             invalidate()
         }
     var borderWidth = BORDER_WIDTH //边宽
         set(value) {
-            if (value === field) return
+            if (value == field) return
             field = value
             invalidate()
         }

@@ -83,7 +83,7 @@ class FlowLayout @JvmOverloads constructor(
             }
 
             //循环中，最后一行的宽高不会被统计到，所以需要单独添加
-            if (i === childCount - 1) {
+            if (i == childCount - 1) {
                 measureWidth = measureWidth.coerceAtLeast(lineWidth)
                 measureHeight += lineHeight
             }
@@ -98,8 +98,8 @@ class FlowLayout @JvmOverloads constructor(
         if (measureHeight > heightSize) measureHeight = heightSize
         //设置布局的宽高
         setMeasuredDimension(
-            if (widthMode === MeasureSpec.EXACTLY) widthSize else measureWidth,
-            if (heightMode === MeasureSpec.EXACTLY) heightSize else measureHeight
+            if (widthMode == MeasureSpec.EXACTLY) widthSize else measureWidth,
+            if (heightMode == MeasureSpec.EXACTLY) heightSize else measureHeight
         )
     }
 
@@ -114,7 +114,7 @@ class FlowLayout @JvmOverloads constructor(
             lineViews = allViews[i]
             for (j in lineViews.indices) {
                 child = lineViews[j]
-                if (child.visibility === View.GONE) continue
+                if (child.visibility == View.GONE) continue
                 lp = child.layoutParams as MarginLayoutParams
                 child.layout(
                     left + lp.leftMargin,

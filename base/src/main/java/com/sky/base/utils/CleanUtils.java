@@ -18,7 +18,7 @@ public class CleanUtils {
      * 清除外部cache下的内容
      * (/storage/emulated/0/Android/data/包名/cache)
      * (/mnt/sdcard/android/data/包名/cache)
-     * /storage/emulated/0===/mnt/sdcard/
+     * /storage/emulated/0/mnt/sdcard/
      */
     public static void cleanExternalCache(Context context) {
         FileUtils.deleteFile(context.getExternalCacheDir());

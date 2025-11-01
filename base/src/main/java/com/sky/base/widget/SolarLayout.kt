@@ -50,7 +50,7 @@ class SolarLayout @JvmOverloads constructor(
     lateinit var menuState: (Boolean) -> Unit  //中心菜单的点击事件
     lateinit var onItemClick: (View, Int) -> Unit //子控件的点击事件
 
-    private val isOpen: Boolean get() = mState === State.OPEN
+    private val isOpen: Boolean get() = mState == State.OPEN
 
     init {
         val style = context.obtainStyledAttributes(attrs, R.styleable.solar_layout)
@@ -227,7 +227,7 @@ class SolarLayout @JvmOverloads constructor(
             val ix = radius * cos(offsetR + radians * i).toFloat()
             val iy = radius * sin(offsetR + radians * i).toFloat()
             // 根据菜单的状态判断是弹出还是收回，平移的动画定义
-            if (mState === State.CLOSE) {
+            if (mState == State.CLOSE) {
                 tranX = ObjectAnimator.ofFloat(childAt, "translationX", 0f, ix)
                 tranY = ObjectAnimator.ofFloat(childAt, "translationY", 0f, iy)
             } else {
@@ -241,7 +241,7 @@ class SolarLayout @JvmOverloads constructor(
             set.duration = time
             set.startDelay = (i + 1) * 100L//每个的子view的延迟时间
             set.start()
-            if (isRotating && i === childCount - 2)
+            if (isRotating && i == childCount - 2)
                 set.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         isRotating = false//动画停止至为false
@@ -249,7 +249,7 @@ class SolarLayout @JvmOverloads constructor(
                 })
         }
         // 执行完成后切换菜单状态
-        mState = if (mState === State.OPEN) State.CLOSE else State.OPEN
+        mState = if (mState == State.OPEN) State.CLOSE else State.OPEN
     }
 
     /**

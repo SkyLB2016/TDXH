@@ -402,7 +402,7 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
                     count++
                 }
             }
-            if (min === i) continue//min没有变化，结束此次循环
+            if (min == i) continue//min没有变化，结束此次循环
             temp = array[i]
             array[i] = array[min]
             array[min] = temp
@@ -710,14 +710,14 @@ class MethodTestActivity : BaseActivity<ActivityMethodBinding>(), View.OnClickLi
 //        for (i in bucket.indices)
 //            LogUtils.i("第" + i + "个桶==" + bucket[i])
         for (item in bucket) {
-            if (bucketSize === 1) {
+            if (bucketSize == 1) {
                 for (i in item) {
                     result.add(i)
                     sortCount++
                 }
             } else {
                 //如果bucketCount等于1，表明bucketSize分配过大，减一
-                if (bucketCount === 1) {
+                if (bucketCount == 1) {
                     bucketSize--
                 }
                 //如果bucketSize 大于当前桶的长度，那取一半作为size，

@@ -185,9 +185,9 @@ class NotesRepository {
 //                for ((i,text) in list.withIndex()) {
 ////                    val text = if (list[i].startsWith(" ")) list[i].substring(1) else list[i]
 //                    //以，作为正文起始处
-//                    if (sign === -1 && text.contains("，")) sign = i % 10
+//                    if (sign == -1 && text.contains("，")) sign = i % 10
 //                    //记录章节
-//                    if (i % 10 === sign) {
+//                    if (i % 10 == sign) {
 //                        //保存上一章节的内容
 //                        chapter.content.setLength(chapter.content.length - 1)
 //                        catalogList.add(chapter)
