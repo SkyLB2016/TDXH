@@ -93,6 +93,7 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     private fun setupViewModel() {
         // 观察数据变化
         viewModel.photos.observe(this) { folderList ->
+            disLoading()
 //            showToast("文件数量==${folderList.size}")
             setAdapter(folderList[0])
 //            构建文件夹的痰喘
@@ -160,7 +161,7 @@ class PhotoActivity : BaseMActivity<ActivityPhotoBinding, PhotoViewModel>() {
     }
 
     private fun loadPhotos() {
-        showToast("开始请求数据")
+        showLoading()
         viewModel.loadPhotos()
     }
 
