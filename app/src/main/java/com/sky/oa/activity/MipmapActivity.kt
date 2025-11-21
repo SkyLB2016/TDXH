@@ -25,7 +25,7 @@ class MipmapActivity : BaseMActivity<ActivityMipmapBinding, MipViewModel>() {
     private lateinit var adapter: ImageResourceAdapter
 
     override val viewModel: MipViewModel by viewModels {
-        // 由于继承自 AndroidViewModel，需传 application
+        // 需传 application 参数
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return MipViewModel(application) as T

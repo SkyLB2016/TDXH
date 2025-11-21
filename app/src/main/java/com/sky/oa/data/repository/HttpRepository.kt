@@ -2,6 +2,7 @@ package com.sky.oa.data.repository
 
 import com.google.gson.reflect.TypeToken
 import com.sky.base.ApiResponse
+import com.sky.base.ApiResult
 import com.sky.base.utils.LogUtils
 import com.sky.oa.data.model.CourseEntity
 import com.sky.oa.gson.GsonUtils
@@ -30,10 +31,57 @@ class HttpRepository {
                 Result.failure(Exception(response.msg))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            // 统一异常处理：网络异常、解析异常等
+            when (e) {
+//                31版本才有
+//                is HttpException -> {
+//                    val errorCode = e.code()
+//                    when (errorCode) {
+//                        404 -> ApiResult.Error("城市不存在: $city")
+//                        401 -> ApiResult.Error("API密钥无效")
+//                        else -> ApiResult.Error("服务器错误: $errorCode")
+//                    }
+//                }
+                is IOException -> {
+                    Result.failure(e)
+//                    ApiResult.Error("网络连接失败，请检查网络设置")
+                }
+
+                else -> {
+                    Result.failure(e)
+//                    ("未知错误: ${e.message}")
+                }
+            }
         }
-    suspend fun getTeachers(type: Int,num: Int): ApiResponse<List<CourseEntity>>{
-        return RetrofitClient.httpApi.getTeachers(type,num)
+
+    suspend fun getCourses(type: Int, num: Int): ApiResponse<List<CourseEntity>> {
+        return RetrofitClient.httpApi.getTeachers(type, num)
+    }
+    suspend fun getTeachers(type: Int, num: Int): ApiResult<ApiResponse<List<CourseEntity>>> {
+        return try {
+            val response = RetrofitClient.httpApi.getTeachers(type, num)
+            ApiResult.Success(response)
+        } catch (e: Exception) {
+            // 统一异常处理：网络异常、解析异常等
+            when (e) {
+//                31版本才有
+//                is HttpException -> {
+//                    val errorCode = e.code()
+//                    when (errorCode) {
+//                        404 -> ApiResult.Error("城市不存在: $city")
+//                        401 -> ApiResult.Error("API密钥无效")
+//                        else -> ApiResult.Error("服务器错误: $errorCode")
+//                    }
+//                }
+                is IOException -> {
+                    ApiResult.Error("网络连接失败，请检查网络设置")
+                }
+
+                else -> {
+                    ApiResult.Error("未知错误: ${e.message}")
+                }
+            }
+        }
     }
 
     fun getImageUrl() {
@@ -51,8 +99,11 @@ class HttpRepository {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val data = GsonUtils.fromJson<ApiResponse<MutableList<CourseEntity>>>(response.body?.string(),
-                    object : TypeToken<ApiResponse<MutableList<CourseEntity>>>() {}.type)
+                val data =
+                    GsonUtils.fromJson<ApiResponse<MutableList<CourseEntity>>>(
+                        response.body?.string(),
+                        object : TypeToken<ApiResponse<MutableList<CourseEntity>>>() {}.type
+                    )
                 LogUtils.i(data.data.toString())
 //                LogUtils.i("数据==${data.status}")
             }
