@@ -1,4 +1,4 @@
-package com.sky.oa.http
+package com.sky.oa.data.http
 
 import com.sky.base.ApiResponse
 import com.sky.oa.data.model.CourseEntity

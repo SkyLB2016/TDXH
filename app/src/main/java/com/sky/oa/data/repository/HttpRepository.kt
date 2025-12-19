@@ -6,7 +6,7 @@ import com.sky.base.ApiResult
 import com.sky.base.utils.LogUtils
 import com.sky.oa.data.model.CourseEntity
 import com.sky.oa.gson.GsonUtils
-import com.sky.oa.http.RetrofitClient
+import com.sky.oa.data.http.RetrofitClient
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient

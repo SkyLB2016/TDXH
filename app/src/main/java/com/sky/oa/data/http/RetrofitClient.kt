@@ -1,4 +1,4 @@
-package com.sky.oa.http
+package com.sky.oa.data.http
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

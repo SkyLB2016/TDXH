@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
-//    alias(libs.plugins.ksp)  // KSP 插件
-//    alias(libs.plugins.hilt.android)  // 添加 Hilt 插件
+    alias(libs.plugins.ksp)  // KSP 插件
+    alias(libs.plugins.hilt.android)  // 添加 Hilt 插件
 //    id("kotlin-parcelize")
 //    alias(libs.plugins.kotlin.compose)
 }
@@ -46,12 +46,12 @@ android {
         buildConfig = true
     }
     // 可选：配置 KSP
-//    ksp {
-//        // 配置参数
-//        arg("room.schemaLocation", "$projectDir/schemas")
-//        arg("room.incremental", "true")
-//        arg("room.expandProjection", "true")
-//    }
+    ksp {
+        // 配置参数
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+        arg("room.expandProjection", "true")
+    }
 }
 
 dependencies {
@@ -92,7 +92,7 @@ dependencies {
 
     // 图片相关
     implementation(libs.glide)
-//    ksp("com.github.bumptech.glide:ksp:4.16.0")  // Glide 的 KSP 扩展
+    ksp("com.github.bumptech.glide:ksp:4.16.0")  // Glide 的 KSP 扩展
 
     // 网络相关
     implementation(libs.okhttp)
@@ -108,13 +108,13 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-//    ksp(libs.moshi.kotlin.codegen)  // 使用 KSP 生成 Moshi 适配器
+    ksp(libs.moshi.kotlin.codegen)  // 使用 KSP 生成 Moshi 适配器
 
 
     // 依赖注入
     implementation(libs.hilt)
     // 或者使用 KSP
-//    ksp("com.google.dagger:hilt-compiler:2.48")
+    ksp("com.google.dagger:hilt-compiler:2.48")
 
 
     // Room 数据库（如果有）
@@ -133,7 +133,7 @@ dependencies {
 
     // Hilt 测试支持
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
-//    kspAndroidTest("com.google.dagger:hilt-compiler:2.48")
+    kspAndroidTest("com.google.dagger:hilt-compiler:2.48")
 
 //    androidTestImplementation(platform(libs.androidx.compose.bom))
 //    androidTestImplementation(libs.androidx.compose.ui.test.junit4)

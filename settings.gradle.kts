@@ -46,6 +46,13 @@ dependencyResolutionManagement {
             url = uri("https://jitpack.io")
         }
     }
+
+    // 启用版本目录
+//    versionCatalogs {
+//        create("libs") {
+//            from(files("../gradle/libs.versions.toml"))
+//        }
+//    }
 }
 
 rootProject.name = "TDXH"

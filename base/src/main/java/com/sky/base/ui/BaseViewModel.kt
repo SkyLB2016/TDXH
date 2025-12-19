@@ -21,9 +21,9 @@ open class BaseViewModel: ViewModel() {
     val error: StateFlow<String?> = _error.asStateFlow()
 
 //    使用 CoroutineExceptionHandler（适用于全局异常处理）
-//    val handler = CoroutineExceptionHandler { _, exception ->
-//        println("协程异常: $exception")
-//    }
+    val handler = CoroutineExceptionHandler { _, exception ->
+        println("协程异常: $exception")
+    }
 //
 //    viewModelScope.launch(handler) {
 //        throw RuntimeException("出错了！")
@@ -34,6 +34,7 @@ open class BaseViewModel: ViewModel() {
      * 这是一个便捷方法，避免在每个子类中重复写 try-catch
      */
     protected fun launchOnViewModelScope(block: suspend () -> Unit) {
+//        viewModelScope.launch(handler) {
         viewModelScope.launch {
             try {
                 LogUtils.i("block执行之前")
